@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dymao.dao.mappper.BlogMapper">
+  <resultMap id="BaseResultMap" type="com.dymao.model.Blog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content_show" jdbcType="VARCHAR" property="contentShow" />
+    <result column="keyword" jdbcType="VARCHAR" property="keyword" />
+    <result column="ispublic" jdbcType="INTEGER" property="ispublic" />
+    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="category" jdbcType="INTEGER" property="category" />
+    <result column="view" jdbcType="INTEGER" property="view" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="zhuanzai" jdbcType="INTEGER" property="zhuanzai" />
+    <result column="zhuanzaiurl" jdbcType="VARCHAR" property="zhuanzaiurl" />
+    <result column="editortype" jdbcType="INTEGER" property="editortype" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="showside" jdbcType="INTEGER" property="showside" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.dymao.model.Blog">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, title, content_show, keyword, ispublic, deleted, category, view, type, 
+    image, create_time, zhuanzai, zhuanzaiurl, editortype, level, showside
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from blog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dymao.model.Blog">
+    insert into blog (id, user_id, title, 
+      content_show, keyword, ispublic, 
+      deleted, category, view, 
+      type, image, create_time, 
+      zhuanzai, zhuanzaiurl, editortype, 
+      level, showside, content
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{contentShow,jdbcType=VARCHAR}, #{keyword,jdbcType=VARCHAR}, #{ispublic,jdbcType=INTEGER}, 
+      #{deleted,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, #{view,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{zhuanzai,jdbcType=INTEGER}, #{zhuanzaiurl,jdbcType=VARCHAR}, #{editortype,jdbcType=INTEGER}, 
+      #{level,jdbcType=INTEGER}, #{showside,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dymao.model.Blog">
+    insert into blog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="contentShow != null">
+        content_show,
+      </if>
+      <if test="keyword != null">
+        keyword,
+      </if>
+      <if test="ispublic != null">
+        ispublic,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+      <if test="category != null">
+        category,
+      </if>
+      <if test="view != null">
+        view,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="zhuanzai != null">
+        zhuanzai,
+      </if>
+      <if test="zhuanzaiurl != null">
+        zhuanzaiurl,
+      </if>
+      <if test="editortype != null">
+        editortype,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="showside != null">
+        showside,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="contentShow != null">
+        #{contentShow,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null">
+        #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="ispublic != null">
+        #{ispublic,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="view != null">
+        #{view,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="zhuanzai != null">
+        #{zhuanzai,jdbcType=INTEGER},
+      </if>
+      <if test="zhuanzaiurl != null">
+        #{zhuanzaiurl,jdbcType=VARCHAR},
+      </if>
+      <if test="editortype != null">
+        #{editortype,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="showside != null">
+        #{showside,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dymao.model.Blog">
+    update blog
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="contentShow != null">
+        content_show = #{contentShow,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null">
+        keyword = #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="ispublic != null">
+        ispublic = #{ispublic,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="view != null">
+        view = #{view,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="zhuanzai != null">
+        zhuanzai = #{zhuanzai,jdbcType=INTEGER},
+      </if>
+      <if test="zhuanzaiurl != null">
+        zhuanzaiurl = #{zhuanzaiurl,jdbcType=VARCHAR},
+      </if>
+      <if test="editortype != null">
+        editortype = #{editortype,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="showside != null">
+        showside = #{showside,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dymao.model.Blog">
+    update blog
+    set user_id = #{userId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      content_show = #{contentShow,jdbcType=VARCHAR},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      ispublic = #{ispublic,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=INTEGER},
+      category = #{category,jdbcType=INTEGER},
+      view = #{view,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      image = #{image,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      zhuanzai = #{zhuanzai,jdbcType=INTEGER},
+      zhuanzaiurl = #{zhuanzaiurl,jdbcType=VARCHAR},
+      editortype = #{editortype,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      showside = #{showside,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dymao.model.Blog">
+    update blog
+    set user_id = #{userId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      content_show = #{contentShow,jdbcType=VARCHAR},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      ispublic = #{ispublic,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=INTEGER},
+      category = #{category,jdbcType=INTEGER},
+      view = #{view,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      image = #{image,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      zhuanzai = #{zhuanzai,jdbcType=INTEGER},
+      zhuanzaiurl = #{zhuanzaiurl,jdbcType=VARCHAR},
+      editortype = #{editortype,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      showside = #{showside,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dymao.dao.mapper.ProductDao">
+
+    <resultMap id="ProductResultMap" type="com.dymao.entity.Product">
+        <id property="productId" column="product_id" />
+        <result property="linkUrl" column="link_url" />
+        <result property="originalPrice" column="original_price" />
+        <result property="weight" column="weight" />
+    </resultMap>
+
+
+    <select id="findByName" resultMap="ProductResultMap">
+        select * from product_detail limit 15
+    </select>
+
+</mapper>
