@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dymao.dao.mappper.BannerMapper">
+<mapper namespace="com.dymao.dao.mapper.BannerMapper">
   <resultMap id="BaseResultMap" type="com.dymao.model.Banner">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
@@ -11,7 +11,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, title, image, url, sn, deleted, create_time
+    id, title, image, url, sn, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -114,4 +114,10 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="findBannerList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from banner where deleted = 0 order by sn
+  </select>
 </mapper>

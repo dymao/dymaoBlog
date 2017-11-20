@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="shortcut icon"  type="image/x-icon" th:href="@{/images/icon/favicon.ico}" />
+<div th:include="common/common_head::common_head('Mervin的技术博客')"></div>
+<body>
+<section class="container user-select">
+  <header>
+    <div th:include="common/menu::left">
+    </div>
+  </header>
+  <!--/超小屏幕可见-->
+  <div class="content-wrap"><!--内容-->
+    <div class="content">
+      <div class="content-block new-content">
+        <h2 class="title"><strong>最新视频</strong></h2>
+        <ul data-am-widget="gallery" class="am-gallery am-avg-sm-1  am-avg-md-1 am-avg-lg-2 am-gallery-default am-no-layout">
+          <li>
+            <div class="am-gallery-item am_list_block">
+              <div>
+                <a href="/video/detail/26193" class="video-a">
+                  <img class="am-radius" th:src="@{/images/video/1.jpg}"  data-original="/attached/video/s_d093aeed03d24646bdf6168045feb1e0.jpg" title="美女的痛苦你们根本就不懂啊" style="display: inline;" /><!--<img-->
+                  <span class="play-button"></span>
+                </a>
+              </div>
+              <div class="am_listimg_info">
+                <a href="/video/detail/26193">
+                  <i class="am-icon-play-circle"></i>
+                  <span>美女的痛苦你们根本就不懂啊</span>
+                </a><br/>
+                <span class="am_imglist_user_ico">
+                    <img th:src="@{/images/icon/icon.png}"  style="width: 20px;height: 20px" alt=""/>
+                    <span class="am_imglist_user_font">Mervin</span>
+                </span>
+                <span class="am-icon-eye"> 1236</span>
+                <span class="am_imglist_time">2016-06-03</span>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <div class="am-gallery-item am_list_block">
+              <div>
+                <a href="/video/detail/26187" class="video-a">
+                  <img class="am-radius" th:src="@{/images/video/3.jpg}" data-original="/attached/video/s_f44d7d379858474db917397792dec83a.jpg" title="遇到这样的服务员还是去别家吧" style="display: inline;"/><!--<img-->
+                  <span class="play-button"></span>
+                </a>
+              </div>
+              <div class="am_listimg_info">
+                <a href="/video/detail/26187">
+                   <i class="am-icon-play-circle"></i>
+                  <span>遇到这样的服务员还是去别家吧</span>
+                </a>
+                <br/>
+                <span class="am_imglist_user_ico">
+					<img th:src="@{/images/icon/icon.png}"  style="width: 20px;height: 20px" alt=""/>
+				    <span class="am_imglist_user_font">Mervin</span>
+			    </span>
+                <span class="am-icon-eye"> 734</span>
+                <span class="am_imglist_time">2016-06-03</span>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="am-gallery-item am_list_block">
+              <div>
+                <a href="/video/detail/26186" class="video-a">
+                  <img class="am-radius" th:src="@{/images/video/2.jpg}" data-original="/attached/video/s_d4b0f69dd6ff4f50befab74819a1557e.jpg" title="程序员单身都是因为乔布斯" style="display: inline;"/><!--<img-->
+                  <span class="play-button"></span>
+                </a>
+              </div>
+              <div class="am_listimg_info">
+                <a href="/video/detail/26186">
+                  <i class="am-icon-play-circle"></i>
+                  <span>程序员单身都是因为乔布斯</span>
+                </a>
+                <br/>
+                <span class="am_imglist_user_ico">
+                    <img th:src="@{/images/icon/icon.png}" style="width: 20px;height: 20px" alt=""/>
+                    <span class="am_imglist_user_font">Mervin</span>
+                </span>
+                <span class="am-icon-eye"> 538</span>
+                <span class="am_imglist_time">2016-06-03</span>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="am-gallery-item am_list_block">
+              <div>
+                <a href="/video/detail/26050" class="video-a">
+                  <img class="am-radius" th:src="@{/images/video/4.jpg}" data-original="/attached/video/s_2b46c8fd598948fb99aaede70c1e8a81.jpg" title="国产电影10大清纯校服女神" style="display: inline;"/><!--<img-->
+                  <span class="play-button"></span>
+                </a>
+              </div>
+              <div class="am_listimg_info">
+                <a href="/video/detail/26050">
+                  <i class="am-icon-play-circle"></i>
+                  <span>国产电影10大清纯校服女神</span>
+                </a>
+                <br/>
+                <span class="am_imglist_user_ico">
+                    <img th:src="@{/images/icon/icon.png}" style="width: 20px;height: 20px" alt=""/>
+                    <span class="am_imglist_user_font">Mervin</span>
+                </span>
+                <span class="am-icon-eye"> 482</span>
+                <span class="am_imglist_time">2016-06-03</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="quotes" style="margin-top:15px"><span class="disabled">首页</span><span class="disabled">上一页</span><span class="current">1</span><a href="">2</a><a href="">下一页</a><a href="">尾页</a></div>
+      </div>
+    </div>
+  </div>
+  <div th:include="/common/right::right"></div>
+  <!--/右侧>992px显示-->
+  <div th:include="/common/footer::copyright"></div>
+</section>
+  <div th:include="/common/footer_js::footer_js"></div>
+</body>
+</html>

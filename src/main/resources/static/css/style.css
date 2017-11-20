@@ -1316,3 +1316,40 @@ h3 a:hover{
 .list-date{
 	margin-left: 5px;
 }
+
+.video-div{
+	margin:15px !important;
+	text-align: center;
+	max-width: 100%;
+	overflow: hidden;
+}
+.video-div embed,iframe{
+	max-width:100%;
+}
+.play-button{
+	background: url(../images/video/play-button-large.png);
+	width: 80px;
+	height: 80px;
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	margin-left: -40px;
+	margin-top: -40px;
+	transition: opacity 0.2s linear;
+	opacity: 0;
+}
+.video-a:HOVER .play-button{
+	opacity: 100;
+}
+.am_list_block { padding: 10px; background:  #f4f4f4; position: relative; }
+.am_listimg_info { color: #d1d1d1; padding-top: 5px; }
+.am-icon-heart:before { font-size: 14px; margin-right: 8px;}
+.am-icon-comments:before { font-size: 14px; margin-right: 8px;}
+.am_listimg_right {  float: right; margin-right: 0;}
+.am_listimg_info span { margin-right: 15px; font-size: 12px; }
+.am_listimg_info a {text-decoration: none;color:#666;}
+.am_listimg_info a:HOVER {text-decoration: none;color: #ff5656;}
+.am_imglist_user_ico { display:inline-block;  height: 20px; padding-right: 0px;}
+.am_imglist_user_ico img { width: 20px;height: 20px; border-radius:50%;}
+.am_imglist_user_font { font-size: 12px;}
+.am_listimg_info .am_imglist_time { position: absolute; bottom: 11px; right:10px; margin-right:0;}

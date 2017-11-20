@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dymao.dao.mappper.blogCategoryMapper">
-  <resultMap id="BaseResultMap" type="com.dymao.model.blogCategory">
+<mapper namespace="com.dymao.dao.mapper.BlogCategoryMapper">
+  <resultMap id="BaseResultMap" type="com.dymao.model.BlogCategory">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="category" jdbcType="VARCHAR" property="category" />
   </resultMap>
@@ -18,11 +18,11 @@
     delete from blogcategory
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.dymao.model.blogCategory">
+  <insert id="insert" parameterType="com.dymao.model.BlogCategory">
     insert into blogcategory (id, category)
     values (#{id,jdbcType=INTEGER}, #{category,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.dymao.model.blogCategory">
+  <insert id="insertSelective" parameterType="com.dymao.model.BlogCategory">
     insert into blogcategory
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -41,7 +41,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dymao.model.blogCategory">
+  <update id="updateByPrimaryKeySelective" parameterType="com.dymao.model.BlogCategory">
     update blogcategory
     <set>
       <if test="category != null">
@@ -50,7 +50,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dymao.model.blogCategory">
+  <update id="updateByPrimaryKey" parameterType="com.dymao.model.BlogCategory">
     update blogcategory
     set category = #{category,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

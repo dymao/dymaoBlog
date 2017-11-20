@@ -5,15 +5,15 @@ import com.dymao.model.Blog;
 public interface BlogMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Blog record);
+    int insert(Blog blog);
 
-    int insertSelective(Blog record);
+    int insertSelective(Blog blog);
 
     Blog selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Blog record);
+    int updateByPrimaryKeySelective(Blog blog);
 
-    int updateByPrimaryKeyWithBLOBs(Blog record);
+    int updateByPrimaryKeyWithBLOBs(Blog blog);
 
-    int updateByPrimaryKey(Blog record);
+    int updateByPrimaryKey(Blog blog);
 }

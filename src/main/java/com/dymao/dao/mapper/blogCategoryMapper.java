@@ -1,17 +1,17 @@
 package com.dymao.dao.mapper;
 
-import com.dymao.model.blogCategory;
+import com.dymao.model.BlogCategory;
 
-public interface blogCategoryMapper {
+public interface BlogCategoryMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(blogCategory record);
+    int insert(BlogCategory blogCategory);
 
-    int insertSelective(blogCategory record);
+    int insertSelective(BlogCategory blogCategory);
 
-    blogCategory selectByPrimaryKey(Integer id);
+    BlogCategory selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(blogCategory record);
+    int updateByPrimaryKeySelective(BlogCategory blogCategory);
 
-    int updateByPrimaryKey(blogCategory record);
+    int updateByPrimaryKey(BlogCategory blogCategory);
 }

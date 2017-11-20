@@ -2,7 +2,7 @@ package com.dymao.model;
 
 import java.util.Date;
 
-public class friendlyLink {
+public class FriendlyLink {
     private Integer id;
 
     private String title;

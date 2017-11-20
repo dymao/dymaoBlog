@@ -1,17 +1,17 @@
 package com.dymao.dao.mapper;
 
-import com.dymao.model.friendlyLink;
+import com.dymao.model.FriendlyLink;
 
-public interface friendlyLinkMapper {
+public interface FriendlyLinkMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(friendlyLink record);
+    int insert(FriendlyLink friendlyLink);
 
-    int insertSelective(friendlyLink record);
+    int insertSelective(FriendlyLink friendlyLink);
 
-    friendlyLink selectByPrimaryKey(Integer id);
+    FriendlyLink selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(friendlyLink record);
+    int updateByPrimaryKeySelective(FriendlyLink friendlyLink);
 
-    int updateByPrimaryKey(friendlyLink record);
+    int updateByPrimaryKey(FriendlyLink friendlyLink);
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dymao.dao.mappper.friendlyLinkMapper">
-  <resultMap id="BaseResultMap" type="com.dymao.model.friendlyLink">
+<mapper namespace="com.dymao.dao.mapper.FriendlyLinkMapper">
+  <resultMap id="BaseResultMap" type="com.dymao.model.FriendlyLink">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="url" jdbcType="VARCHAR" property="url" />
@@ -21,13 +21,13 @@
     delete from friendlylink
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.dymao.model.friendlyLink">
+  <insert id="insert" parameterType="com.dymao.model.FriendlyLink">
     insert into friendlylink (id, title, url, 
       sn, create_time)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
       #{sn,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.dymao.model.friendlyLink">
+  <insert id="insertSelective" parameterType="com.dymao.model.FriendlyLink">
     insert into friendlylink
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -64,7 +64,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dymao.model.friendlyLink">
+  <update id="updateByPrimaryKeySelective" parameterType="com.dymao.model.FriendlyLink">
     update friendlylink
     <set>
       <if test="title != null">
@@ -82,7 +82,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dymao.model.friendlyLink">
+  <update id="updateByPrimaryKey" parameterType="com.dymao.model.FriendlyLink">
     update friendlylink
     set title = #{title,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},

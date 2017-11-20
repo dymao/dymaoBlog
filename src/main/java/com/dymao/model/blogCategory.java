@@ -1,6 +1,6 @@
 package com.dymao.model;
 
-public class blogCategory {
+public class BlogCategory {
     private Integer id;
 
     private String category;
