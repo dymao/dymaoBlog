@@ -1,28 +1,77 @@
 CREATE  DATABASE  dymaoBlog;
 USE `dymaoBlog`;
 
-CREATE TABLE `friendlylink` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '标题',
-  `url` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT  '链接地址',
-  `sn` int(11) NOT NULL DEFAULT '1' COMMENT '序号',
-  `create_time` datetime NOT NULL COMMENT ' 创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*****************************************
+由于mysql和oracle不太一样，不支持直接的sequence，所以需要创建一张table来模拟sequence的功能
+ *****************************************/
+/* 1. 创建--Sequence 管理表*/
+DROP TABLE IF EXISTS sequence;
+CREATE TABLE sequence (
+  seq_name VARCHAR(50) NOT NULL  COMMENT '序列名称',
+  current_value INT NOT NULL COMMENT '当前值',
+  increment INT NOT NULL DEFAULT 1 COMMENT '步长',
+  PRIMARY KEY (seq_name)
+) ENGINE=InnoDB;
 
-ALTER TABLE friendlylink COMMENT '友情链接表';
+/* 2. 创建--取当前值的函数*/
+DROP FUNCTION IF EXISTS currval;
+DELIMITER $
+CREATE FUNCTION currval(seqName VARCHAR(50))
+  RETURNS INTEGER
+LANGUAGE SQL
+DETERMINISTIC
+CONTAINS SQL
+  SQL SECURITY DEFINER
+  COMMENT ''
+  BEGIN
+    DECLARE value INTEGER;
+    SET value = 0;
+    SELECT current_value INTO value
+    FROM sequence
+    WHERE seq_name = seqName;
+    RETURN value;
+  END
+$
+DELIMITER ;
 
+/* 3. 创建--取下一个值的函数*/
+DROP FUNCTION IF EXISTS nextval;
+DELIMITER $
+CREATE FUNCTION nextval (seqName VARCHAR(50))
+  RETURNS INTEGER
+LANGUAGE SQL
+DETERMINISTIC
+CONTAINS SQL
+  SQL SECURITY DEFINER
+  COMMENT ''
+  BEGIN
+    UPDATE sequence
+    SET current_value = current_value + increment
+    WHERE seq_name = seqName;
+    RETURN currval(seqName);
+  END
+$
+DELIMITER ;
 
-CREATE TABLE `banner` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '标题',
-  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '图片名称',
-  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '链接地址',
-  `sn` int(11) DEFAULT NULL COMMENT '序号',
-  `deleted` int(11) NOT NULL DEFAULT '0',
-  `create_time` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT '滚动图片表';
+/* 4. 创建--更新当前值的函数*/
+DROP FUNCTION IF EXISTS setval;
+DELIMITER $
+CREATE FUNCTION setval (seq_name VARCHAR(50), value INTEGER)
+  RETURNS INTEGER
+LANGUAGE SQL
+DETERMINISTIC
+CONTAINS SQL
+  SQL SECURITY DEFINER
+  COMMENT ''
+  BEGIN
+    UPDATE sequence
+    SET current_value = value
+    WHERE name = seq_name;
+    RETURN currval(seq_name);
+  END
+$
+DELIMITER ;
+
 
 
 CREATE TABLE `blog` (

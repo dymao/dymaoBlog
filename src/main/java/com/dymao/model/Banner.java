@@ -3,7 +3,7 @@ package com.dymao.model;
 import java.util.Date;
 
 public class Banner {
-    private Integer id;
+    private String id;
 
     private String title;
 
@@ -11,17 +11,17 @@ public class Banner {
 
     private String url;
 
-    private Integer sn;
+    private String showFlag;
 
-    private Integer deleted;
+    private String deleted;
 
     private Date createTime;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -49,19 +49,19 @@ public class Banner {
         this.url = url == null ? null : url.trim();
     }
 
-    public Integer getSn() {
-        return sn;
+    public String getShowFlag() {
+        return showFlag;
     }
 
-    public void setSn(Integer sn) {
-        this.sn = sn;
+    public void setShowFlag(String showFlag) {
+        this.showFlag = showFlag;
     }
 
-    public Integer getDeleted() {
+    public String getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Integer deleted) {
+    public void setDeleted(String deleted) {
         this.deleted = deleted;
     }
 

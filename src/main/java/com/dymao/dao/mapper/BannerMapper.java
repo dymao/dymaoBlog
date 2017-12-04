@@ -7,17 +7,23 @@ import java.util.List;
 
 @Mapper
 public interface BannerMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     int insert(Banner banner);
 
     int insertSelective(Banner banner);
 
-    Banner selectByPrimaryKey(Integer id);
+    Banner selectByPrimaryKey(String id);
 
     int updateByPrimaryKeySelective(Banner banner);
 
     int updateByPrimaryKey(Banner banner);
 
     List<Banner> findBannerList();
+
+    List<Banner> findAllBanner();
+
+    Integer findAllBannerCount();
+
+
 }

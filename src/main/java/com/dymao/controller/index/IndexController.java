@@ -1,6 +1,6 @@
 package com.dymao.controller.index;
 
-import com.dymao.DateUtils;
+import com.dymao.common.Utils.DateUtils;
 import com.dymao.model.Banner;
 import com.dymao.service.BannerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ import java.util.List;
  * @date 2017/11/19 0:06
  */
 @Controller
+@RequestMapping(value = "/")
 public class IndexController {
 
     @Autowired
@@ -32,8 +33,8 @@ public class IndexController {
         //获取系统时间
         List<Banner> bannerList = bannerService.findBannerList();
         model.addAttribute("bannerList",bannerList);
-        model.addAttribute("currentDate", DateUtils.getStringData(new Date(),DateUtils.DATE_YYYY_MM_DD_WEEK));
-
+        request.getSession().setAttribute("currentDate", DateUtils.getStringDate(new Date(),DateUtils.DATE_YYYY_MM_DD_WEEK));
+        request.getSession().setAttribute("DailySentence","你是我人生中唯一的主角，我却只能是你故事中的一晃而过的路人甲");
         return "index";
     }
 

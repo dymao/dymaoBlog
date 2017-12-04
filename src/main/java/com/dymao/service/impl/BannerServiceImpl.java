@@ -26,7 +26,27 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
+    public Integer deleteByPrimaryKey(String id) {
+        return bannerMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Integer updateByPrimaryKeySelective(Banner banner) {
+        return bannerMapper.updateByPrimaryKeySelective(banner);
+    }
+
+    @Override
     public List<Banner> findBannerList() {
         return bannerMapper.findBannerList();
+    }
+
+    @Override
+    public List<Banner> findAllBanner() {
+        return bannerMapper.findAllBanner();
+    }
+
+    @Override
+    public Integer findAllBannerCount() {
+        return bannerMapper.findAllBannerCount();
     }
 }

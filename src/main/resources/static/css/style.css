@@ -1118,6 +1118,7 @@ textarea::-webkit-scrollbar-thumb {
 	position: relative;
 	margin-left: 215px;
 	margin-right: 20px;
+	text-align: center;
 	padding: 20px 0 30px 20px;
 	border-top: 2px solid #eee;
 	font-size: 12px;
@@ -1341,7 +1342,9 @@ h3 a:hover{
 .video-a:HOVER .play-button{
 	opacity: 100;
 }
-.am_list_block { padding: 10px; background:  #f4f4f4; position: relative; }
+.am_list_block { padding: 10px; background:  #f4f4f4; position: relative;-webkit-box-shadow: #666 0px 0px 10px;
+	-moz-box-shadow: #666 0px 0px 10px;
+	box-shadow: #666 0px 0px 10px; }
 .am_listimg_info { color: #d1d1d1; padding-top: 5px; }
 .am-icon-heart:before { font-size: 14px; margin-right: 8px;}
 .am-icon-comments:before { font-size: 14px; margin-right: 8px;}

@@ -1,4 +1,4 @@
-package com.dymao;
+package com.dymao.common.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,9 +11,11 @@ import java.util.Date;
 public class DateUtils {
 
     public static final String DATE_YYYY_MM_DD_WEEK = "yyyy年MM月dd日 E";
+    public static final String DATE_YYYYMMDD = "yyyyMMdd";
 
-    public static String getStringData(Date date,String pattern){
+    public static String getStringDate(Date date,String pattern){
         SimpleDateFormat dateFormat=new SimpleDateFormat(pattern);
         return  dateFormat.format(date);
     }
+
 }

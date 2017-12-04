@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div th:fragment="common(title)" >
+            <meta charset="utf-8"/>
+            <title th:text="${title}"></title>
+            <meta name="renderer" content="webkit"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+            <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+            <meta name="apple-mobile-web-app-capable" content="yes"/>
+            <meta name="format-detection" content="telephone=no"/>
+            <link rel="stylesheet" th:href="@{/admin/css/x-admin.css}" media="all"/>
+            <link rel="stylesheet" th:href="@{/admin/lib/bootstrap/css/bootstrap.css}" media="all"/>
+            <link rel="stylesheet" th:href="@{/admin/lib/bootstrap/js/bootstrap.min.js}" media="all"/>
+    </div>
+ </body>
+</html>

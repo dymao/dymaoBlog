@@ -2,33 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dymao.dao.mapper.BannerMapper">
   <resultMap id="BaseResultMap" type="com.dymao.model.Banner">
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="image" jdbcType="VARCHAR" property="image" />
     <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="sn" jdbcType="INTEGER" property="sn" />
-    <result column="deleted" jdbcType="INTEGER" property="deleted" />
+    <result column="showFlag" jdbcType="VARCHAR" property="showFlag" />
+    <result column="deleted" jdbcType="VARCHAR" property="deleted" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, title, image, url, sn, create_time
+    id, title, image, url, showFlag, create_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from banner
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from banner
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+  <update id="deleteByPrimaryKey" parameterType="java.lang.String">
+    update banner set deleted = '1'
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
   <insert id="insert" parameterType="com.dymao.model.Banner">
     insert into banner (id, title, image, 
-      url, sn, deleted, create_time
+      url, showFlag, deleted, create_time
       )
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
-      #{url,jdbcType=VARCHAR}, #{sn,jdbcType=INTEGER}, #{deleted,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR},
+      #{url,jdbcType=VARCHAR}, #{showFlag,jdbcType=INTEGER}, #{deleted,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.dymao.model.Banner">
@@ -46,8 +46,8 @@
       <if test="url != null">
         url,
       </if>
-      <if test="sn != null">
-        sn,
+      <if test="showFlag != null">
+        showFlag,
       </if>
       <if test="deleted != null">
         deleted,
@@ -58,7 +58,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=VARCHAR},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
@@ -69,11 +69,11 @@
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
       </if>
-      <if test="sn != null">
-        #{sn,jdbcType=INTEGER},
+      <if test="showFlag != null">
+        #{showFlag,jdbcType=INTEGER},
       </if>
       <if test="deleted != null">
-        #{deleted,jdbcType=INTEGER},
+        #{deleted,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -92,32 +92,44 @@
       <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
       </if>
-      <if test="sn != null">
-        sn = #{sn,jdbcType=INTEGER},
+      <if test="showFlag != null">
+        showFlag = #{showFlag,jdbcType=VARCHAR},
       </if>
       <if test="deleted != null">
-        deleted = #{deleted,jdbcType=INTEGER},
+        deleted = #{deleted,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dymao.model.Banner">
     update banner
     set title = #{title,jdbcType=VARCHAR},
       image = #{image,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
-      sn = #{sn,jdbcType=INTEGER},
-      deleted = #{deleted,jdbcType=INTEGER},
+      showFlag = #{showFlag,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
 
   <select id="findBannerList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from banner where deleted = 0 order by sn
+    from banner where deleted = '0'
+  </select>
+
+  <select id="findAllBanner" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from banner  where deleted = '0'
+  </select>
+
+  <select id="findAllBannerCount" resultType="java.lang.Integer">
+    select
+      count(1)
+    from banner where deleted = '0'
   </select>
 </mapper>

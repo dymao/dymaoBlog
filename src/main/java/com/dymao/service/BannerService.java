@@ -11,7 +11,15 @@ import java.util.List;
  */
 public interface BannerService {
 
-    public Integer addBanner(Banner banner);
+    Integer addBanner(Banner banner);
 
-    public List<Banner> findBannerList();
+    Integer deleteByPrimaryKey(String id);
+
+    Integer updateByPrimaryKeySelective(Banner banner);
+
+    List<Banner> findBannerList();
+
+    List<Banner> findAllBanner();
+
+    Integer findAllBannerCount();
 }
