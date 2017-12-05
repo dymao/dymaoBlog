@@ -26,4 +26,5 @@ public interface BannerMapper {
     Integer findAllBannerCount();
 
 
+    Integer deleteByBannerIds(List<String> bannerIds);
 }

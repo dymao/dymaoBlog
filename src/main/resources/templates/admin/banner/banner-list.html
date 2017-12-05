@@ -13,7 +13,7 @@
             <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
         </div>
         <div class="x-body">
-            <xblock><button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button><button class="layui-btn" onclick="banner_add('新增轮播图','/admin/banner/toAddPage','550','500')"><i class="layui-icon">&#xe608;</i>添加</button><span class="x-right" style="line-height:40px">共有数据：<span id="bannerNum" name="bannerNum" th:text="${bannerNum}"></span> 条</span></xblock>
+            <xblock><button class="layui-btn layui-btn-danger" onclick="delBatch()"><i class="layui-icon">&#xe640;</i>批量删除</button><button class="layui-btn" onclick="banner_add('新增轮播图','/admin/banner/toAddPage','550','500')"><i class="layui-icon">&#xe608;</i>添加</button><span class="x-right" style="line-height:40px">共有数据：<span id="bannerNum" name="bannerNum" th:text="${bannerNum}"></span> 条</span></xblock>
             <table class="layui-table">
                 <thead>
                     <tr>
@@ -135,14 +135,32 @@
             };
 
             //批量删除提交
-             function delAll () {
+             function delBatch () {
                  var bannerIds = getCheckedboxValue();
                  if(bannerIds == ''){
                      layer.msg('请先选中要删除的记录', {icon: 5,time:1000});
                      return ;
                  }
                 layer.confirm('确认要删除吗？',function(index){
-                    layer.msg('删除成功', {icon: 1});
+                    $.ajax({
+                        url:"/admin/banner/delBatch",
+                        data: {"bannerIds":bannerIds},
+                        type:"Post",
+                        dataType:"json",
+                        success:function(res){
+                            if(res.count > 0){
+                                $("input[name=bannerId]:checked").each(function () {
+                                    $(this).parents("tr").remove();
+                                });
+                                layer.msg('已删除!',{icon:1,time:1000});
+                            }else{
+                                layer.msg('删除失败!',{icon:5,time:1000});
+                            }
+                        },
+                        error:function(data){
+                            layer.msg('错误','删除失败');
+                        }
+                    });
                 });
              }
              /*添加*/
@@ -169,7 +187,7 @@
                             }
                         },
                         error:function(data){
-                            $.messager.alert('错误','操作失败');
+                            layer.msg('错误','操作失败');
                         }
                     });
                 });
@@ -195,7 +213,7 @@
                             }
                         },
                         error:function(data){
-                            $.messager.alert('错误','操作失败');
+                            layer.msg('错误','操作失败');
                         }
                     });
                 });
@@ -224,7 +242,7 @@
                             }
                         },
                         error:function(data){
-                            $.messager.alert('错误','删除失败');
+                            layer.msg('错误','删除失败');
                         }
                     });
 

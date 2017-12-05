@@ -22,4 +22,6 @@ public interface BannerService {
     List<Banner> findAllBanner();
 
     Integer findAllBannerCount();
+
+    Integer deleteByBannerIds(List<String> bannerIds);
 }

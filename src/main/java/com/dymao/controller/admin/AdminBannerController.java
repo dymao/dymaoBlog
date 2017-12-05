@@ -15,10 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Mervin
@@ -93,6 +90,16 @@ public class AdminBannerController {
     public Map delBanner(@PathVariable String id){
         Map result  = new HashMap();
         Integer count = bannerService.deleteByPrimaryKey(id);
+        result.put("count",count);
+        return result;
+    }
+
+    @RequestMapping(value = "/delBatch",method = RequestMethod.POST)
+    @ResponseBody
+    public Map delBatchBanner(String bannerIds){
+        Map result  = new HashMap();
+        List<String> idList = Arrays.asList(bannerIds.split(","));
+        Integer count = bannerService.deleteByBannerIds(idList);
         result.put("count",count);
         return result;
     }
