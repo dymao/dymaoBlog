@@ -13,6 +13,8 @@ public interface BannerService {
 
     Integer addBanner(Banner banner);
 
+    Banner selectByPrimaryKey(String id);
+
     Integer deleteByPrimaryKey(String id);
 
     Integer updateByPrimaryKeySelective(Banner banner);

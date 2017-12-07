@@ -14,4 +14,10 @@ public class Constant {
     // 记录显示状态
     public static final String SHOW_FLAG_0 = "0"; // 显示
     public static final String SHOW_FLAG_1 = "1"; // 不显示
+
+    // 博客分类级别
+    public static final Integer BLOG_CATEGORY_LEVEL_1 = 1; // 1类
+    public static final Integer BLOG_CATEGORY_LEVEL_2 = 2; // 2类
+    public static final Integer BLOG_CATEGORY_LEVEL_3 = 3; // 3类
+
 }

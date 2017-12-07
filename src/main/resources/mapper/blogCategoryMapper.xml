@@ -2,27 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dymao.dao.mapper.BlogCategoryMapper">
   <resultMap id="BaseResultMap" type="com.dymao.model.BlogCategory">
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="level" jdbcType="SMALLINT" property="level" />
+    <result column="parentId" jdbcType="VARCHAR" property="parentId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, category
+    id, category, level, parentId
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from blogcategory
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from blogcategory
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.dymao.model.BlogCategory">
-    insert into blogcategory (id, category)
-    values (#{id,jdbcType=INTEGER}, #{category,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.dymao.model.BlogCategory">
     insert into blogcategory
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -31,28 +29,50 @@
       <if test="category != null">
         category,
       </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="parentId != null">
+        parentId,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=VARCHAR},
       </if>
       <if test="category != null">
         #{category,jdbcType=VARCHAR},
       </if>
+      <if test="level != null">
+        #{level,jdbcType=SMALLINT},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dymao.model.BlogCategory">
+  <update id="updateByPrimaryKey" parameterType="com.dymao.model.BlogCategory">
     update blogcategory
     <set>
       <if test="category != null">
         category = #{category,jdbcType=VARCHAR},
       </if>
+      <if test="level != null">
+        level = #{level,jdbcType=SMALLINT},
+      </if>
+      <if test="parentId != null">
+        parentId = #{parentId,jdbcType=VARCHAR},
+      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dymao.model.BlogCategory">
-    update blogcategory
-    set category = #{category,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
+  <select id="findCategoryList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+       <include refid="Base_Column_List" />
+     from blogcategory
+    <if test="level != null">
+       where level = #{level,jdbcType=SMALLINT}
+    </if>
+  </select>
 </mapper>

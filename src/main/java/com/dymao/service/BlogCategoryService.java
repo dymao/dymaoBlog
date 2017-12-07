@@ -1,13 +1,16 @@
-package com.dymao.dao.mapper;
+package com.dymao.service;
 
 import com.dymao.model.BlogCategory;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-@Mapper
-public interface BlogCategoryMapper {
+/**
+ * @author Mervin
+ * @Description:
+ * @date 2017/12/6 22:57
+ */
+public interface BlogCategoryService {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(BlogCategory blogCategory);
@@ -16,5 +19,5 @@ public interface BlogCategoryMapper {
 
     int updateByPrimaryKey(BlogCategory blogCategory);
 
-    List<BlogCategory> findCategoryList(@Param("level") Integer level);
+    List<BlogCategory> findCategoryList(Integer level);
 }

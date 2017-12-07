@@ -14,7 +14,7 @@
         </div>
         <div class="x-body">
             <xblock><button class="layui-btn layui-btn-danger" onclick="delBatch()"><i class="layui-icon">&#xe640;</i>批量删除</button><button class="layui-btn" onclick="banner_add('新增轮播图','/admin/banner/toAddPage','550','500')"><i class="layui-icon">&#xe608;</i>添加</button><span class="x-right" style="line-height:40px">共有数据：<span id="bannerNum" name="bannerNum" th:text="${bannerNum}"></span> 条</span></xblock>
-            <table class="layui-table">
+            <table class="layui-table lay-even " llay-skin="line" lay-size="lg">
                 <thead>
                     <tr>
                         <th>
@@ -75,8 +75,7 @@
                             <a th:if="${banner.showFlag=='0'}" style="text-decoration:none" th:onclick="'banner_stop(this,'+${banner.id}+')'" href="javascript:;" title="不显示">
                                 <i class="layui-icon">&#xe601;</i>
                             </a>
-                            <a title="编辑" href="javascript:;" onclick="banner_edit('编辑','banner-edit.html','4','','510')"
-                            class="ml-5" style="text-decoration:none">
+                            <a title="编辑" href="javascript:;" th:onclick="'banner_edit(\'编辑\',\'/admin/banner/toEditPage/'+${banner.id}+'\',\'4\',\'\',\'510\')'" class="ml-5" style="text-decoration:none">
                                 <i class="layui-icon">&#xe642;</i>
                             </a>
                             <a title="删除" href="javascript:;" th:onclick="'banner_del(this,'+${banner.id}+')'" style="text-decoration:none">

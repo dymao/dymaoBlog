@@ -5,4 +5,8 @@
       SELECT NEXTVAL('bannerId');
   </select>
 
+  <select id="getCategoryId" resultType="java.lang.String">
+      SELECT NEXTVAL('categoryId');
+  </select>
+
 </mapper>

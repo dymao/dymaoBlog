@@ -26,6 +26,11 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
+    public Banner selectByPrimaryKey(String id) {
+        return bannerMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public Integer deleteByPrimaryKey(String id) {
         return bannerMapper.deleteByPrimaryKey(id);
     }

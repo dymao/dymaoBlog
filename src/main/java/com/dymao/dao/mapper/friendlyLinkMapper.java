@@ -1,7 +1,9 @@
 package com.dymao.dao.mapper;
 
 import com.dymao.model.FriendlyLink;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface FriendlyLinkMapper {
     int deleteByPrimaryKey(Integer id);
 

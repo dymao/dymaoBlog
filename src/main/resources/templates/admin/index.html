@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html  xmlns:th="http://www.thymeleaf.org">
 <head>
+  <link rel="shortcut icon"  type="image/x-icon" th:href="@{/images/icon/favicon.ico}" />
   <div th:include="/admin/common::common('博客后台管理系统')"></div>
 </head>
 <body>
@@ -8,7 +9,7 @@
   <div class="layui-header header header-demo">
     <div class="layui-main">
     <div class="admin-logo-box">
-				<a class="logo" th:href="@{/admin}" title="logo">个人博客后台管理系统</a>
+				<a class="logo" th:href="@{/admin}" title="logo">XXXXX后台管理系统</a>
 				<div class="larry-side-menu">
 					<i class="fa fa-th-large" aria-hidden="true"></i>
 				</div>
@@ -40,24 +41,23 @@
             </dd>
           </dl>
         </li>
-        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe634;</i><cite>轮播图管理</cite> </a>
+        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe634;</i><cite>轮播管理</cite> </a>
           <dl class="layui-nav-child">
             <dd class="">
             <dd class=""> <a href="javascript:;" _href="/admin/banner/bannerList"> <cite>轮播图列表</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" _href="./banner-list.html"> <cite>新增轮播图</cite> </a> </dd>
             </dd>
           </dl>
         </li>
-        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe6ed;</i><cite>视频分享管理</cite> </a>
+        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe6ed;</i><cite>视频分享</cite> </a>
           <dl class="layui-nav-child">
             <dd class="">
             <dd class=""> <a href="javascript:;" _href="./welcome.html"> <cite>视频分享列表（待开发）</cite> </a> </dd>
             </dd>
           </dl>
         </li>
-        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe630;</i><cite>博客分类管理</cite> </a>
+        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe630;</i><cite>分类管理</cite> </a>
           <dl class="layui-nav-child">
-            <dd class=""> <a href="javascript:;" _href="./category.html"> <cite>分类列表</cite> </a> </dd>
+            <dd class=""> <a href="javascript:;" _href="/admin/category/toCategoryListPage"> <cite>分类列表</cite> </a> </dd>
           </dl>
         </li>
         <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe606;</i><cite>评论管理</cite> </a>
@@ -66,7 +66,12 @@
             <dd class=""> <a href="javascript:;" _href="./feedback-list.html"> <cite>意见反馈</cite> </a> </dd>
           </dl>
         </li>
-        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe612;</i><cite>会员管理</cite> </a>
+        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe64c;</i><cite>友情链接</cite> </a>
+          <dl class="layui-nav-child">
+            <dd class=""> <a href="javascript:;" _href="./comment-list.html"> <cite>链接管理</cite> </a> </dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe613;</i><cite>会员管理</cite> </a>
           <dl class="layui-nav-child">
             <dd class=""> <a href="javascript:;" _href="member-list.html"> <cite>会员列表</cite> </a> </dd>
             <dd class=""> <a href="javascript:;" _href="./member-del.html"> <cite>删除会员</cite> </a> </dd>
@@ -76,7 +81,7 @@
             <dd class=""> <a href="javascript:;" _href="./member-view.html"> <cite>分享记录</cite> </a> </dd>
           </dl>
         </li>
-        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe613;</i><cite>管理员管理</cite> </a>
+        <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe60f;</i><cite>权限管理</cite> </a>
           <dl class="layui-nav-child">
             <dd class=""> <a href="javascript:;" _href="./admin-list.html"> <cite>管理员列表</cite> </a> </dd>
             <dd class=""> <a href="javascript:;" _href="./admin-role.html"> <cite>角色管理</cite> </a> </dd>
@@ -89,7 +94,7 @@
             <dd class=""> <a href="javascript:;" _href="./echart.html"> <cite>统计报表</cite> </a> </dd>
           </dl>
           <dl class="layui-nav-child">
-            <dd class=""> <a href="javascript:;" _href="./echart.html"> <cite>日志查询</cite> </a> </dd>
+            <dd class=""> <a href="javascript:;" _href="./echart.html"> <cite>系统日志</cite> </a> </dd>
           </dl>
         </li>
         <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe614;</i><cite>系统设置</cite> </a>
@@ -97,8 +102,6 @@
             <dd class=""> <a href="javascript:;" _href="./sys-set.html"> <cite>系统设置</cite> </a> </dd>
             <dd class=""> <a href="javascript:;" _href="./sys-data.html"> <cite>数字字典</cite> </a> </dd>
             <dd class=""> <a href="javascript:;" _href="./sys-shield.html"> <cite>屏蔽词</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" _href="./sys-log.html"> <cite>系统日志</cite> </a> </dd>
-            <dd class=""> <a href="javascript:;" _href="./sys-link.html"> <cite>友情链接</cite> </a> </dd>
             <dd class=""> <a href="javascript:;" _href="./sys-qq.html"> <cite>第三方登录</cite> </a> </dd>
           </dl>
         </li>

@@ -85,6 +85,25 @@ public class AdminBannerController {
         return banner;
     }
 
+    /**
+     * 跳转到轮播图修改页
+     * @return
+     */
+    @RequestMapping(value = "/toEditPage/{id}",method = RequestMethod.GET)
+    public String toAdminBannerEdit(@PathVariable String id,Model model) {
+        Banner banner = bannerService.selectByPrimaryKey(id);
+        model.addAttribute("banner",banner);
+        return "admin/banner/banner-edit";
+    }
+
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    @ResponseBody
+    public Banner updateBanner(Model model, Banner banner){
+        banner.setCreateTime(new Date());
+        bannerService.updateByPrimaryKeySelective(banner);
+        return banner;
+    }
+
     @RequestMapping(value = "/del/{id}",method = RequestMethod.POST)
     @ResponseBody
     public Map delBanner(@PathVariable String id){

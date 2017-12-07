@@ -81,24 +81,24 @@
               });
 
               //监听提交
-              form.on('submit(add)', function(data){
-                console.log(data.field);
+              form.on('submit(add)', function(data) {
+                  console.log(data.field);
                   $.ajax({
-                      url:"/admin/banner/add",
-                      data:data.field,
-                      type:"Post",
-                      dataType:"json",
-                      success:function(res){
-                          if(res){
-                              layer.alert("增加成功", {icon: 6},function () {
+                      url: "/admin/banner/add",
+                      data: data.field,
+                      type: "Post",
+                      dataType: "json",
+                      success: function (res) {
+                          if (res) {
+                              layer.alert("增加成功", {icon: 6}, function () {
                                   // 获得frame索引
                                   var index = parent.layer.getFrameIndex(window.name);
                                   //关闭当前frame
                                   parent.layer.close(index);
                                   location.replace(location.href);
                               });
-                          }else{
-                              layer.alert("增加失败", {icon: 6},function () {
+                          } else {
+                              layer.alert("增加失败", {icon: 6}, function () {
                                   // 获得frame索引
                                   var index = parent.layer.getFrameIndex(window.name);
                                   //关闭当前frame
@@ -106,8 +106,8 @@
                               });
                           }
                       },
-                      error:function(data){
-                          $.alert('错误',data.msg);
+                      error: function (data) {
+                          $.alert('错误', data.msg);
                       }
                   });
                   return false;
