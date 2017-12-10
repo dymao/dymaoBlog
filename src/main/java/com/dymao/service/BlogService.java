@@ -1,14 +1,17 @@
-package com.dymao.dao.mapper;
+package com.dymao.service;
 
 import com.dymao.model.Blog;
 import com.dymao.vo.BlogVo;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
 
-@Mapper
-public interface BlogMapper {
+/**
+ * @author Mervin
+ * @Description:
+ * @date 2017/12/9 21:20
+ */
+public interface BlogService {
 
     int deleteByPrimaryKey(String id);
 

@@ -3,6 +3,7 @@ package com.dymao.service.impl;
 import com.dymao.dao.mapper.BlogCategoryMapper;
 import com.dymao.model.BlogCategory;
 import com.dymao.service.BlogCategoryService;
+import com.dymao.vo.CategoryInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,11 @@ import java.util.List;
 @Service
 public class BlogCategoryServiceImpl implements BlogCategoryService {
 
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private BlogCategoryMapper blogCategoryMapper;
 
-   public int deleteByPrimaryKey(Integer id){
+   public int deleteByPrimaryKey(String id){
         return blogCategoryMapper.deleteByPrimaryKey(id);
     }
 
@@ -27,7 +29,7 @@ public class BlogCategoryServiceImpl implements BlogCategoryService {
         return blogCategoryMapper.insert(blogCategory);
     }
 
-    public BlogCategory selectByPrimaryKey(Integer id){
+    public BlogCategory selectByPrimaryKey(String id){
         return blogCategoryMapper.selectByPrimaryKey(id);
     }
 
@@ -37,5 +39,17 @@ public class BlogCategoryServiceImpl implements BlogCategoryService {
 
     public List<BlogCategory> findCategoryList(Integer level){
         return blogCategoryMapper.findCategoryList(level);
+    }
+
+    public List<CategoryInfo> queryCategoryInfoList(Integer level){
+        return blogCategoryMapper.queryCategoryInfoList(level);
+    }
+
+    public int queryCategoryInfoListCount(Integer level){
+        return blogCategoryMapper.queryCategoryInfoListCount(level);
+    }
+
+    public Integer deleteByCategoryIds(List<String> categoryIds){
+        return blogCategoryMapper.deleteByCategoryIds(categoryIds);
     }
 }

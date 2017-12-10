@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2017/11/19 0:06
  */
 @Controller
-@RequestMapping(value = "/")
 public class AdminIndexController {
 
 

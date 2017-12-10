@@ -1,6 +1,8 @@
 package com.dymao.service;
 
 import com.dymao.model.BlogCategory;
+import com.dymao.vo.CategoryInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,13 +13,19 @@ import java.util.List;
  */
 public interface BlogCategoryService {
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     int insert(BlogCategory blogCategory);
 
-    BlogCategory selectByPrimaryKey(Integer id);
+    BlogCategory selectByPrimaryKey(String id);
 
     int updateByPrimaryKey(BlogCategory blogCategory);
 
     List<BlogCategory> findCategoryList(Integer level);
+
+    List<CategoryInfo> queryCategoryInfoList(@Param("level") Integer level);
+
+    int  queryCategoryInfoListCount(Integer level);
+
+    Integer deleteByCategoryIds(List<String> categoryIds);
 }

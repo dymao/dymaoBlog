@@ -11,4 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface CommonMapper {
     String getBannerId();
     String getCategoryId();
+    String getFriendlinkId();
 }

@@ -30,7 +30,6 @@
                 layer = layui.layer;
                 //监听提交
                 form.on('submit(login)',function(data) {
-                    console.log(data);
                     location.href = "/admin/login?"+data.field;
                     return false;
                 });

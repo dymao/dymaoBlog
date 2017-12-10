@@ -12,6 +12,7 @@ public class DateUtils {
 
     public static final String DATE_YYYY_MM_DD_WEEK = "yyyy年MM月dd日 E";
     public static final String DATE_YYYYMMDD = "yyyyMMdd";
+    public static final String DATE_YYMMDD = "yyMMdd";
 
     public static String getStringDate(Date date,String pattern){
         SimpleDateFormat dateFormat=new SimpleDateFormat(pattern);

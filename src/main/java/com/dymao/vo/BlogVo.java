@@ -1,8 +1,8 @@
-package com.dymao.model;
+package com.dymao.vo;
 
 import java.util.Date;
 
-public class Blog {
+public class BlogVo {
     private String id;              // id主键
 
     private String userId;          // 用户id
@@ -19,7 +19,11 @@ public class Blog {
 
     private String categoryIdOne;   // 一级分类ID
 
+    private String categoryOneName; // 一级分类名称
+
     private String categoryIdTwo;   // 二级分类ID
+
+    private String categoryTwoName; // 二级分类名称
 
     private Integer viewNum;        // 浏览次数
 
@@ -221,5 +225,21 @@ public class Blog {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+    }
+
+    public String getCategoryOneName() {
+        return categoryOneName;
+    }
+
+    public void setCategoryOneName(String categoryOneName) {
+        this.categoryOneName = categoryOneName;
+    }
+
+    public String getCategoryTwoName() {
+        return categoryTwoName;
+    }
+
+    public void setCategoryTwoName(String categoryTwoName) {
+        this.categoryTwoName = categoryTwoName;
     }
 }

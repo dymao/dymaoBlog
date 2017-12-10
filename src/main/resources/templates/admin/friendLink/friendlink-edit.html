@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <div th:include="/admin/common::common('链接修改')"></div>
+    </head>
+    <body>
+        <div class="x-body">
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <label  class="layui-form-label">
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="hidden" id="id" name="id" th:value="${friendlyLink.id}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="title" class="layui-form-label">
+                        <span class="x-red">*</span>链接名
+                    </label>
+                    <div class="layui-input-inline" style="width:300px;">
+                        <input type="text" id="title" name="title" required="" lay-verify="required"
+                        autocomplete="off" th:value="${friendlyLink.title}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="url" class="layui-form-label">
+                        <span class="x-red">*</span>URL
+                    </label>
+                    <div class="layui-input-inline" style="width:300px;">
+                        <input type="text" id="url" name="url" required="" lay-verify="required"
+                        autocomplete="off" th:value="${friendlyLink.url}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="sn" class="layui-form-label">
+                        <span class="x-red">*</span>排序
+                    </label>
+                    <div class="layui-input-inline" style="width:60px;">
+                        <input type="number" id="sn" name="sn" required="" lay-verify="required"
+                        autocomplete="off" th:value="${friendlyLink.sn}" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                    </label>
+                    <button  class="layui-btn" lay-filter="save" lay-submit="">
+                        保存
+                    </button>
+                </div>
+            </form>
+        </div>
+        <script th:src="@{/admin/lib/layui/layui.js}"  charset="utf-8"></script>
+        <script th:src="@{/admin/js/x-layui.js}" charset="utf-8"></script>
+        <script>
+            layui.use(['form','layer'], function(){
+                $ = layui.jquery;
+              var form = layui.form()
+              ,layer = layui.layer;
+              form.on('submit(save)', function(data){
+                  $.ajax({
+                      url: "/admin/friendlink/update",
+                      data: data.field,
+                      type: "Post",
+                      dataType: "json",
+                      success: function (res) {
+                          if (res.count > 0) {
+                              layer.alert("修改成功", {icon: 6},function () {
+                                  // 获得frame索引
+                                  var index = parent.layer.getFrameIndex(window.name);
+                                  //关闭当前frame
+                                  parent.layer.close(index);
+                                  parent.location = parent.location;
+                              });
+                          } else {
+                              layer.alert("修改失败", {icon: 6});
+                          }
+                      },
+                      error: function (data) {
+                          layer.alert('错误', data.msg);
+                      }
+                  });
+                return false;
+              });
+              
+              
+            });
+        </script>
+        
+    </body>
+
+</html>

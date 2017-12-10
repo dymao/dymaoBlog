@@ -1,13 +1,16 @@
-package com.dymao.dao.mapper;
+package com.dymao.service;
 
 import com.dymao.model.FriendlyLink;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
 
-@Mapper
-public interface FriendlyLinkMapper {
+/**
+ * @author Mervin
+ * @Description:
+ * @date 2017/12/8 16:54
+ */
+public interface FriendLinkService {
 
     int deleteByPrimaryKey(String id);
 

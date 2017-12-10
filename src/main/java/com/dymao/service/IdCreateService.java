@@ -10,4 +10,6 @@ public interface IdCreateService {
     String getBannerId();
 
     String getCategoryId();
+
+    String getFriendlinkId();
 }

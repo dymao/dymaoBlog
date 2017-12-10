@@ -1,6 +1,6 @@
-package com.dymao.model;
+package com.dymao.vo;
 
-public class BlogCategory {
+public class CategoryInfo {
     private String id;  //分类id
 
     private String name; //分类名称
@@ -8,6 +8,8 @@ public class BlogCategory {
     private Integer level;  // 分类级别
 
     private String parentId; // 上级分类Id
+
+    private String parentName; //上级分类名称
 
     public String getId() {
         return id;
@@ -25,6 +27,14 @@ public class BlogCategory {
         this.name = name;
     }
 
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
     public Integer getLevel() {
         return level;
     }
@@ -40,4 +50,5 @@ public class BlogCategory {
     public void setParentId(String parentId) {
         this.parentId = parentId == null ? null : parentId.trim();
     }
+
 }

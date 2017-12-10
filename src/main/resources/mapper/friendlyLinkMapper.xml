@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dymao.dao.mapper.FriendlyLinkMapper">
   <resultMap id="BaseResultMap" type="com.dymao.model.FriendlyLink">
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="sn" jdbcType="INTEGER" property="sn" />
@@ -11,23 +11,25 @@
   <sql id="Base_Column_List">
     id, title, url, sn, create_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from friendlylink
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from friendlylink
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
+
+  <delete id="deleteByFriendlinkIds" parameterType="java.util.List">
+    delete from friendlylink where id in
+    <foreach collection="list" index="index" item="id" open="(" close=")" separator=",">
+      #{id,jdbcType=VARCHAR}
+    </foreach>
+  </delete>
+
   <insert id="insert" parameterType="com.dymao.model.FriendlyLink">
-    insert into friendlylink (id, title, url, 
-      sn, create_time)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{sn,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.dymao.model.FriendlyLink">
     insert into friendlylink
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -48,7 +50,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=VARCHAR},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
@@ -64,7 +66,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dymao.model.FriendlyLink">
+  <update id="updateByPrimaryKey" parameterType="com.dymao.model.FriendlyLink">
     update friendlylink
     <set>
       <if test="title != null">
@@ -80,14 +82,18 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dymao.model.FriendlyLink">
-    update friendlylink
-    set title = #{title,jdbcType=VARCHAR},
-      url = #{url,jdbcType=VARCHAR},
-      sn = #{sn,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
+  <select id="findFriendlinkList" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from friendlylink
+  </select>
+
+  <select id="findFriendlinkListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1)
+    from friendlylink
+  </select>
+
 </mapper>

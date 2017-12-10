@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:include="/admin/common::common('博客列表')"></div>
+    <link rel="stylesheet" th:href="@{/admin/css/blog.css}" media="all" />
+    <link rel="stylesheet" th:href="@{/admin/lib/layui/css/layui.css}"  media="all">
+</head>
+<body class="childrenBody">
+<blockquote class="layui-elem-quote news_search">
+    <div class="layui-inline">
+        <div class="layui-input-inline">
+            <input type="text" value="" placeholder="请输入关键字" class="layui-input search_input">
+        </div>
+        <a class="layui-btn">查询</a>
+    </div>
+    <div class="layui-inline">
+        <a class="layui-btn layui-btn-normal newsAdd_btn" style="background-color:#9e548f">添加博客</a>
+    </div>
+    <div class="layui-inline">
+        <a class="layui-btn recommend" style="background-color:#5FB878">推荐博客</a>
+    </div>
+    <div class="layui-inline">
+        <a class="layui-btn audit_btn">审核博客</a>
+    </div>
+    <div class="layui-inline">
+        <a class="layui-btn layui-btn-danger batchDel">批量删除</a>
+    </div>
+</blockquote>
+<div class="news_list">
+    <table class="layui-table" style="text-align: left">
+        <thead>
+        <tr style="text-align: center;">
+            <th>
+                <input type="checkbox" id="checkBox" name="checkBox">
+            </th>
+            <th>
+                标题
+            </th>
+            <th>
+                一级分类
+            </th>
+            <th>
+                二级分类
+            </th>
+            <th>
+                博客关键字
+            </th>
+            <th>
+                发表状态
+            </th>
+            <th>
+                浏览次数
+            </th>
+            <th>
+                点赞次数
+            </th>
+            <th>
+                被踩次数
+            </th>
+            <th>
+                浏览权限
+            </th>
+            <th>
+                是否转载
+            </th>
+            <th>
+                是否推荐
+            </th>
+            <th>
+                作者
+            </th>
+            <th>
+                审核状态
+            </th>
+            <th>
+                删除状态
+            </th>
+            <th>
+                更新时间
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="blogVo:${blogVoList}">
+            <td>
+                <input type="checkbox" value="1" name="">
+            </td>
+            <td th:text="${blogVo.title}"></td>
+            <td th:text="${blogVo.categoryOneName}"></td>
+            <td th:text="${blogVo.categoryTwoName}"></td>
+            <td th:text="${blogVo.keyword}"></td>
+            <td th:text="${blogVo.isPublic}"></td>
+            <td th:text="${blogVo.viewNum}"></td>
+            <td th:text="${blogVo.likeNum}"></td>
+            <td th:text="${blogVo.treadNum}"></td>
+            <td th:text="${blogVo.authority}"></td>
+            <td th:text="${blogVo.isTransshipment}"></td>
+            <td th:text="${blogVo.isRecommend}"></td>
+            <td th:text="${blogVo.userId}"></td>
+            <td th:text="${blogVo.isAudit}"></td>
+            <td th:text="${blogVo.deleted}"></td>
+            <td th:text="${blogVo.updateTime}"></td>
+            <td class="td-manage">
+                <a title="编辑" href="javascript:;" onclick="question_edit('编辑','question-edit.html','4','','510')"
+                   class="ml-5" style="text-decoration:none ;color: rgb(66, 139, 202);">
+                    <i class="layui-icon">&#xe642;</i>
+                </a>
+                <a title="删除" href="javascript:;" onclick="question_del(this,'1')"
+                   style="text-decoration:none;color: rgb(66, 139, 202);">
+                    <i class="layui-icon">&#xe640;</i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div id="page"></div>
+</div>
+<script th:src="@{/admin/lib/layui/layui.js}"  charset="utf-8"></script>
+<script th:src="@{/admin/js/x-layui.js}" charset="utf-8"></script>
+<script>
+    layui.use(['laydate','element','laypage','layer'], function(){
+        $ = layui.jquery;//jquery
+        laydate = layui.laydate;//日期插件
+        lement = layui.element();//面包导航
+        laypage = layui.laypage;//分页
+        layer = layui.layer;//弹出层
+
+        //以上模块根据需要引入
+        laypage({
+            cont: 'page'
+            ,pages: 20
+            ,first: '首页'
+            ,last: '尾页'
+            ,prev: '上一页'
+            ,next: '下一页'
+            ,jump: function(obj, first){
+                if(!first){
+                    layer.msg('第 '+ obj.curr +' 页');
+                }
+            }
+        });
+
+        $(".newsAdd_btn").click(function () {
+            var index = layer.open({
+                title: "添加博文",
+                type: 2,
+                area: ['1024px', '768px'],
+                content: "/admin/blog/toAddPage",
+                success: function (layero, index) {
+                    layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {tips: 3});
+                }
+            })
+            /*$(window).resize(function () {
+                layui.layer.full(index);
+            })
+            layui.layer.full(index);*/
+
+            //批量删除提交
+            function delAll () {
+                layer.confirm('确认要删除吗？',function(index){
+                    //捉到所有被选中的，发异步进行删除
+                    layer.msg('删除成功', {icon: 1});
+                });
+            }
+
+            function question_show (argument) {
+                layer.msg('可以跳到前台具体问题页面',{icon:1,time:1000});
+            }
+            /*添加*/
+            function question_add(title,url,w,h){
+                x_admin_show(title,url,w,h);
+            }
+            //编辑
+            function question_edit (title,url,id,w,h) {
+                x_admin_show(title,url,w,h);
+            }
+
+            /*删除*/
+            function question_del(obj,id){
+                layer.confirm('确认要删除吗？',function(index){
+                    //发异步删除数据
+                    $(obj).parents("tr").remove();
+                    layer.msg('已删除!',{icon:1,time:1000});
+                });
+            }
+        })
+
+        /*var start = {
+            min: laydate.now()
+            ,max: '2099-06-16 23:59:59'
+            ,istoday: false
+            ,choose: function(datas){
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+
+        var end = {
+            min: laydate.now()
+            ,max: '2099-06-16 23:59:59'
+            ,istoday: false
+            ,choose: function(datas){
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };*/
+
+      /*  document.getElementById('LAY_demorange_s').onclick = function(){
+            start.elem = this;
+            laydate(start);
+        }
+        document.getElementById('LAY_demorange_e').onclick = function(){
+            end.elem = this
+            laydate(end);
+        }*/
+    });
+
+
+</script>
+
+</body>
+</html>

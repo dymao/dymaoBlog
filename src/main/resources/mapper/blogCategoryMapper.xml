@@ -3,12 +3,20 @@
 <mapper namespace="com.dymao.dao.mapper.BlogCategoryMapper">
   <resultMap id="BaseResultMap" type="com.dymao.model.BlogCategory">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="level" jdbcType="SMALLINT" property="level" />
     <result column="parentId" jdbcType="VARCHAR" property="parentId" />
   </resultMap>
+
+  <resultMap id="queryForListMap" type="com.dymao.vo.CategoryInfo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="level" jdbcType="SMALLINT" property="level" />
+    <result column="parentId" jdbcType="VARCHAR" property="parentId" />
+    <result column="parentName" jdbcType="VARCHAR" property="parentName" />
+  </resultMap>
   <sql id="Base_Column_List">
-    id, category, level, parentId
+    id, name, level, parentId
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -20,14 +28,22 @@
     delete from blogcategory
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+
+  <delete id="deleteByCategoryIds" parameterType="java.util.List">
+    delete from blogcategory where id in
+    <foreach collection="list" index="index" item="id" open="(" close=")" separator=",">
+      #{id,jdbcType=VARCHAR}
+    </foreach>
+  </delete>
+
   <insert id="insert" parameterType="com.dymao.model.BlogCategory">
     insert into blogcategory
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="category != null">
-        category,
+      <if test="name != null">
+        name,
       </if>
       <if test="level != null">
         level,
@@ -40,8 +56,8 @@
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="category != null">
-        #{category,jdbcType=VARCHAR},
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
       </if>
       <if test="level != null">
         #{level,jdbcType=SMALLINT},
@@ -54,8 +70,8 @@
   <update id="updateByPrimaryKey" parameterType="com.dymao.model.BlogCategory">
     update blogcategory
     <set>
-      <if test="category != null">
-        category = #{category,jdbcType=VARCHAR},
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="level != null">
         level = #{level,jdbcType=SMALLINT},
@@ -73,6 +89,22 @@
      from blogcategory
     <if test="level != null">
        where level = #{level,jdbcType=SMALLINT}
+    </if>
+  </select>
+
+  <select id="queryCategoryInfoList" parameterType="java.lang.Integer" resultMap="queryForListMap">
+    select a.id, a.name, a.level, a.parentId,b.name as parentName
+      from blogcategory a left join blogcategory b on a.parentId = b.id
+    <if test="level != null">
+      where a.level = #{level,jdbcType=SMALLINT}
+    </if>
+  </select>
+
+  <select id="queryCategoryInfoListCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(1)
+      from blogcategory a left join blogcategory b on a.parentId = b.id
+    <if test="level != null">
+      where a.level = #{level,jdbcType=SMALLINT}
     </if>
   </select>
 </mapper>

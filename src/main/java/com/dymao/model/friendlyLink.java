@@ -3,7 +3,7 @@ package com.dymao.model;
 import java.util.Date;
 
 public class FriendlyLink {
-    private Integer id;
+    private String id;
 
     private String title;
 
@@ -13,11 +13,11 @@ public class FriendlyLink {
 
     private Date createTime;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

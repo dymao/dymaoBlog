@@ -53,8 +53,7 @@
                         <td>
                             <img th:src="@{${banner.image}}"  width="200" alt=""/>
                         </td>
-                        <td th:text="${banner.url}">
-                        </td>
+                        <td><a th:href="${banner.url}" th:text="${banner.url}"></a></td>
                         <td th:text="${banner.title}" >
                             轮播标题
                         </td>
@@ -75,7 +74,7 @@
                             <a th:if="${banner.showFlag=='0'}" style="text-decoration:none" th:onclick="'banner_stop(this,'+${banner.id}+')'" href="javascript:;" title="不显示">
                                 <i class="layui-icon">&#xe601;</i>
                             </a>
-                            <a title="编辑" href="javascript:;" th:onclick="'banner_edit(\'编辑\',\'/admin/banner/toEditPage/'+${banner.id}+'\',\'4\',\'\',\'510\')'" class="ml-5" style="text-decoration:none">
+                            <a title="编辑" href="javascript:;" th:onclick="'banner_edit(\'编辑\',\'/admin/banner/toEditPage/'+${banner.id}+'\',\'\',\'510\')'" class="ml-5" style="text-decoration:none">
                                 <i class="layui-icon">&#xe642;</i>
                             </a>
                             <a title="删除" href="javascript:;" th:onclick="'banner_del(this,'+${banner.id}+')'" style="text-decoration:none">
@@ -218,7 +217,7 @@
                 });
             }
             // 编辑
-            function banner_edit (title,url,id,w,h) {
+            function banner_edit (title,url,w,h) {
                 x_admin_show(title,url,w,h); 
             }
             /*删除*/

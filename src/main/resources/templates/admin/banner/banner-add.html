@@ -60,10 +60,8 @@
                 </div>
             </form>
         </div>
-        <script th:src="@{/admin/lib/layui/layui.js}"  charset="utf-8">
-        </script>
-        <script th:src="@{/admin/js/x-layui.js}" charset="utf-8">
-        </script>
+        <script th:src="@{/admin/lib/layui/layui.js}"  charset="utf-8"></script>
+        <script th:src="@{/admin/js/x-layui.js}" charset="utf-8"></script>
         <script>
             layui.use(['form','layer','upload'], function(){
                 $ = layui.jquery;
@@ -82,7 +80,6 @@
 
               //监听提交
               form.on('submit(add)', function(data) {
-                  console.log(data.field);
                   $.ajax({
                       url: "/admin/banner/add",
                       data: data.field,
@@ -103,6 +100,7 @@
                                   var index = parent.layer.getFrameIndex(window.name);
                                   //关闭当前frame
                                   parent.layer.close(index);
+                                  parent.location = parent.location;
                               });
                           }
                       },

@@ -9,4 +9,8 @@
       SELECT NEXTVAL('categoryId');
   </select>
 
+  <select id="getFriendlinkId" resultType="java.lang.String">
+      SELECT NEXTVAL('friendlinkId');
+  </select>
+
 </mapper>
