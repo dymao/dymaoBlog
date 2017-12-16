@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Mervin
@@ -51,5 +52,10 @@ public class BlogCategoryServiceImpl implements BlogCategoryService {
 
     public Integer deleteByCategoryIds(List<String> categoryIds){
         return blogCategoryMapper.deleteByCategoryIds(categoryIds);
+    }
+
+    @Override
+    public List<BlogCategory> findCategoryListByMap(Map map) {
+        return blogCategoryMapper.findCategoryListByMap(map);
     }
 }

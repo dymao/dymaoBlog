@@ -4,6 +4,7 @@ import com.dymao.common.constants.Constant;
 import com.dymao.model.BlogCategory;
 import com.dymao.service.BlogCategoryService;
 import com.dymao.service.IdCreateService;
+import com.dymao.vo.BaseMessage;
 import com.dymao.vo.CategoryInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -92,5 +93,19 @@ public class AdminCategoryController {
         int count = blogCategoryService.updateByPrimaryKey(blogCategory);
         result.put("count",count);
         return result;
+    }
+
+    @RequestMapping(value = "/getBolgCategoryTwoLevelList",method = RequestMethod.GET)
+    @ResponseBody
+    public BaseMessage getBolgCategoryTwoLevelList(Model model,String parentId){
+        BaseMessage baseMessage = new BaseMessage();
+        Map paramMap = new HashMap();
+        paramMap.put("level",Constant.BLOG_CATEGORY_LEVEL_2);
+        paramMap.put("parentId",parentId);
+        List<BlogCategory> bolgCategoryTwoLevelList = blogCategoryService.findCategoryListByMap(paramMap);
+        baseMessage.setReturnCode(200);
+        baseMessage.setData(bolgCategoryTwoLevelList);
+        baseMessage.setReturnMsg("加载成功");
+        return baseMessage;
     }
 }

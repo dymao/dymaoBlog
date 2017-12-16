@@ -264,7 +264,7 @@
     select
       a.id,user_id, title, content_show, keyword, is_public, deleted, category_id_one, category_id_two,
       view_num, like_num, tread_num, image, is_transshipment, is_recommend,
-      is_audit, audit_user_id, authority, create_time
+      is_audit, audit_user_id, authority, create_time,update_time
       ,b.`name` as categoryOneName, c.`name` as categoryTwoName
     from blog a
        LEFT JOIN blogcategory b
@@ -273,37 +273,37 @@
           on a.category_id_two = c.id
     <where>
       <if test="userId != null">
-        user_id = #{userId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=VARCHAR}
       </if>
       <if test="title != null">
-       and title = #{title,jdbcType=VARCHAR},
+       and title = #{title,jdbcType=VARCHAR}
       </if>
       <if test="keyword != null">
-        and keyword = #{keyword,jdbcType=VARCHAR},
+        and keyword = #{keyword,jdbcType=VARCHAR}
       </if>
       <if test="contentShow != null">
-        and  content_show = #{contentShow,jdbcType=VARCHAR},
+        and  content_show = #{contentShow,jdbcType=VARCHAR}
       </if>
       <if test="isPublic != null">
-        and is_public = #{isPublic,jdbcType=VARCHAR},
+        and is_public = #{isPublic,jdbcType=VARCHAR}
       </if>
       <if test="deleted != null">
-        and  deleted = #{deleted,jdbcType=VARCHAR},
+        and  deleted = #{deleted,jdbcType=VARCHAR}
       </if>
       <if test="categoryIdOne != null">
-        and category_id_one = #{categoryIdOne,jdbcType=VARCHAR},
+        and category_id_one = #{categoryIdOne,jdbcType=VARCHAR}
       </if>
       <if test="categoryIdTwo != null">
-        and category_id_two = #{categoryIdTwo,jdbcType=VARCHAR},
+        and category_id_two = #{categoryIdTwo,jdbcType=VARCHAR}
       </if>
       <if test="isTransshipment != null">
-        and is_transshipment = #{isTransshipment,jdbcType=VARCHAR},
+        and is_transshipment = #{isTransshipment,jdbcType=VARCHAR}
       </if>
       <if test="isRecommend != null">
-        and  is_recommend = #{isRecommend,jdbcType=VARCHAR},
+        and  is_recommend = #{isRecommend,jdbcType=VARCHAR}
       </if>
       <if test="isAudit != null">
-        and  is_audit = #{isAudit,jdbcType=VARCHAR},
+        and  is_audit = #{isAudit,jdbcType=VARCHAR}
       </if>
     </where>
   </select>

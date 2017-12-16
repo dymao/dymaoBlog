@@ -1246,6 +1246,11 @@ h3 a:hover{
 	}
 	.blog-content-show{
 		font-size:12px !important;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 4; /* 这个表示要显示几行 */
+		-webkit-box-orient: vertical;
 	}
 	.blog-keyword-show{
 		font-size:12px;
@@ -1282,6 +1287,11 @@ h3 a:hover{
 	word-wrap: break-word;
 	line-height: 20px;
 	margin: 0 0 0rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 4; /* 这个表示要显示几行 */
+	-webkit-box-orient: vertical;
 }
 
 .am-badge.am-round {

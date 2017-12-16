@@ -12,4 +12,6 @@ public interface IdCreateService {
     String getCategoryId();
 
     String getFriendlinkId();
+
+    String getBlogId();
 }

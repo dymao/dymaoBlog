@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface BlogCategoryMapper {
@@ -24,6 +25,8 @@ public interface BlogCategoryMapper {
     int queryCategoryInfoListCount(@Param("level") Integer level);
 
     Integer deleteByCategoryIds(List<String> categoryIds);
+
+    List<BlogCategory> findCategoryListByMap(Map map);
 
 
 }

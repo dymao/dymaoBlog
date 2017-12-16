@@ -13,4 +13,8 @@
       SELECT NEXTVAL('friendlinkId');
   </select>
 
+  <select id="getBlogId" resultType="java.lang.String">
+      SELECT NEXTVAL('blogId');
+  </select>
+
 </mapper>

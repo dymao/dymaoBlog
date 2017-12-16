@@ -107,4 +107,19 @@
       where a.level = #{level,jdbcType=SMALLINT}
     </if>
   </select>
+
+  <select id="findCategoryListByMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from blogcategory
+    <where>
+        <if test="level != null">
+           level = #{level,jdbcType=SMALLINT}
+        </if>
+        <if test="parentId != null">
+          and parentId = #{parentId,jdbcType=VARCHAR}
+        </if>
+    </where>
+
+  </select>
 </mapper>

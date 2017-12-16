@@ -1,9 +1,15 @@
 package com.dymao.controller.admin;
 
 import com.dymao.common.constants.Config;
+import com.dymao.common.constants.Constant;
 import com.dymao.model.Blog;
+import com.dymao.model.BlogCategory;
+import com.dymao.service.BlogCategoryService;
 import com.dymao.service.BlogService;
+import com.dymao.service.IdCreateService;
+import com.dymao.vo.BaseMessage;
 import com.dymao.vo.BlogVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,9 +33,17 @@ public class AdminBlogController {
     @Autowired
     private BlogService blogService;
 
+    @Autowired
+    private BlogCategoryService blogCategoryService;
+
+    @Autowired
+    private IdCreateService idCreateService;
+
     @RequestMapping(value = "/toBlogListPage", method = RequestMethod.GET)
     public String toBlogListPage(Model model){
-        List<BlogVo> blogVoList = blogService.selectBlogList(new HashMap());
+        Map paramMap = new HashMap();
+        paramMap.put("deleted",Constant.DELETE_FLAG_0);
+        List<BlogVo> blogVoList = blogService.selectBlogList(paramMap);
         model.addAttribute("blogVoList",blogVoList);
         return "/admin/blog/blogList";
     }
@@ -39,35 +53,41 @@ public class AdminBlogController {
      * @return
      */
     @RequestMapping(value = "/toAddPage",method = RequestMethod.GET)
-    public String toAdminBlogAdd() {
+    public String toAdminBlogAdd(Model model) {
+        // 查询一级分类列表
+        List<BlogCategory> categoryOneLevelList = blogCategoryService.findCategoryList(Constant.BLOG_CATEGORY_LEVEL_1);
+        model.addAttribute("categoryOneLevelList",categoryOneLevelList);
         return "admin/blog/blog-add";
-    }
-
-
-    @RequestMapping(value = "/uploadImg",method = RequestMethod.POST)
-    @ResponseBody
-    public Map uploadImage(@RequestParam("file") MultipartFile file, HttpServletRequest request){
-        Map result  = new HashMap();
-        String fileName = "";
-       /* String contentType = file.getContentType();
-        String originalFilename = file.getOriginalFilename();
-        String imgSuffix = originalFilename.substring(originalFilename.indexOf("."));
-        String fileName = StringUtil.getCharAndNumr(20)+imgSuffix;
-        String filePath = request.getSession().getServletContext().getRealPath(Config.BANNER_IMAGE_PAHT);
-        try {
-            FileUtil.uploadFile(file.getBytes(), filePath, fileName);
-        } catch (Exception e) {
-
-        }*/
-        result.put("url",Config.BANNER_IMAGE_PAHT+fileName);
-        return result;
     }
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public Blog addBanner(Model model, Blog blog){
+    public BaseMessage addBlog(Model model, Blog blog){
+        BaseMessage baseMessage = new BaseMessage();
+        int count = 0;
+        Date now = new Date();
+        blog.setUpdateTime(now);
+        blog.setIsAudit(Constant.BLOG_IS_AUDIT_1); // 无论是新增还是修改，状态都应该是待审核
+        if(StringUtils.isEmpty(blog.getId())){// 新增
+            blog.setId(idCreateService.getBlogId());
+            blog.setDeleted(Constant.DELETE_FLAG_0);
+            blog.setIsPublic(Constant.BLOG_IS_PUBLIC_0);
+            blog.setUserId("admin");
+            blog.setViewNum(0);
+            blog.setLikeNum(0);
+            blog.setTreadNum(0);
+            blog.setIsRecommend(Constant.BLOG_IS_RECOMMEND_0);
 
-        return blog;
+            blog.setCreateTime(now);
+            count = blogService.insert(blog);
+        }else{   // 修改
+            count = blogService.updateByPrimaryKey(blog);
+        }
+        if(count <=0){
+            baseMessage.setReturnCode(201);
+            baseMessage.setReturnMsg("保存失败");
+        }
+        return baseMessage;
     }
 
     /**
@@ -75,24 +95,20 @@ public class AdminBlogController {
      * @return
      */
     @RequestMapping(value = "/toEditPage/{id}",method = RequestMethod.GET)
-    public String toAdminBannerEdit(@PathVariable String id,Model model) {
+    public String toAdminBlogEdit(@PathVariable String id,Model model) {
+        // 查询一级分类列表
+        List<BlogCategory> categoryOneLevelList = blogCategoryService.findCategoryList(Constant.BLOG_CATEGORY_LEVEL_1);
+        model.addAttribute("categoryOneLevelList",categoryOneLevelList);
         Blog blog = blogService.selectByPrimaryKey(id);
         model.addAttribute("blog",blog);
-        return "admin/blog/blog-edit";
-    }
+        // 查询二级分类
+        Map paramMap = new HashMap();
+        paramMap.put("level",Constant.BLOG_CATEGORY_LEVEL_2);
+        paramMap.put("parentId",blog.getCategoryIdOne());
+        List<BlogCategory> bolgCategoryTwoLevelList = blogCategoryService.findCategoryListByMap(paramMap);
 
-    /**
-     * 博客修改
-     * @param model
-     * @param blog
-     * @return
-     */
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
-    @ResponseBody
-    public Blog updateBanner(Model model, Blog blog){
-        blog.setCreateTime(new Date());
-        blogService.updateByPrimaryKey(blog);
-        return blog;
+        model.addAttribute("bolgCategoryTwoLevelList",bolgCategoryTwoLevelList);
+        return "admin/blog/blog-edit";
     }
 
     /**
@@ -118,4 +134,62 @@ public class AdminBlogController {
         result.put("count",count);
         return result;
     }*/
+
+    @RequestMapping(value = "/recommend/{id}",method = RequestMethod.POST)
+    @ResponseBody
+    public BaseMessage recommendBlog(@PathVariable String id){
+        BaseMessage baseMessage = new BaseMessage();
+
+        Blog blog = blogService.selectByPrimaryKey(id);
+        if(blog == null || Constant.DELETE_FLAG_1.equals(blog.getDeleted())){
+            baseMessage.setReturnCode(201);
+            baseMessage.setReturnMsg("博客不存在，请检查！");
+            return  baseMessage;
+        }
+        if(Constant.BLOG_IS_RECOMMEND_1.equals(blog.getIsRecommend())){
+            baseMessage.setReturnCode(201);
+            baseMessage.setReturnMsg("该博客已是推荐状态，不能重复推荐！");
+            return  baseMessage;
+        }
+        Blog newBlog = new Blog();
+        newBlog.setId(id);
+        newBlog.setIsRecommend(Constant.BLOG_IS_RECOMMEND_1);
+        Date now = new Date();
+        newBlog.setUpdateTime(now);
+        int count = blogService.updateByPrimaryKey(newBlog);
+        if(count <=0){
+            baseMessage.setReturnCode(201);
+            baseMessage.setReturnMsg("保存失败");
+        }
+        return baseMessage;
+    }
+
+    @RequestMapping(value = "/audit/{id}",method = RequestMethod.POST)
+    @ResponseBody
+    public BaseMessage auditBlog(@PathVariable String id){
+        BaseMessage baseMessage = new BaseMessage();
+
+        Blog blog = blogService.selectByPrimaryKey(id);
+        if(blog == null || Constant.DELETE_FLAG_1.equals(blog.getDeleted())){
+            baseMessage.setReturnCode(201);
+            baseMessage.setReturnMsg("博客不存在，请检查！");
+            return  baseMessage;
+        }
+        if(Constant.BLOG_IS_AUDIT_0.equals(blog.getIsAudit())){
+            baseMessage.setReturnCode(201);
+            baseMessage.setReturnMsg("该博客已是审核通过状态，不需要审核！");
+            return  baseMessage;
+        }
+        Blog newBlog = new Blog();
+        newBlog.setId(id);
+        newBlog.setIsAudit(Constant.BLOG_IS_AUDIT_0);
+        Date now = new Date();
+        newBlog.setUpdateTime(now);
+        int count = blogService.updateByPrimaryKey(newBlog);
+        if(count <=0){
+            baseMessage.setReturnCode(201);
+            baseMessage.setReturnMsg("保存失败");
+        }
+        return baseMessage;
+    }
 }

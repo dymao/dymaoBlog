@@ -55,25 +55,6 @@ public class AdminBannerController {
         return "admin/banner/banner-add";
     }
 
-
-    @RequestMapping(value = "/uploadImg",method = RequestMethod.POST)
-    @ResponseBody
-    public Map uploadImage(@RequestParam("file") MultipartFile file,HttpServletRequest request){
-        Map result  = new HashMap();
-        String contentType = file.getContentType();
-        String originalFilename = file.getOriginalFilename();
-        String imgSuffix = originalFilename.substring(originalFilename.indexOf("."));
-        String fileName = StringUtil.getCharAndNumr(20)+imgSuffix;
-        String filePath = request.getSession().getServletContext().getRealPath(Config.BANNER_IMAGE_PAHT);
-        try {
-            FileUtil.uploadFile(file.getBytes(), filePath, fileName);
-        } catch (Exception e) {
-
-        }
-        result.put("url",Config.BANNER_IMAGE_PAHT+fileName);
-        return result;
-    }
-
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     public Banner addBanner(Model model, Banner banner){

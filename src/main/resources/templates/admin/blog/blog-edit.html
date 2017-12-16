@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:include="/admin/common::common('新增博文')"></div>
+    <div th:include="/admin/common::common('编辑博文')"></div>
     <link rel="stylesheet" th:href="@{/admin/lib/layui/css/layui.css}"  media="all">
 </head>
 <body class="childrenBody">
 <form class="layui-form" style="padding: 5px;">
+    <div class="layui-input-inline">
+        <input type="hidden" id="id" name="id" th:value="${blog.id}" />
+    </div>
+    <div class="layui-input-inline">
+        <input type="hidden" id="content" name="content" th:value="${blog.content}" />
+    </div>
     <div class="layui-form-item">
         <label class="layui-form-label" style="width: 110px;"><span class="x-red">*</span>文章标题</label>
         <div class="layui-input-block">
-            <input type="text" name="title" id="title" class="layui-input" lay-verify="required" style="margin: 0px;" placeholder="请输入文章标题">
-            <div class="layui-input-inline">
-                <input type="hidden" id="content" name="content" />
-            </div>
+            <input type="text" name="title" th:value="${blog.title}" id="title" class="layui-input" lay-verify="required" style="margin: 0px;" placeholder="请输入文章标题">
         </div>
     </div>
     <div class="layui-form-item">
@@ -20,8 +23,8 @@
             <label class="layui-form-label" style="width: 110px;"><span class="x-red">*</span>浏览权限</label>
             <div class="layui-input-inline">
                 <select name="authority" id="authority" lay-filter="authority">
-                    <option value="0">所有人可见</option>
-                    <option value="1">仅会员可见</option>
+                    <option value="0" th:selected="${blog.authority=='0'}">所有人可见</option>
+                    <option value="1" th:selected="${blog.authority=='1'}">仅会员可见</option>
                 </select>
             </div>
         </div>
@@ -29,7 +32,7 @@
             <label class="layui-form-label" style="width: 110px;"><span class="x-red">*</span>一级分类</label>
             <div class="layui-input-inline">
                 <select  id="categoryIdOne" name="categoryIdOne"  lay-filter="categoryIdOne">
-                    <option th:each="categoryOneLevel:${categoryOneLevelList}" th:value="${categoryOneLevel.id}" th:text="${categoryOneLevel.name}"></option>
+                    <option th:each="categoryOneLevel:${categoryOneLevelList}" th:value="${categoryOneLevel.id}" th:text="${categoryOneLevel.name}" th:selected="${blog.categoryIdOne==categoryOneLevel.id}"></option>
                 </select>
             </div>
         </div>
@@ -37,7 +40,7 @@
             <label class="layui-form-label" style="width: 110px;"><span class="x-red">*</span>二级分类</label>
             <div class="layui-input-inline">
                 <select id="categoryIdTwo" name="categoryIdTwo"  lay-filter="categoryIdTwo">
-                    <option  value="">请选择二级分类</option>
+                    <option th:each="categoryTwoLevel:${bolgCategoryTwoLevelList}" th:value="${categoryTwoLevel.id}" th:text="${categoryTwoLevel.name}" th:selected="${blog.categoryIdTwo==categoryTwoLevel.id}" ></option>
                 </select>
             </div>
         </div>
@@ -45,8 +48,8 @@
             <label class="layui-form-label" style="width: 110px;"><span class="x-red">*</span>是否原创</label>
             <div class="layui-input-inline">
                 <select name="isTransshipment" id="isTransshipment" lay-filter="isTransshipment">
-                    <option value="0">原创</option>
-                    <option value="1">转载</option>
+                    <option value="0" th:selected="${blog.isTransshipment=='0'}" >原创</option>
+                    <option value="1" th:selected="${blog.isTransshipment=='1'}" >转载</option>
                 </select>
             </div>
         </div>
@@ -60,7 +63,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label" style="width: 110px;"><span class="x-red">*</span>关键字</label>
         <div class="layui-input-block">
-            <input type="text" id="keyword" name="keyword" class="layui-input" placeholder="请输入文章关键字,以英文逗号分隔">
+            <input type="text" id="keyword" name="keyword" th:value="${blog.keyword}" class="layui-input" placeholder="请输入文章关键字,以英文逗号分隔">
         </div>
     </div>
     <div class="layui-form-item">
@@ -72,29 +75,28 @@
                 <input type="file" name="titleImg" id="titleImg" class="layui-upload-file" id="titleImg"/>
             </div>
         </div>
+        <img width="400" id="showImg" width="250px" height="200px" th:src="${blog.image}" />
         <div class="layui-input-inline">
-            <input type="hidden" id="image" name="image" />
+            <input type="hidden" id="image" name="image"  th:value="${blog.image}" />
         </div>
         <!--<img id="LAY_demo_upload" width="400"    src=""/>-->
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label" style="width: 110px;"><span class="x-red">*</span>内容摘要</label>
         <div class="layui-input-block">
-            <textarea name="contentShow" id="contentShow" placeholder="请输入内容摘要" class="layui-textarea"></textarea>
+            <textarea name="contentShow" id="contentShow" th:text="${blog.contentShow}" placeholder="请输入内容摘要" class="layui-textarea"></textarea>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label" style="width: 110px;"><span class="x-red">*</span>文章内容</label>
         <div class="layui-input-block">
             <div id="contentArea">
-                <p>在此处输入博客正文内容...</p>
             </div>
         </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" id="publish" lay-submit="" lay-filter="publish">发表</button>
-           <!-- <button class="layui-btn" id="save" lay-submit="save" lay-filter="save">保存</button>-->
+            <button class="layui-btn" id="saveAndPublish" lay-submit="" lay-filter="saveAndPublish">发表</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
@@ -103,7 +105,7 @@
 <script th:src="@{/admin/js/x-layui.js}" charset="utf-8"></script>
 <script th:src="@{/admin/js/wangEditor.js}" charset="utf-8"></script>
 <!--<script type="text/javascript" th:src="@{/admin/js/blogAdd.js}"></script>-->
-<script>
+<script th:inline="javascript">
     layui.use(['form', 'layer', 'jquery','element','upload'], function() {
         var form = layui.form();
         $ = layui.jquery;//jquery
@@ -158,19 +160,12 @@
             }
         });
 
-        form.on('submit(save)', function(data){
+        form.on('submit(saveAndPublish)', function(data){
             saveData(data);
             return false;
         });
 
-     /*   form.on('submit(save)', function(data){
-            $("#isPublic").val(1); //发表
-            saveData(data);
-            return false;
-        });*/
         function saveData(data){
-            console.log(data.field);
-            alert(data.field);
             $.ajax({
                 url: "/admin/blog/add",
                 data: data.field,
@@ -205,7 +200,9 @@
     editor.customConfig.uploadImgTimeout = 30000;
     //上传图片时，可自定义filename，即在使用formdata.append(name, file)添加图片文件时，自定义第一个参数。
     editor.customConfig.uploadFileName = 'blogImg';
-    editor.create()
+    editor.create();
+    var content = [[${blog.content}]];
+    editor.txt.html(content)
 
     document.getElementById('saveAndPublish').addEventListener('click', function () {
         $("#content").val(editor.txt.html());

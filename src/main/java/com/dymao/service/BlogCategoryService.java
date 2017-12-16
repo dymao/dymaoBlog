@@ -5,6 +5,7 @@ import com.dymao.vo.CategoryInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Mervin
@@ -28,4 +29,6 @@ public interface BlogCategoryService {
     int  queryCategoryInfoListCount(Integer level);
 
     Integer deleteByCategoryIds(List<String> categoryIds);
+
+    List<BlogCategory> findCategoryListByMap(Map map);
 }

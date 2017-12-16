@@ -77,7 +77,7 @@
 
                 //图片上传接口
                 layui.upload({
-                    url: '/admin/banner/uploadImg' //上传接口
+                    url: '/admin/fileUpload/bannerImg' //上传接口
                     ,success: function(res){ //上传成功后的回调
                         console.log(res);
                         $('#LAY_demo_upload').attr('src',res.url);

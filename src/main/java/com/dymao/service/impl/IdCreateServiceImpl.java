@@ -20,6 +20,7 @@ public class IdCreateServiceImpl implements IdCreateService {
     public static String SIGN_CODE_BANNER = "0";        // 博客分类
     public static String SIGN_CODE_BlOG_CATEGORY = "1"; // 博客分类
     public static String SIGN_CODE_FRIEND_LINK = "2";   // 友情链接
+    public static String SIGN_CODE_BLOG_ID = "3";       // 博客ID
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
@@ -59,5 +60,17 @@ public class IdCreateServiceImpl implements IdCreateService {
             seqId = StringUtils.substring(seqId,seqId.length()-5);
         }
         return bannerId + seqId + SIGN_CODE_FRIEND_LINK;
+    }
+
+    @Override
+    public String getBlogId() {
+        String bannerId = DateUtils.getStringDate(new Date(),DateUtils.DATE_YYMMDD);
+        String seqId = commonMapper.getFriendlinkId();
+        if(seqId.length() < 25){
+            seqId = StringUtils.leftPad(seqId,25,"0");
+        }else if(seqId.length() > 25){
+            seqId = StringUtils.substring(seqId,seqId.length()-5);
+        }
+        return bannerId + seqId + SIGN_CODE_BLOG_ID;
     }
 }

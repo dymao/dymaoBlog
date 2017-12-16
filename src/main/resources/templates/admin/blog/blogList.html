@@ -31,7 +31,7 @@
         <thead>
         <tr style="text-align: center;">
             <th>
-                <input type="checkbox" id="checkBox" name="checkBox">
+                <input type="checkbox" id="selectAll" name="selectAll" />
             </th>
             <th>
                 标题
@@ -61,7 +61,7 @@
                 浏览权限
             </th>
             <th>
-                是否转载
+                是否原创
             </th>
             <th>
                 是否推荐
@@ -86,29 +86,44 @@
         <tbody>
         <tr th:each="blogVo:${blogVoList}">
             <td>
-                <input type="checkbox" value="1" name="">
+                <input type="checkbox" th:value="${blogVo.id}" name="blogCheckbox" id="blogCheckbox"/>
             </td>
             <td th:text="${blogVo.title}"></td>
             <td th:text="${blogVo.categoryOneName}"></td>
             <td th:text="${blogVo.categoryTwoName}"></td>
             <td th:text="${blogVo.keyword}"></td>
-            <td th:text="${blogVo.isPublic}"></td>
+
+            <td th:if="${blogVo.isPublic}==0">已发表</td>
+            <td style="color:#f00" th:if="${blogVo.isPublic}==1">未发表</td>
+
             <td th:text="${blogVo.viewNum}"></td>
             <td th:text="${blogVo.likeNum}"></td>
             <td th:text="${blogVo.treadNum}"></td>
-            <td th:text="${blogVo.authority}"></td>
-            <td th:text="${blogVo.isTransshipment}"></td>
-            <td th:text="${blogVo.isRecommend}"></td>
+
+            <td th:if="${blogVo.authority}==0">所有人可见</td>
+            <td th:if="${blogVo.authority}==1">仅会员可见</td>
+
+
+            <td th:if="${blogVo.isTransshipment}==0">原创</td>
+            <td th:if="${blogVo.isTransshipment}==1">转载</td>
+
+            <td id="recommendId" th:if="${blogVo.isRecommend}==0">否</td>
+            <td id="recommendId" th:if="${blogVo.isRecommend}==1">是</td>
+
             <td th:text="${blogVo.userId}"></td>
-            <td th:text="${blogVo.isAudit}"></td>
-            <td th:text="${blogVo.deleted}"></td>
-            <td th:text="${blogVo.updateTime}"></td>
+
+            <td id="auditId" th:if="${blogVo.isAudit}==0">已审核</td>
+            <td id="auditId" style="color:#f00" th:if="${blogVo.isAudit}==1">待审核</td>
+
+            <td th:if="${blogVo.deleted}==0">正常</td>
+            <td style="color:#f00" th:if="${blogVo.deleted}==1">已删除</td>
+
+            <td th:text="${#dates.format(blogVo.updateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
             <td class="td-manage">
-                <a title="编辑" href="javascript:;" onclick="question_edit('编辑','question-edit.html','4','','510')"
-                   class="ml-5" style="text-decoration:none ;color: rgb(66, 139, 202);">
+                <a title="编辑" href="javascript:;" th:onclick="'blog_edit(\'编辑\',\'/admin/blog/toEditPage/'+${blogVo.id}+'\',\'1027\',\'768\')'" class="ml-5" style="text-decoration:none ;color: rgb(66, 139, 202);">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
-                <a title="删除" href="javascript:;" onclick="question_del(this,'1')"
+                <a title="删除" href="javascript:;" th:onclick="'blog_del(this,\''+${blogVo.id}+'\')'"
                    style="text-decoration:none;color: rgb(66, 139, 202);">
                     <i class="layui-icon">&#xe640;</i>
                 </a>
@@ -159,35 +174,101 @@
             })
             layui.layer.full(index);*/
 
-            //批量删除提交
-            function delAll () {
-                layer.confirm('确认要删除吗？',function(index){
-                    //捉到所有被选中的，发异步进行删除
-                    layer.msg('删除成功', {icon: 1});
+
+        });
+
+        $(function () {
+            $("#selectAll").change(function() {
+                if ($(this).prop("checked")) {  // 因jquery版本原因，此处用$(this).attr("checked")拿不到是否选中状态，改用prop后可正常使用
+                    $("input[name=blogCheckbox]").each(function() {
+                        $(this).prop("checked", true);
+                    });
+                } else {
+                    $("input[name=blogCheckbox]").each(function() {
+                        $(this).prop("checked", false);
+                    });
+                }
+            });
+        });
+
+        function getCheckedboxValue() {
+            var ckbValue = "";
+            $("input[name=blogCheckbox]:checked").each(function () {
+                ckbValue = ckbValue + $(this).val() + ",";
+            });
+            return ckbValue.substring(0, ckbValue.length - 1);
+
+        };
+
+        $(".recommend").click(function () {
+            var blogIds = getCheckedboxValue();
+            if(blogIds == ''){
+                layer.msg('请先选中要推荐的博客', {icon: 5,time:1000});
+                return ;
+            }
+            if(blogIds.indexOf(',') > 0){
+                layer.msg('每次最多只能选择一篇博文进行推荐', {icon: 5,time:1000});
+                return ;
+            }
+            layer.confirm('确认要推荐吗？',function(index){
+                $.ajax({
+                    url:"/admin/blog/recommend/"+blogIds,
+                    data:'',
+                    type:"Post",
+                    dataType:"json",
+                    success:function(res){
+                        if(res.returnCode == 200){
+                            layer.msg('推荐成功!',{icon:1,time:1000});
+                            $("input[name=blogCheckbox]:checked").each(function () {
+                                $(this).parents("tr").find("#recommendId").text('是');
+                            });
+                        }else{
+                            layer.msg(res.returnMsg,{icon:5,time:1000});
+                        }
+                    },
+                    error:function(data){
+                        layer.msg('错误','推荐失败');
+                    }
                 });
+            });
+        });
+        $(".audit_btn").click(function () {
+            var blogIds = getCheckedboxValue();
+            if(blogIds == ''){
+                layer.msg('请先选中要审核的博客', {icon: 5,time:1000});
+                return ;
+            }
+            if(blogIds.indexOf(',') > 0){
+                layer.msg('每次最多只能选择一篇博文进行审核', {icon: 5,time:1000});
+                return ;
             }
 
-            function question_show (argument) {
-                layer.msg('可以跳到前台具体问题页面',{icon:1,time:1000});
-            }
-            /*添加*/
-            function question_add(title,url,w,h){
-                x_admin_show(title,url,w,h);
-            }
-            //编辑
-            function question_edit (title,url,id,w,h) {
-                x_admin_show(title,url,w,h);
-            }
-
-            /*删除*/
-            function question_del(obj,id){
-                layer.confirm('确认要删除吗？',function(index){
-                    //发异步删除数据
-                    $(obj).parents("tr").remove();
-                    layer.msg('已删除!',{icon:1,time:1000});
+            layer.confirm('确认要审核吗？',function(index){
+                $.ajax({
+                    url:"/admin/blog/audit/"+blogIds,
+                    data:'',
+                    type:"Post",
+                    dataType:"json",
+                    success:function(res){
+                        if(res.returnCode == 200){
+                            // $(obj).parents("tr").remove();
+                            layer.msg('审核成功!',{icon:1,time:1000});
+                            $("input[name=blogCheckbox]:checked").each(function () {
+                                $(this).parents("tr").find("#auditId").text('已审核');
+                                $(this).parents("tr").find("#auditId").css('color','#000');
+                            });
+                        }else{
+                            layer.msg(res.returnMsg,{icon:5,time:1000});
+                        }
+                    },
+                    error:function(data){
+                        layer.msg('错误','审核失败');
+                    }
                 });
-            }
-        })
+            });
+        });
+
+
 
         /*var start = {
             min: laydate.now()
@@ -218,6 +299,44 @@
         }*/
     });
 
+    function blog_edit (title,url,w,h) {
+        x_admin_show(title,url,w,h);
+    }
+
+    //批量删除提交
+    function delAll () {
+        layer.confirm('确认要删除吗？',function(index){
+            //捉到所有被选中的，发异步进行删除
+            layer.msg('删除成功', {icon: 1});
+        });
+    }
+
+    function blog_show (argument) {
+        layer.msg('可以跳到前台具体问题页面',{icon:1,time:1000});
+    }
+
+    /*删除*/
+    function blog_del(obj,id){
+        layer.confirm('确认要删除吗？',function(index){
+            $.ajax({
+                url:"/admin/blog/del/"+id,
+                data:'',
+                type:"Post",
+                dataType:"json",
+                success:function(res){
+                    if(res.count > 0){
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!',{icon:1,time:1000});
+                    }else{
+                        layer.msg('删除失败!',{icon:5,time:1000});
+                    }
+                },
+                error:function(data){
+                    layer.msg('错误','删除失败');
+                }
+            });
+        });
+    }
 
 </script>
 
