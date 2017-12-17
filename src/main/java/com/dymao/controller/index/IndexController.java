@@ -38,6 +38,17 @@ public class IndexController {
      */
     @RequestMapping(value = "/")
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
+        request.getSession().setAttribute("currentDate", DateUtils.getStringDate(new Date(),DateUtils.DATE_YYYY_MM_DD_WEEK));
+        request.getSession().setAttribute("DailySentence","你是我人生中唯一的主角，我却只能是你故事中的一晃而过的路人甲");
+        return "index";
+    }
+    /**
+     * 首页
+     * @return
+     */
+    @RequestMapping(value = "/welcome")
+    public String welcome(Model model, HttpServletRequest request, HttpServletResponse response) {
+
         //获取系统时间
         List<Banner> bannerList = bannerService.findBannerList();
 
@@ -50,9 +61,7 @@ public class IndexController {
         model.addAttribute("bannerList",bannerList);
 
         model.addAttribute("blogList",blogList);
-        request.getSession().setAttribute("currentDate", DateUtils.getStringDate(new Date(),DateUtils.DATE_YYYY_MM_DD_WEEK));
-        request.getSession().setAttribute("DailySentence","你是我人生中唯一的主角，我却只能是你故事中的一晃而过的路人甲");
-        return "index";
+        return "welcome";
     }
 
 }

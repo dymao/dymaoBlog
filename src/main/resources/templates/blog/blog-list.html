@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="shortcut icon"  type="image/x-icon" th:href="@{/images/icon/favicon.ico}" />
+<div th:include="/common/common_head::common_head('Mervin的技术博客')"></div>
+<body>
+<header class="am-topbar am-topbar-inverse nav-style">
+    <div th:include="/common/menu::top">
+    </div>
+</header>
+<section class="container user-select">
+  <!--/超小屏幕可见-->
+  <div class="content-wrap"><!--内容-->
+    <div class="content">
+      <div class="content-block new-content">
+        <h2 class="title"><strong>博文列表</strong></h2>
+          <div class="inner-box blog-img am-gallery-item " th:each="blog : ${blogList}">
+            <div class="am-g">
+              <div class="col-md-2">
+                <a class="blog-a-curse" href="#">
+                  <img class="am_img animated" th:alt="${blog.title}" th:src="@{${blog.image}}" style="display: inline;" />
+                </a>
+              </div>
+              <div class="col-md-10">
+                <div class="blog-header">
+                  <span class="index-label index-label-blog" th:text="${blog.categoryOneName}"></span>
+                  <a href="#" class="blog-category"  th:text="${blog.categoryTwoName}"></a>
+                  <h3><a href="#" th:text="${blog.title}"></a></h3>
+                </div>
+                  <p class="blog-ext">
+                    <span class="blog-ext-ico">
+                        <i class="glyphicon glyphicon-user"></i>
+                       <span th:text="${blog.userId}"></span>
+                    </span>
+                    <span class="blog-ext-ico"><i class="glyphicon glyphicon-time"></i><span class="list-date" th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd')}"></span></span>
+                    <span class="blog-ext-ico">
+                        <i class="glyphicon glyphicon-eye-open"></i>
+                        <span th:text="'共'+${blog.viewNum}+'人围观'"></span>
+                    </span>
+                </p>
+                <p class="blog-content-show" th:text="${blog.contentShow}">
+                </p>
+                <!--<span style="color:#999;font-size:16px;margin-top: 11px"  class="glyphicon glyphicon-thumbs-up" th:text="'('+${blog.likeNum}+')'" ></span><span style="color:#999;font-size:16px;margin-top: 11px;margin-left: 10px;"  class="glyphicon glyphicon-thumbs-down" th:text="'('+${blog.treadNum}+')'" ></span>-->
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div th:include="/common/right::right"></div>
+  <!--/右侧>992px显示-->
+</section>
+<div th:include="/common/footer::copyright"></div>
+<div th:include="/common/footer_js::footer_js"></div>
+</body>
+<script type="javascript">
+    function sub(){
+        $(window.parent.document).find("#iframe").attr("src", "video/index");
+    }
+</script>
+
+</html>
