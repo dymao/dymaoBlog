@@ -3,15 +3,15 @@
 <link rel="shortcut icon"  type="image/x-icon" th:href="@{/images/icon/favicon.ico}" />
 <div th:include="/common/common_head::common_head('Mervin的技术博客')"></div>
 <body>
-<section class="container user-select">
-  <header>
+<header class="am-topbar am-topbar-inverse nav-style">
     <div th:include="/common/menu::left">
     </div>
-  </header>
+</header>
+<section class="container user-select">
   <!--/超小屏幕可见-->
   <div class="content-wrap"><!--内容-->
     <div class="content">
-      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel"> <!--banner-->
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="margin-top: 45px;"> <!--banner-->
         <ol class="carousel-indicators">
           <li th:each="bannerSn,iterStat1:${bannerList}" th:if="${iterStat1.first}" data-target="#carousel-example-generic" th:attr="data-slide-to=${iterStat1.index},class='active'"></li>
           <li th:each="bannerSn,iterStat1:${bannerList}" th:unless="${iterStat1.first}" data-target="#carousel-example-generic" th:attr="data-slide-to=${iterStat1.index}" ></li>
@@ -31,12 +31,12 @@
         <h2 class="title"><strong>最新文章</strong></h2>
           <div class="inner-box blog-img am-gallery-item " th:each="blog : ${blogList}">
             <div class="am-g">
-              <div class="col-md-4">
+              <div class="col-md-2">
                 <a class="blog-a-curse" href="#">
-                  <img class="am_img animated" alt="常用 Git 命令清单" th:src="@{${blog.image}}" style="display: inline;" />
+                  <img class="am_img animated" th:alt="${blog.title}" th:src="@{${blog.image}}" style="display: inline;" />
                 </a>
               </div>
-              <div class="col-md-8">
+              <div class="col-md-10">
                 <div class="blog-header">
                   <span class="index-label index-label-blog" th:text="${blog.categoryOneName}"></span>
                   <a href="#" class="blog-category"  th:text="${blog.categoryTwoName}"></a>
@@ -50,24 +50,24 @@
                     <span class="blog-ext-ico"><i class="glyphicon glyphicon-time"></i><span class="list-date" th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd')}"></span></span>
                     <span class="blog-ext-ico">
                         <i class="glyphicon glyphicon-eye-open"></i>
-                        <span th:text="${blog.viewNum}"></span>
+                        <span th:text="'共'+${blog.viewNum}+'人围观'"></span>
                     </span>
                 </p>
                 <p class="blog-content-show" th:text="${blog.contentShow}">
                 </p>
-                <span style="color:#999;font-size:16px;margin-top: 11px"  class="glyphicon glyphicon-thumbs-up" th:text="'('+${blog.likeNum}+')'" ></span><span style="color:#999;font-size:16px;margin-top: 11px;margin-left: 10px;"  class="glyphicon glyphicon-thumbs-down" th:text="'('+${blog.treadNum}+')'" ></span>
+                <!--<span style="color:#999;font-size:16px;margin-top: 11px"  class="glyphicon glyphicon-thumbs-up" th:text="'('+${blog.likeNum}+')'" ></span><span style="color:#999;font-size:16px;margin-top: 11px;margin-left: 10px;"  class="glyphicon glyphicon-thumbs-down" th:text="'('+${blog.treadNum}+')'" ></span>-->
               </div>
             </div>
           </div>
-        <div class="quotes" style="margin-top:15px"><span class="disabled">首页</span><span class="disabled">上一页</span><span class="current">1</span><a href="">2</a><a href="">下一页</a><a href="">尾页</a></div>
+        <!--<div class="quotes" style="margin-top:15px"><span class="disabled">首页</span><span class="disabled">上一页</span><span class="current">1</span><a href="">2</a><a href="">下一页</a><a href="">尾页</a></div>-->
       </div>
     </div>
   </div>
   <div th:include="/common/right::right"></div>
   <!--/右侧>992px显示-->
-  <div th:include="/common/footer::copyright"></div>
 </section>
-  <div th:include="/common/footer_js::footer_js"></div>
+<div th:include="/common/footer::copyright"></div>
+<div th:include="/common/footer_js::footer_js"></div>
 </body>
 <script type="javascript">
     function sub(){

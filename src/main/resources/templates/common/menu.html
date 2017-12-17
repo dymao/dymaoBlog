@@ -2,40 +2,92 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
   <div th:fragment="left">
-    <div class="hidden-xs header"><!--超小屏幕不显示-->
-      <h1 class="logo"><a href="../index.html" title="深蓝的星空"><span class="logo_say1">淡泊明志</span><span class="logo_say2">宁静致远</span></a></h1>
-      <ul class="nav hidden-xs-nav">
-        <li class="active"><a href="/"><span class="glyphicon glyphicon-home"></span>博客首页</a></li>
-        <li><a href=""><span class="glyphicon glyphicon-erase"></span>技术分享</a></li>
-        <li><a href=""><span class="glyphicon glyphicon-comment"></span>生活杂谈</a></li>
-        <li><a th:href="@{/video/index}" href="/video/index"><span class="glyphicon glyphicon-facetime-video"></span>视频分享</a></li>
-        <li><a href="friendly.html"><span class="glyphicon glyphicon-envelope"></span>网友留言</a></li>
-        <li><a href="about.html"><span class="glyphicon glyphicon-user"></span>关于作者</a></li>
-      </ul>
-      <div class="feeds"> <a class="feed feed-xlweibo" href="" target="_blank"><i></i>新浪微博</a> <a class="feed feed-txweibo" href="" target="_blank"><i></i>腾讯微博</a> <a class="feed feed-rss" href="" target="_blank"><i></i>订阅本站</a> <a class="feed feed-weixin" data-toggle="popover" data-trigger="hover" title="微信扫一扫" data-html="true" data-content="" href="javascript:;" target="_blank"><i></i>关注微信</a> </div>
-      <div class="wall"><a href="readerWall.html" target="_blank">读者墙</a> | <a href="tags.html" target="_blank">标签云</a></div>
-    </div>
-    <!--/超小屏幕不显示-->
-    <div class="visible-xs header-xs"><!--超小屏幕可见-->
-      <div class="navbar-header header-xs-logo">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-xs-menu" aria-expanded="false" aria-controls="navbar"><span class="glyphicon glyphicon-menu-hamburger"></span></button>
-      </div>
-      <div id="header-xs-menu" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav header-xs-nav">
-          <li class="active"><a href="/"><span class="glyphicon glyphicon-home"></span>博客首页</a></li>
-          <li><a href=""><span class="glyphicon glyphicon-erase"></span>技术分享</a></li>
-          <li><a href=""><span class="glyphicon glyphicon-comment"></span>生活杂谈</a></li>
-          <li><a th:href="@{/video/index}" href="/video/index"><span class="glyphicon glyphicon-facetime-video"></span>视频分享</a></li>
-          <li><a href="friendly.html"><span class="glyphicon glyphicon-envelope"></span>网友留言</a></li>
-          <li><a href="about.html"><span class="glyphicon glyphicon-user"></span>关于作者</a></li>
+    <div class="am-container">
+      <h1 class="am-topbar-brand">
+        <a href="/" class="am-topbar-logo">
+          深蓝的星空
+        </a>
+      </h1>
+      <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+              data-am-collapse="{target: '#doc-topbar-collapse-5'}">
+            <span class="am-sr-only">
+                	导航切换
+            </span>
+            <span class="am-icon-bars">
+            </span>
+      </button>
+      <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse-5">
+        <ul class="am-nav am-nav-pills am-topbar-nav">
+          <li id="header-index">
+            <a href="/" >
+              首页
+            </a>
+          </li>
+          <li class="am-dropdown" data-am-dropdown="" id="header-blog">
+            <a class="am-dropdown-toggle" id="header-blog-first"  data-am-dropdown-toggle=""  href="javascript:;">
+              技术博客
+                        <span class="am-icon-caret-down">
+                        </span>
+            </a>
+            <ul class="am-dropdown-content">
+              <li>
+                <a href="${base}/blog/">
+                  博客列表
+                </a>
+              </li>
+              <li>
+                <a href="${base}/blog?ranktype=latest">
+                  前端技术
+                </a>
+              </li>
+              <li>
+                <a href="${base}/blog?ranktype=hot">
+                  后台技术
+                </a>
+              </li>
+              <li>
+                <a href="${base}/blog?ranktype=hot">
+                  其他
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li id="header-beauty">
+            <a href="${base}/beauty/" >
+              生活分享
+            </a>
+          </li>
+          <li id="header-video">
+            <a href="${base}/video/" >
+              音乐台
+            </a>
+          </li>
+
+          <li id="header-liuyanban">
+            <a href="${base}/liuyanban/" >
+              留言板
+            </a>
+          </li>
+          <li class="am-dropdown am-right" data-am-dropdown="">
+            <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+              系统
+                        <span class="am-icon-caret-down">
+                        </span>
+            </a>
+            <ul class="am-dropdown-content">
+              <li>
+                <a href="javascript:void(0)" onclick="logout();">
+                  注销
+                </a>
+              </li>
+              <li>
+                <a href="${base}/admins/">
+                  后台
+                </a>
+              </li>
+            </ul>
+          </li>
         </ul>
-        <form class="navbar-form" action="search.php" method="post" style="padding:0 25px;">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="请输入关键字" />
-            <span class="input-group-btn" >
-            <button class="btn btn-default btn-search" type="submit">搜索</button>
-            </span> </div>
-        </form>
       </div>
     </div>
   </div>

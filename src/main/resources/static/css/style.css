@@ -207,7 +207,7 @@ body, input, button, textarea, select {
 }
 .content {
 	margin-right: 320px;
-	margin-left: 190px;
+	/*margin-left: 190px;*/
 	padding: 10px 20px 0;
 	min-height: 800px;
 	overflow: hidden;
@@ -981,6 +981,7 @@ textarea::-webkit-scrollbar-thumb {
 /*每日一句开始*/
 .sidebar .sentence {
 	margin-bottom: 20px;
+	margin-top: 35px;
 	position: relative;
 	padding: 30px 10px 10px 10px;
 	border: 1px solid #EEE;
@@ -1012,7 +1013,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 /*搜索表单样式开始*/
 .sidebar .search {
-	position: absolute;
+	/*position: absolute;*/
 	width: 300px;
 }
 .shadow {
@@ -1052,9 +1053,9 @@ textarea::-webkit-scrollbar-thumb {
 	border: #3399CC solid 1px;
 }
 /*热门推荐样式开始*/
-.sidebar .recommend {
-	margin-top: 125px;/*由于搜索块绝对定位，所以必须加此属性*/
-}
+/*.sidebar .recommend {*/
+	/*margin-top: 125px;!*由于搜索块绝对定位，所以必须加此属性*!*/
+/*}*/
 .sidebar .recommend ul li a:hover {
 	color: #3399CC;
 }
@@ -1116,7 +1117,7 @@ textarea::-webkit-scrollbar-thumb {
 	clear: both;
 	color: #AAA;
 	position: relative;
-	margin-left: 215px;
+	/*margin-left: 215px;*/
 	margin-right: 20px;
 	text-align: center;
 	padding: 20px 0 30px 20px;
@@ -1249,7 +1250,7 @@ h3 a:hover{
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display: -webkit-box;
-		-webkit-line-clamp: 4; /* 这个表示要显示几行 */
+		-webkit-line-clamp: 2; /* 这个表示要显示几行 */
 		-webkit-box-orient: vertical;
 	}
 	.blog-keyword-show{
@@ -1290,7 +1291,7 @@ h3 a:hover{
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;
-	-webkit-line-clamp: 4; /* 这个表示要显示几行 */
+	-webkit-line-clamp: 2; /* 这个表示要显示几行 */
 	-webkit-box-orient: vertical;
 }
 
@@ -1366,3 +1367,66 @@ h3 a:hover{
 .am_imglist_user_ico img { width: 20px;height: 20px; border-radius:50%;}
 .am_imglist_user_font { font-size: 12px;}
 .am_listimg_info .am_imglist_time { position: absolute; bottom: 11px; right:10px; margin-right:0;}
+
+.friendLink {
+	clear: both;
+	position: relative;
+	margin-bottom: 15px;
+	background-color: #fff;
+	border-radius: 4px;
+	border: 1px solid #eaeaea;
+	overflow: hidden;
+}
+.friendLink ul{
+	padding: 10px 0 10px 15px;
+	color: #999;
+	font-size: 14px
+}
+.friendLink ul li{
+	width: 48.3333%;
+	float: left;
+	padding: 0;
+	border-bottom: none;
+	margin-bottom: 5px;
+	overflow: hidden;
+	list-style: none;
+	text-align: center;
+}
+.friendLink li a{
+	color: #777;
+	background-color: #f6f6f6;
+	border: 1px solid #f6f6f6;
+	padding: 0px !important;
+	font-size: 12px;
+	height: 29px;
+	line-height: 29px;
+	overflow: hidden;
+	display: inline-block;
+	margin-right: 15px;
+	min-height: 35px !important;
+}.friendLink li a:hover{
+	background-color: #3399CC !important;
+	 color: #ffffff !important;
+}
+ .nav-style{
+	 position: fixed !important;
+	 width: 100%;
+	 margin-bottom: 30px;
+	 z-index: 999
+ }
+.cloud { width: 100%; clear: both; overflow: hidden }
+.cloud h3 { line-height: 40px; color: #38485A; font-size: 18px; border-bottom: 1px solid #E6E6E6; height: 40px; }
+.cloud ul { margin: 20px 0 }
+.cloud ul li { line-height: 24px; height: 30px; display: block; background: #999; float: left; padding: 3px 11px; margin: 10px 10px 0 0; border-radius: 8px; -moz-transition: all 0.5s; -webkit-transition: all 0.5s; -o-transition: all 0.5s; transition: all 0.5s; }
+.cloud ul li a { color: #FFF!important; display: inline !important; border-bottom: none !important;}
+.cloud ul li:nth-child(8n-7) { background: #8A9B0F }
+.cloud ul li:nth-child(8n-6) { background: #3bb4f2 }
+.cloud ul li:nth-child(8n-5) { background: #3FB8AF }
+.cloud ul li:nth-child(8n-4) { background: #A576F7 }
+.cloud ul li:nth-child(8n-3) { background: #FC9D9A }
+.cloud ul li:nth-child(8n-2) { background: #EDC951 }
+.cloud ul li:nth-child(8n-1) { background: #C8C8A9 }
+.cloud ul li:nth-child(8n) { background: #83AF9B }
+.cloud ul li:first-child { background: #036564 }
+.cloud ul li:last-child { background: #3299BB }
+.cloud ul li:hover { border-radius: 0; text-shadow: #000 1px 1px 1px }
