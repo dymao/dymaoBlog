@@ -19,7 +19,7 @@
                         敬请期待！
                     </div>
                     <div data-tab-panel-1 class="am-tab-panel ">
-                        【彩虹】那时候有多好，任雨打湿裙角。忍不住哼起，心爱的旋律。绿油油的树叶，自由地在说笑。燕子忙归巢，风铃在舞蹈。经过青春的草地，彩虹忽然升起。即使视线渐渐模糊，它也在我心里。就像爱过的旋律，没人能抹去。因为生命存在失望，歌唱，所以才要歌唱。
+                        敬请期待！
                     </div>
                     <div data-tab-panel-2 class="am-tab-panel ">
                         <div style="font-size: 18px;padding: 5px">
@@ -87,10 +87,7 @@
             <div class="sidebar-block friendLink">
                 <h2 class="title"><strong>友情链接</strong></h2>
                 <ul>
-                    <li><a href="http://qiusongsong.net/dh/" target="_blank">博客导航</a></li>
-                    <li><a href="http://bbs.tomoya.cn/" target="_blank">朋也社区</a></li>
-                    <li><a href="http://www.jfinal.com/" target="_blank">JFinal官网</a></li>
-                    <li><a href="http://amazeui.org/" target="_blank">Amaze UI</a></li>
+                    <li th:each="friendlink :${session.friendlinkList}"><a th:href="@{${friendlink.url}}"  target="_blank" th:text="${friendlink.title}"></a></li>
                 </ul>
             </div>
         </aside>

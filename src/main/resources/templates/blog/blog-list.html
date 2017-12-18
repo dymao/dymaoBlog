@@ -13,7 +13,7 @@
     <div class="content">
       <div class="content-block new-content">
         <h2 class="title"><strong>博文列表</strong></h2>
-          <div class="inner-box blog-img am-gallery-item " th:each="blog : ${blogList}">
+          <div class="inner-box blog-img am-gallery-item " th:each="blog : ${pageInfo.list}">
             <div class="am-g">
               <div class="col-md-2">
                 <a class="blog-a-curse" href="#">
@@ -24,7 +24,7 @@
                 <div class="blog-header">
                   <span class="index-label index-label-blog" th:text="${blog.categoryOneName}"></span>
                   <a href="#" class="blog-category"  th:text="${blog.categoryTwoName}"></a>
-                  <h3><a href="#" th:text="${blog.title}"></a></h3>
+                  <h3><a th:href="@{'/blog/detail/'+${blog.id}}" th:text="${blog.title}" ></a></h3>
                 </div>
                   <p class="blog-ext">
                     <span class="blog-ext-ico">
@@ -42,6 +42,34 @@
                 <!--<span style="color:#999;font-size:16px;margin-top: 11px"  class="glyphicon glyphicon-thumbs-up" th:text="'('+${blog.likeNum}+')'" ></span><span style="color:#999;font-size:16px;margin-top: 11px;margin-left: 10px;"  class="glyphicon glyphicon-thumbs-down" th:text="'('+${blog.treadNum}+')'" ></span>-->
               </div>
             </div>
+          </div>
+          <div>
+              <nav>
+                  <ul class="pagination" style="margin:0px;font-size: 13px;">
+                      <li><a th:href="@{${'/blog/list?'}+'pageNum=1&pageSize='+${pageInfo.pageSize}}">首页</a></li>
+
+                      <li>
+                          <a th:if="${not pageInfo.isFirstPage}" th:href="@{${'/blog/list?'}+'pageNum='+${pageInfo.pageNum-1}+'&pageSize='+${pageInfo.pageSize}}">上一页</a>
+                          <a th:if="${pageInfo.isFirstPage}" style="cursor: not-allowed;" href="javascript:void(0);">上一页</a>
+                      </li>
+
+                      <li th:each="pageNo : ${#numbers.sequence(1, pageInfo.pages)}">
+                          <a th:if="${pageInfo.pageNum eq pageNo}" href="javascript:void(0);" style="background-color: #ddd;">
+                              <span th:text="${pageNo}"></span>
+                          </a>
+
+                          <a th:if="${not (pageInfo.pageNum eq pageNo)}" th:href="@{'/blog/list?pageNum='+${pageNo}+'&pageSize='+${pageInfo.pageSize}}">
+                              <span th:text="${pageNo}"></span>
+                          </a>
+                      </li>
+                      <li>
+                          <a th:if="${not pageInfo.isLastPage}" th:href="@{'/blog/list?pageNum='+${pageInfo.pageNum+1}+'&pageSize='+${pageInfo.pageSize}}">下一页</a>
+                          <a th:if="${pageInfo.isLastPage}" style="cursor: not-allowed;" href="javascript:void(0);">下一页</a>
+                      </li>
+
+                      <li><a th:href="@{${'/blog/list?'}+'pageNum='+${pageInfo.pages}+'&pageSize='+${pageInfo.pageSize}}">尾页</a></li>
+                  </ul>
+              </nav>
           </div>
       </div>
     </div>

@@ -3,8 +3,10 @@ package com.dymao.controller.index;
 import com.dymao.common.Utils.DateUtils;
 import com.dymao.common.constants.Constant;
 import com.dymao.model.Banner;
+import com.dymao.model.FriendlyLink;
 import com.dymao.service.BannerService;
 import com.dymao.service.BlogService;
+import com.dymao.service.FriendLinkService;
 import com.dymao.vo.BlogVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,9 @@ public class IndexController {
 
     @Autowired
     private BlogService blogService;
+
+    @Autowired
+    private FriendLinkService friendLinkService;
     /**
      * 首页
      * @return
@@ -40,6 +45,9 @@ public class IndexController {
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
         request.getSession().setAttribute("currentDate", DateUtils.getStringDate(new Date(),DateUtils.DATE_YYYY_MM_DD_WEEK));
         request.getSession().setAttribute("DailySentence","你是我人生中唯一的主角，我却只能是你故事中的一晃而过的路人甲");
+
+        List<FriendlyLink> friendlinkList = friendLinkService.findFriendlinkList(new HashMap<>());
+        request.getSession().setAttribute("friendlinkList",friendlinkList);
         return "index";
     }
     /**

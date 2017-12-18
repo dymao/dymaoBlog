@@ -307,4 +307,32 @@
       </if>
     </where>
   </select>
+
+  <select id="selectPreBlog" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT ID,TITLE FROM BLOG
+      WHERE ID = (
+        select  MAX(id) from  blog  where  id <![CDATA[<]]> #{id,jdbcType=VARCHAR} and deleted = '0'  and is_audit = '0' and is_public ='0'  order by id desc
+    )
+  </select>
+  <select id="selectNextBlog" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT ID,TITLE FROM BLOG  WHERE ID = (
+      select  MIN(id)  from  blog  where  id > #{id,jdbcType=VARCHAR} and deleted = '0'  and is_audit = '0' and is_public ='0'  order by id
+     )
+  </select>
+
+  <!-- 更新浏览次数 -->
+  <update id="updateViewNumByPrimaryKey" parameterType="java.util.Map">
+    update blog  set view_num = view_num +1
+      where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 更新点赞次数 -->
+  <update id="updateLikeNumByPrimaryKey" parameterType="java.util.Map">
+    update blog  set like_num = like_num +1
+      where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 更新踩的次数 -->
+  <update id="updateTreadNumByPrimaryKey" parameterType="java.util.Map">
+    update blog  set tread_num = tread_num +1
+      where id = #{id,jdbcType=VARCHAR}
+  </update>
 </mapper>

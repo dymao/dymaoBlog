@@ -46,4 +46,30 @@ public class BlogServiceImpl  implements BlogService{
     public List<BlogVo> selectBlogList(Map map) {
         return blogMapper.selectBlogList(map);
     }
+
+    @Override
+    public Blog selectPreBlog(Map map) {
+        return blogMapper.selectPreBlog(map);
+    }
+
+    @Override
+    public Blog selectNextBlog(Map map) {
+        return blogMapper.selectNextBlog(map);
+
+    }
+
+    @Override
+    public int updateViewNumByPrimaryKey(Map map) {
+        return blogMapper.updateViewNumByPrimaryKey(map);
+    }
+
+    @Override
+    public int updateLikeNumByPrimaryKey(Map map) {
+        return blogMapper.updateLikeNumByPrimaryKey(map);
+    }
+
+    @Override
+    public int updateTreadNumByPrimaryKey(Map map) {
+        return blogMapper.updateTreadNumByPrimaryKey(map);
+    }
 }

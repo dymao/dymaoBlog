@@ -19,4 +19,14 @@ public interface BlogMapper {
     int updateByPrimaryKey(Blog blog);
 
     List<BlogVo> selectBlogList(Map map);
+
+    Blog selectPreBlog(Map map);
+
+    Blog selectNextBlog(Map map);
+
+    int updateViewNumByPrimaryKey(Map map);
+
+    int updateLikeNumByPrimaryKey(Map map);
+
+    int updateTreadNumByPrimaryKey(Map map);
 }

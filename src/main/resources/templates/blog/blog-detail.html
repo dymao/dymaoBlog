@@ -29,6 +29,10 @@
                </div>
                <hr class="blog-detail-hr"/>
             <p th:utext="${blog.content}"></p>
+             <div>
+                 <div>上一篇：<span th:if="${preBlog != null}"><a th:href="@{'/blog/detail/'+${preBlog.id}}" th:text="${preBlog.title}"></a></span> <span th:if="${preBlog == null}">没有了</span> </div>
+                 <div>下一篇：<span th:if="${nextBlog != null}"><a th:href="@{'/blog/detail/'+${nextBlog.id}}" th:text="${nextBlog.title}"></a></span> <span th:if="${nextBlog == null}">没有了</span></div>
+             </div>
            </div>
       </div>
     </div>
