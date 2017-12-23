@@ -43,7 +43,7 @@
 		<dependency>
 		    <groupId>com.github.pagehelper</groupId>
 		    <artifactId>pagehelper</artifactId>
-		    <!--<version>4.1.6</version>-->
+		    <version>4.1.6</version>
 		</dependency>
 
 		<dependency>
@@ -82,7 +82,25 @@
 			<version>1.9.22</version>
 		</dependency>
 
-</dependencies>
+		<!-- 图片验证码-->
+		<dependency>
+            <groupId>com.google.code</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>2.3.2</version>
+            <!--<exclusions>
+				<exclusion>
+					<artifactId>javax.servlet-api</artifactId>
+					<groupId>javax.servlet</groupId>
+				</exclusion>
+			</exclusions>-->
+		</dependency>
+        <dependency>
+            <groupId>com.jhlabs</groupId>
+            <artifactId>filters</artifactId>
+            <version>2.0.235</version>
+        </dependency>
+
+	</dependencies>
 
 	<build>
 		<plugins>

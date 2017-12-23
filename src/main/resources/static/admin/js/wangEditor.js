@@ -1339,7 +1339,7 @@ Panel.prototype = {
         // panel 的容器
         var $container = $('<div class="w-e-panel-container"></div>');
         var width = opt.width || 300; // 默认 300px
-        $container.css('width', width + 'px').css('margin-left', (0 - width) / 2 + 'px');
+        $container.css('width', width + 'px').css('margin-left', (0 - width) / 2+ 'px');
 
         // 添加关闭按钮
         var $closeBtn = $('<i class="w-e-icon-close w-e-panel-close"></i>');

@@ -39,4 +39,9 @@ public class Constant {
     public static final String BLOG_IS_AUDIT_0 = "0"; // 0 已审核
     public static final String BLOG_IS_AUDIT_1 = "1"; // 1 未审核
 
+    // 验证码验证返回状态 0：通过  1：验证码已失效  2：验证码错误
+    public static final Integer IMAGE_VRIFY_CODE_STATUS_0 = 0; // 通过
+    public static final Integer IMAGE_VRIFY_CODE_STATUS_1 = 1; // 验证码已失效
+    public static final Integer IMAGE_VRIFY_CODE_STATUS_2 = 2; // 验证码错误
+
 }

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="shortcut icon"  type="image/x-icon" th:href="@{/images/icon/favicon.ico}" />
+<div th:include="/common/common_head::common_head('深蓝的星空')"></div>
+
+<!--<link rel="stylesheet" th:href="@{/css/audio/mobile.css}">-->
+<!--音频播放器-->
+<script th:src="@{/admin/js/wangEditor.js}" charset="utf-8"></script>
+<body>
+<header class="am-topbar am-topbar-inverse nav-style">
+    <div th:include="/common/menu::top">
+    </div>
+</header>
+<section class="container user-select">
+  <!--/超小屏幕可见-->
+  <div class="content-wrap"><!--内容-->
+      <div class="content">
+        <div class="content-block new-content">
+            <div class="blog-detail-inner-box">
+              <!--<h2 class="title"><strong>留言板</strong></h2>-->
+              <form class="am-form">
+                  <input type="hidden" name="message" id="message" />
+                <fieldset>
+                    <legend><strong>留言板</strong></legend>
+                    <div class="am-input-group am-input-group-primary">
+                        <span class="am-input-group-label"><i class="am-icon-user"></i></span>
+                        <input type="text" name="nickName" class="am-form-field" placeholder="输入您的昵称">
+                    </div>
+                    <br/>
+                    <div class="am-input-group  am-input-group-primary">
+                        <span class="am-input-group-label"><i class="am-icon-envelope"></i></span>
+                        <input type="email" class="am-form-field" id="email" name="email" placeholder="输入电子邮箱">
+                    </div>
+                    <br/>
+                    <div class="am-input-group am-input-group-primary">
+                        <span class="am-input-group-label"><i class="am-icon-certificate "></i></span>
+                        <input type="text" name="checkCode" class="am-form-field" style="width: 49%" placeholder="输入图形验证码"> &nbsp;
+                        <img alt="验证码" onclick = "this.src='/imageToken/getImageToken?d='+new Date()*1" src="/imageToken/getImageToken" />
+                    </div>
+                    <br/>
+                    <div class="am-form-group">
+                        <div id="messageArea">
+                            <p></p>
+                        </div>
+                        <!--<textarea class="" id="messageArea" name="messageArea"  rows="6" id="doc-ta-1">请输入留言内容</textarea>-->
+                    </div>
+
+                    <p><button type="submit" id="submit" class="am-btn am-btn-default">提交</button></p>
+                </fieldset>
+            </form>
+           </div>
+        </div>
+    </div>
+  </div>
+  <div th:include="/common/right::right"></div>
+  <!--/右侧>992px显示-->
+</section>
+<div th:include="/common/footer::copyright"></div>
+<div th:include="/common/footer_js::footer_js"></div>
+<script>
+    var E = window.wangEditor;
+    var editor = new E('#messageArea');
+    editor.customConfig.menus = [ 'emoticon']
+    // 将 timeout 时间改为 30s
+    editor.create()
+
+    document.getElementById('submit').addEventListener('click', function () {
+        $("#message").val(editor.txt.html());
+    }, false)
+</script>
+</body>
+
+</html>
