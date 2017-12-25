@@ -1413,7 +1413,7 @@ h3 a:hover{
 	 position: fixed !important;
 	 width: 100%;
 	 margin-bottom: 30px;
-	 z-index: 999
+	 z-index: 10001
  }
 .cloud { width: 100%; clear: both; overflow: hidden }
 .cloud h3 { line-height: 40px; color: #38485A; font-size: 18px; border-bottom: 1px solid #E6E6E6; height: 40px; }
@@ -1456,4 +1456,9 @@ h3 a:hover{
 }.blog-detail-inner-box .blog-detail-numShow{
 	text-align: center;
 	font-size: 14px;
+}
+.am-btn-default {
+	color: #f8f8f8;
+	background-color: #15afef;
+	border-color: #e6e6e6;
 }

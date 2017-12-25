@@ -14,4 +14,6 @@ public interface IdCreateService {
     String getFriendlinkId();
 
     String getBlogId();
+
+    String getMessageId();
 }

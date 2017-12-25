@@ -17,4 +17,8 @@
       SELECT NEXTVAL('blogId');
   </select>
 
+  <select id="getMessageId" resultType="java.lang.String">
+      SELECT NEXTVAL('messageId');
+  </select>
+
 </mapper>

@@ -21,6 +21,7 @@ public class IdCreateServiceImpl implements IdCreateService {
     public static String SIGN_CODE_BlOG_CATEGORY = "1"; // 博客分类
     public static String SIGN_CODE_FRIEND_LINK = "2";   // 友情链接
     public static String SIGN_CODE_BLOG_ID = "3";       // 博客ID
+    public static String SIGN_CODE_MESSAGE_ID = "4";    // 留言ID
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
@@ -28,49 +29,61 @@ public class IdCreateServiceImpl implements IdCreateService {
 
     @Override
     public String getBannerId() {
-        String bannerId = DateUtils.getStringDate(new Date(),DateUtils.DATE_YYMMDD);
+        String dateStr = DateUtils.getStringDate(new Date(),DateUtils.DATE_YYMMDD);
         String seqId = commonMapper.getBannerId();
         if(seqId.length() < 5){
             seqId = StringUtils.leftPad(seqId,5,"0");
         }else if(seqId.length() > 5){
             seqId = StringUtils.substring(seqId,seqId.length()-5);
         }
-        return bannerId + seqId + SIGN_CODE_BANNER;
+        return dateStr + seqId + SIGN_CODE_BANNER;
     }
 
     @Override
     public String getCategoryId() {
-        String bannerId = DateUtils.getStringDate(new Date(),DateUtils.DATE_YYMMDD);
+        String dateStr = DateUtils.getStringDate(new Date(),DateUtils.DATE_YYMMDD);
         String seqId = commonMapper.getCategoryId();
         if(seqId.length() < 5){
             seqId = StringUtils.leftPad(seqId,5,"0");
         }else if(seqId.length() > 5){
             seqId = StringUtils.substring(seqId,seqId.length()-5);
         }
-        return bannerId + seqId + SIGN_CODE_BlOG_CATEGORY;
+        return dateStr + seqId + SIGN_CODE_BlOG_CATEGORY;
     }
 
     @Override
     public String getFriendlinkId() {
-        String bannerId = DateUtils.getStringDate(new Date(),DateUtils.DATE_YYMMDD);
+        String dateStr = DateUtils.getStringDate(new Date(),DateUtils.DATE_YYMMDD);
         String seqId = commonMapper.getFriendlinkId();
         if(seqId.length() < 5){
             seqId = StringUtils.leftPad(seqId,5,"0");
         }else if(seqId.length() > 5){
             seqId = StringUtils.substring(seqId,seqId.length()-5);
         }
-        return bannerId + seqId + SIGN_CODE_FRIEND_LINK;
+        return dateStr + seqId + SIGN_CODE_FRIEND_LINK;
     }
 
     @Override
     public String getBlogId() {
-        String bannerId = DateUtils.getStringDate(new Date(),DateUtils.DATE_YYMMDD);
-        String seqId = commonMapper.getFriendlinkId();
+        String dateStr = DateUtils.getStringDate(new Date(),DateUtils.DATE_YYMMDD);
+        String seqId = commonMapper.getBlogId();
         if(seqId.length() < 25){
             seqId = StringUtils.leftPad(seqId,25,"0");
         }else if(seqId.length() > 25){
             seqId = StringUtils.substring(seqId,seqId.length()-5);
         }
-        return bannerId + seqId + SIGN_CODE_BLOG_ID;
+        return dateStr + seqId + SIGN_CODE_BLOG_ID;
+    }
+
+    @Override
+    public String getMessageId() {
+        String dateStr = DateUtils.getStringDate(new Date(),DateUtils.DATE_YYMMDD);
+        String seqId = commonMapper.getMessageId();
+        if(seqId.length() < 25){
+            seqId = StringUtils.leftPad(seqId,25,"0");
+        }else if(seqId.length() > 25){
+            seqId = StringUtils.substring(seqId,seqId.length()-5);
+        }
+        return dateStr + seqId + SIGN_CODE_MESSAGE_ID;
     }
 }

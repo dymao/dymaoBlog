@@ -9,32 +9,34 @@
             </div>
             <div data-am-widget="tabs" style="width: 100%" class="am-tabs am-tabs-d2">
                 <ul class="am-tabs-nav am-cf">
-                    <li class="am-active"><a href="[data-tab-panel-0]">滚动播报</a></li>
+                    <!--<li class="am-active"><a href="[data-tab-panel-0]">滚动播报</a></li>-->
                     <li class=""><a href="[data-tab-panel-1]">天气</a></li>
                     <li class=""><a href="[data-tab-panel-2]">联系站长</a></li>
                     <li class=""><a href="[data-tab-panel-3]">赞助站长</a></li>
                 </ul>
                 <div class="am-tabs-bd">
-                    <div data-tab-panel-0 class="am-tab-panel am-active">
+                   <!-- <div data-tab-panel-0 class="am-tab-panel am-active">
                         敬请期待！
-                    </div>
+                    </div>-->
                     <div data-tab-panel-1 class="am-tab-panel ">
                         敬请期待！
                     </div>
                     <div data-tab-panel-2 class="am-tab-panel ">
                         <div style="font-size: 18px;padding: 5px">
                             <div><span style="font-weight: bold;padding-right: 15px;">Email:</span>dymaosuper@163.com</div>
-                            <div><span style="font-weight: bold;padding-right: 15px;">Q&nbsp;&nbsp;Q:</span>273880255</div>
+                            <div><span style="font-weight: bold;padding-right: 15px;">Q&nbsp;&nbsp;Q:</span>273780255</div>
                         </div>
                     </div>
                     <div data-tab-panel-3 class="am-tab-panel ">
-                        【歌唱】那时候有多好，任雨打湿裙角。忍不住哼起，心爱的旋律。绿油油的树叶，自由地在说笑。燕子忙归巢，风铃在舞蹈。经过青春的草地，彩虹忽然升起。即使视线渐渐模糊，它也在我心里。就像爱过的旋律，没人能抹去。因为生命存在失望，歌唱，所以才要歌唱。
+                        <span id="alipay"><img width="135px" alt="支付宝赞助站长" height="135px" th:src="@{/images/alipay.png}" /></span>
+                        <span id="wechat"><img width="135px" alt="微信赞助站长" height="135px" th:src="@{/images/wechat.png}" /></span>
+                        <div><span style="padding: 5px;color: #FF0000">站长将给您提供力所能及的帮助！</span></div>
                     </div>
                 </div>
             </div>
             <div id="search" class="sidebar-block search" role="search">
                 <h2 class="title"><strong>站内搜索</strong></h2>
-                <form class="navbar-form" action="search.php" method="post">
+                <form class="navbar-form" action="/" method="post">
                     <div class="input-group">
                           <input type="text" class="form-control" size="35" placeholder="请输入关键字" />
                           <span class="input-group-btn">

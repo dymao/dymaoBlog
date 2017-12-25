@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dymao.dao.mapper.AdminUserMapper">
+  <resultMap id="BaseResultMap" type="com.dymao.model.AdminUser">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="login_id" jdbcType="VARCHAR" property="loginId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="user_status" jdbcType="VARCHAR" property="userStatus" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, login_id, user_name, password, user_status, email, mobile, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from adminuser
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from adminuser
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dymao.model.AdminUser">
+    insert into adminuser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="loginId != null">
+        login_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="userStatus != null">
+        user_status,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="loginId != null">
+        #{loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null">
+        #{userStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.dymao.model.AdminUser">
+    update adminuser
+    <set>
+      <if test="loginId != null">
+        login_id = #{loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null">
+        user_status = #{userStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="queryUserByMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+         id, login_id, user_name, password,user_status
+      from adminuser
+     <where>
+       <if test="id != null">
+         #{id,jdbcType=VARCHAR}
+       </if>
+       <if test="loginId != null">
+         and login_id = #{loginId,jdbcType=VARCHAR}
+       </if>
+       <if test="userName != null">
+         and user_name = #{userName,jdbcType=VARCHAR}
+       </if>
+       <if test="userStatus != null">
+         and user_status = #{userStatus,jdbcType=VARCHAR}
+       </if>
+     </where>
+  </select>
+</mapper>

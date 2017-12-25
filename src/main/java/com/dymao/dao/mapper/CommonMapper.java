@@ -13,4 +13,5 @@ public interface CommonMapper {
     String getCategoryId();
     String getFriendlinkId();
     String getBlogId();
+    String getMessageId();
 }

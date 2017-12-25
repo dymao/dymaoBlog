@@ -9,7 +9,7 @@
   <div class="layui-header header header-demo">
     <div class="layui-main">
     <div class="admin-logo-box">
-				<a class="logo" th:href="@{/admin}" title="logo">XXXXX后台管理系统</a>
+				<a class="logo" th:href="@{/admin}" title="logo">博客后台管理系统</a>
 				<div class="larry-side-menu">
 					<i class="fa fa-th-large" aria-hidden="true"></i>
 				</div>
@@ -20,8 +20,8 @@
           <dl class="layui-nav-child">
             <!-- 二级菜单 -->
             <dd><a href="">个人信息</a></dd>
-            <dd><a href="">切换帐号</a></dd>
-            <dd><a href="./login.html">退出</a></dd>
+            <dd><a th:href="@{/admin/loginOut}">切换帐号</a></dd>
+            <dd><a th:href="@{/admin/loginOut}">退出</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item x-index"><a href="/">前台首页</a></li>

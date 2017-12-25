@@ -44,4 +44,14 @@ public class Constant {
     public static final Integer IMAGE_VRIFY_CODE_STATUS_1 = 1; // 验证码已失效
     public static final Integer IMAGE_VRIFY_CODE_STATUS_2 = 2; // 验证码错误
 
+    // 登录返回状态 0：通过  1：验证码已失效  2：验证码错误
+    public static final String LOGIN_VRRFY_STATUS_0 = "0"; // 通过
+    public static final String LOGIN_VRRFY_STATUS_1 = "1"; // 验证码失效
+    public static final String LOGIN_VRRFY_STATUS_2 = "2"; // 验证码错误
+    public static final String LOGIN_VRRFY_STATUS_3 = "3"; // 验证码为空
+    public static final String LOGIN_VRRFY_STATUS_4 = "4"; // 用户名或密码错误
+    public static final String LOGIN_VRRFY_STATUS_5 = "5"; // 用户已注销
+    public static final String LOGIN_VRRFY_STATUS_6 = "6"; // 用户已被冻结
+    public static final String LOGIN_VRRFY_STATUS_7 = "7"; // 用户已被锁定
+
 }

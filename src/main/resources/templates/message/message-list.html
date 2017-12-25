@@ -18,55 +18,144 @@
         <div class="content-block new-content">
             <div class="blog-detail-inner-box">
               <!--<h2 class="title"><strong>留言板</strong></h2>-->
-              <form class="am-form">
-                  <input type="hidden" name="message" id="message" />
+              <form class="am-form" action="/message/add" method="post">
+                  <input type="hidden" name="content" id="content" value="" />
                 <fieldset>
                     <legend><strong>留言板</strong></legend>
                     <div class="am-input-group am-input-group-primary">
                         <span class="am-input-group-label"><i class="am-icon-user"></i></span>
-                        <input type="text" name="nickName" class="am-form-field" placeholder="输入您的昵称">
+                        <input type="text" name="nickName" class="am-form-field" style="width: 60%" placeholder="输入您的昵称" maxlength="15" required/>
                     </div>
+                    <span th:if="${nickNameErrorMsg} != null" th:text="${nickNameErrorMsg}" style="color: #ff0000" ><br/></span>
                     <br/>
                     <div class="am-input-group  am-input-group-primary">
                         <span class="am-input-group-label"><i class="am-icon-envelope"></i></span>
-                        <input type="email" class="am-form-field" id="email" name="email" placeholder="输入电子邮箱">
+                        <input type="email" class="am-form-field" id="email" name="email" style="width: 60%" placeholder="输入电子邮箱">
                     </div>
                     <br/>
                     <div class="am-input-group am-input-group-primary">
                         <span class="am-input-group-label"><i class="am-icon-certificate "></i></span>
-                        <input type="text" name="checkCode" class="am-form-field" style="width: 49%" placeholder="输入图形验证码"> &nbsp;
+                        <input type="text" name="checkCode" class="am-form-field" style="width: 45%" placeholder="输入图形验证码" maxlength="4" required> &nbsp;
                         <img alt="验证码" onclick = "this.src='/imageToken/getImageToken?d='+new Date()*1" src="/imageToken/getImageToken" />
                     </div>
+                    <span th:if="${errorStatus ==1 }" style="color: #ff0000" ><br/>验证码超时</span>
+                    <span th:if="${errorStatus ==2 }" style="color: #ff0000" ><br/>验证码错误</span>
                     <br/>
-                    <div class="am-form-group">
-                        <div id="messageArea">
-                            <p></p>
+                    <div class="am-form-group" style="width: 85%">
+                        <div id="messageArea" >
                         </div>
-                        <!--<textarea class="" id="messageArea" name="messageArea"  rows="6" id="doc-ta-1">请输入留言内容</textarea>-->
                     </div>
-
+                    <span id="showTip" style="color: #FF0000"></span>
+                    <span th:if="${contentErrorMsg} != null" th:text="${contentErrorMsg}" style="color: #ff0000" ><br/></span>
                     <p><button type="submit" id="submit" class="am-btn am-btn-default">提交</button></p>
                 </fieldset>
             </form>
-           </div>
+            <legend><strong>最新留言</strong></legend>
+            <div th:if="${pageInfo.pages le 0}">
+                暂无留言数据
+            </div>
+            <div th:if="${pageInfo.pages gt 0}">
+                <div class="am-panel-bd am-cf am-collapse am-in" id="collapse-panel-3">
+                    <ul class="am-comments-list admin-content-comment">
+
+                        <li class="am-comment" th:each="message : ${pageInfo.list}">
+                            <img th:src="@{/images/user_logo.jpg}" alt="" class="am-comment-avatar" width="48" height="48">
+                            <div class="am-comment-main">
+                                <header class="am-comment-hd">
+                                    <div class="am-comment-meta">昵称是<span class="am-comment-author" th:text="${message.nickName}"></span> 的用户于 <time th:text="${#dates.format(message.createTime, 'yyyy-MM-dd HH:mm:ss')}"></time>留言：</div>
+                                </header>
+                                <div class="am-comment-bd"><p th:utext="${message.content}"></p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <nav>
+                    <ul class="pagination" style="margin:0px;font-size: 13px;">
+                        <li>
+                            <a th:if="${pageInfo.pages gt 1}" th:href="@{${'/message/list?'}+'pageNum=1&pageSize='+${pageInfo.pageSize}}">首页</a>
+                            <a th:if="${pageInfo.pages le 1}" style="cursor: not-allowed;" href="javascript:void(0);">首页</a>
+                        <li>
+                            <a th:if="${not pageInfo.isFirstPage}" th:href="@{${'/message/list?'}+'pageNum='+${pageInfo.pageNum-1}+'&pageSize='+${pageInfo.pageSize}}">上一页</a>
+                            <a th:if="${pageInfo.isFirstPage}" style="cursor: not-allowed;" href="javascript:void(0);">上一页</a>
+                        </li>
+                        <li th:if="${pageInfo.pages le 0}">
+                        </li>
+                         <li  th:each="pageNo : ${#numbers.sequence(1, pageInfo.pages)}">
+                             <a th:if="${pageInfo.pageNum eq pageNo}" href="javascript:void(0);" style="background-color: #ddd;">
+                                 <span th:text="${pageNo}"></span>
+                             </a>
+                             <a th:if="${not (pageInfo.pageNum eq pageNo)}" th:href="@{'/message/list?pageNum='+${pageNo}+'&pageSize='+${pageInfo.pageSize}}">
+                                 <span th:text="${pageNo}"></span>
+                             </a>
+                         </li>
+                        <li>
+                            <a th:if="${not pageInfo.isLastPage}" th:href="@{'/message/list?pageNum='+${pageInfo.pageNum+1}+'&pageSize='+${pageInfo.pageSize}}">下一页</a>
+                            <a th:if="${pageInfo.isLastPage}" style="cursor: not-allowed;" href="javascript:void(0);">下一页</a>
+                        </li>
+
+                        <li>
+                            <a th:if="${not (pageInfo.pageNum eq pageInfo.pages)}" th:href="@{${'/message/list?'}+'pageNum='+${pageInfo.pages}+'&pageSize='+${pageInfo.pageSize}}">尾页</a>
+                            <a th:if="${pageInfo.pageNum eq pageInfo.pages}" style="cursor: not-allowed;" href="javascript:void(0);">尾页</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+          </div>
         </div>
     </div>
   </div>
   <div th:include="/common/right::right"></div>
   <!--/右侧>992px显示-->
 </section>
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert-tip">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">提示信息</div>
+        <div class="am-modal-bd" id="tipText">
+            留言内容不能空！！！
+        </div>
+        <div class="am-modal-footer" id="my-alert-tip-close">
+            <span class="am-modal-btn" >知道了</span>
+        </div>
+    </div>
+</div>
 <div th:include="/common/footer::copyright"></div>
 <div th:include="/common/footer_js::footer_js"></div>
 <script>
     var E = window.wangEditor;
     var editor = new E('#messageArea');
     editor.customConfig.menus = [ 'emoticon']
-    // 将 timeout 时间改为 30s
-    editor.create()
+    editor.customConfig.onchange = function (html){
+        var maxlength = 1000;
+        var rem = maxlength - html.length;
+        if (rem <= 0){
+            $("#showTip").html("已超过最大限制输入字符数！！！");
+            var content = editor.txt.html();
+            var afterDealContent = content.substring(0,maxlength);
+            editor.txt.html(afterDealContent)
+            $("#content").val(afterDealContent);
+
+        }else{
+            $("#showTip").html("还可以输入" + rem + "个字符");
+        }
+    }
+    editor.create();
 
     document.getElementById('submit').addEventListener('click', function () {
-        $("#message").val(editor.txt.html());
-    }, false)
+        $("#content").val(editor.txt.html());
+        if($("#content").val() == '<p><br></p>'){
+            $('#my-alert-tip').modal('open');
+            return;
+        }
+    }, false);
+
+    $(function(){
+        $(".w-e-text-container").height(120);
+
+        $("#my-alert-tip-close").on('click', function() {
+            $('#my-alert-tip').modal('close');
+        });
+    });
 </script>
 </body>
 
