@@ -26,7 +26,7 @@ public class AdminIndexController {
      */
     @RequestMapping(value = "/admin")
     public String adminIndex(Model model, HttpServletRequest request, HttpServletResponse response) {
-    	if(request.getSession().getAttribute("userId") == null) {
+    	if(request.getSession().getAttribute("adminUser") == null) {
     		return "redirect:/admin/toLoginPage";
     	}
     	return "admin/index";

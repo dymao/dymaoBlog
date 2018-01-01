@@ -53,5 +53,6 @@ public class Constant {
     public static final String LOGIN_VRRFY_STATUS_5 = "5"; // 用户已注销
     public static final String LOGIN_VRRFY_STATUS_6 = "6"; // 用户已被冻结
     public static final String LOGIN_VRRFY_STATUS_7 = "7"; // 用户已被锁定
+    public static final String LOGIN_VRRFY_STATUS_8 = "8"; // 系统出错
 
 }

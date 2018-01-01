@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface UserManagerService {
 
-    String authenticate(User user)throws Exception;
+    String authenticate(User user,HttpServletRequest request)throws Exception;
 
     void initUser(User user,HttpServletRequest request) throws Exception;
 }

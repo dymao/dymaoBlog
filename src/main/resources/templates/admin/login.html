@@ -7,23 +7,26 @@
   <link rel="stylesheet" th:href="@{/admin/css/login.css}" media="all"/>
   <script type="text/javascript" th:src="@{/admin/js/jquery.min.js}"></script>
   <script th:src="@{/admin/lib/layui/layui.js}" charset="utf-8"></script>
+  <script th:src="@{/admin/js/security.js}"></script>
 </head>
 <body class="login-bg">
     <canvas id="fullstarbg">你的浏览器不支持canvas标签</canvas>
     <div class="login">
         <div class="message">博客后台管理系统登录</div>
         <div id="darkbannerwrap"></div>   
-        <form method="post" class="layui-form" >
-            <span th:if="${errorStatus =='1' }" style="color: #ff0000" ><br/>验证码失效</span>
-            <span th:if="${errorStatus =='2' }" style="color: #ff0000" ><br/>验证码错误</span>
-            <span th:if="${errorStatus =='3' }" style="color: #ff0000" ><br/>验证码不能为空</span>
-            <span th:if="${errorStatus =='4' }" style="color: #ff0000" ><br/>用户名或密码错误</span>
-            <span th:if="${errorStatus =='5' }" style="color: #ff0000" ><br/>用户已销户，请检查</span>
-            <span th:if="${errorStatus =='6' }" style="color: #ff0000" ><br/>您的用户已被冻结,详情请联系管理员</span>
-            <span th:if="${errorStatus =='7' }" style="color: #ff0000" ><br/>用户已被锁定，请稍后再试，如紧急，请联系管理员解锁</span>
-            <input name="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" />
+        <form class="layui-form" method="post" action="/admin/login" id="loginForm">
+            <span th:if="${errorStatus =='1' }" style="color: #ff0000;font-size: 15px;" ><br/>验证码失效</span>
+            <span th:if="${errorStatus =='2' }" style="color: #ff0000;font-size: 15px;" ><br/>验证码错误</span>
+            <span th:if="${errorStatus =='3' }" style="color: #ff0000;font-size: 15px;" ><br/>验证码不能为空</span>
+            <span th:if="${errorStatus =='4' }" style="color: #ff0000;font-size: 15px;" ><br/>用户名或密码错误</span>
+            <span th:if="${errorStatus =='5' }" style="color: #ff0000;font-size: 15px;" ><br/>用户已销户，请检查</span>
+            <span th:if="${errorStatus =='6' }" style="color: #ff0000;font-size: 15px;" ><br/>您的用户已被冻结,详情请联系管理员</span>
+            <span th:if="${errorStatus =='7' }" style="color: #ff0000;font-size: 15px;" ><br/>用户已被锁定，请稍后再试，如紧急，请联系管理员解锁</span>
+            <span th:if="${errorStatus =='8' }" style="color: #ff0000;font-size: 15px;" ><br/>系统错误，请稍后再试！</span>
+            <input name="loginId" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" />
             <hr class="hr15"/>
-            <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input"/>
+            <input name="password" type="hidden" id="password" >
+            <input name="passwordPlain" id="passwordPlain" lay-verify="required" placeholder="密码"  type="password" class="layui-input"/>
             <hr class="hr15"/>
             <input name="checkCode" placeholder="图形验证码"  style="display:inline;width: 48%"  type="text" lay-verify="required" class="layui-input" />
             <img alt="验证码" style="height: 49px;" onclick = "this.src='/imageToken/getImageToken?d='+new Date()*1" src="/imageToken/getImageToken" />
@@ -40,7 +43,34 @@
                 layer = layui.layer;
                 //监听提交
                 form.on('submit(login)',function(data) {
-                    location.href = "/admin/login?"+data.field;
+                    var str = $('#passwordPlain').val();
+                    console.log("str=="+str)
+
+                    $.ajax({
+                        type:"GET",
+                        url:"/admin/getLoginPublicKey",
+                        dataType: "json",
+                        success:function(rd){
+                            if(rd!=null){
+                                //加密模
+                                var Modulus = rd.Modulus;
+                                //公钥指数
+                                var public_exponent = rd.Exponent;
+                                console.log("Modulus="+Modulus+",public_exponent="+public_exponent);
+                                //通过模和公钥参数获取公钥
+                                var key = new RSAUtils.getKeyPair(public_exponent, "", Modulus);
+                                //颠倒密码的顺序，要不然后解密后会发现密码顺序是反的
+                                var reversedPwd = str.split("").reverse().join("");
+                                //对密码进行加密传输
+                                var encrypedPwd = RSAUtils.encryptedString(key,reversedPwd);
+
+                                console.log("after encrypt:"+encrypedPwd);
+                                $("#password").val(encrypedPwd);
+                                // location.href = "/admin/login";
+                                $("#loginForm").submit();
+                            }
+                        }
+                    })
                     return false;
                 });
 

@@ -1,8 +1,12 @@
 package com.dymao.service;
 
+import com.dymao.common.Utils.RSAUtils;
 import com.dymao.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.interfaces.RSAPrivateKey;
 
 /**
  * @author Mervin
@@ -11,23 +15,22 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class AbstractUserManagerService implements UserManagerService {
 
+    protected static final Logger logger = LoggerFactory.getLogger(AbstractUserManagerService.class);
+
     @Override
-    public final String authenticate(User user) throws Exception {
-        decryptUserPwd(user);
+    public final String authenticate(User user,HttpServletRequest request) throws Exception {
+        decryptUserPwd(user,request);
         return checkUser(user);
     }
 
-    @Override
-    public void initUser(User user, HttpServletRequest request) throws Exception {
-
-    }
+    public abstract void initUser(User user, HttpServletRequest request) throws Exception;
 
     /**
      * 解密用户的密码方法
      * @param user
      * @throws Exception
      */
-    protected abstract void  decryptUserPwd(User user) throws Exception;
+    protected abstract void  decryptUserPwd(User user,HttpServletRequest request) throws Exception;
 
     /**
      * 校验用户信息的方法
