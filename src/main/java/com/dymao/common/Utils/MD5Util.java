@@ -23,4 +23,9 @@ public class MD5Util {
 		return "";
 	}
 
+	public static void main(String[] args) {
+		String str = "1qaz!@#2wsx";
+		System.out.println(MD5Util.encrypt(str));
+	}
+
 }

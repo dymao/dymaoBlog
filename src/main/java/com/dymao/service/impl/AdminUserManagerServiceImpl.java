@@ -3,6 +3,7 @@ package com.dymao.service.impl;
 import com.dymao.common.Utils.MD5Util;
 import com.dymao.common.Utils.RSAUtils;
 import com.dymao.common.constants.Constant;
+import com.dymao.common.constants.Dict;
 import com.dymao.dao.mapper.AdminUserMapper;
 import com.dymao.model.AdminUser;
 import com.dymao.model.User;
@@ -72,6 +73,6 @@ public class AdminUserManagerServiceImpl extends AbstractUserManagerService {
         }
         AdminUser adminUser = adminUserMapper.selectByPrimaryKey(user.getId());
         HttpSession session = request.getSession();
-        session.setAttribute("adminUser",adminUser);
+        session.setAttribute(Dict.ADMIN_USER,adminUser);
     }
 }
