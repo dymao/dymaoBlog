@@ -20,6 +20,8 @@ public interface BlogMapper {
 
     List<BlogVo> selectBlogList(Map map);
 
+    List<Blog> selectHotBlogList(Map map);
+
     Blog selectPreBlog(Map map);
 
     Blog selectNextBlog(Map map);

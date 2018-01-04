@@ -48,6 +48,11 @@ public class BlogServiceImpl  implements BlogService{
     }
 
     @Override
+    public List<Blog> selectHotBlogList(Map map) {
+        return blogMapper.selectHotBlogList(map);
+    }
+
+    @Override
     public Blog selectPreBlog(Map map) {
         return blogMapper.selectPreBlog(map);
     }
