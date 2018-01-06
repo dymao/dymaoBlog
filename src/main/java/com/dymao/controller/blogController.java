@@ -9,6 +9,7 @@ import com.dymao.service.BlogService;
 import com.dymao.vo.BlogVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,12 +41,24 @@ public class blogController {
      * @return
      */
     @RequestMapping(value = "/list")
-    public String list(Model model, @RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize")Integer pageSize, HttpServletRequest request, HttpServletResponse response) {
+    public String list(Model model, String pageNum, String pageSize, String categoryIdOne,String categoryIdTwo) {
+        if(StringUtils.isEmpty(pageNum) || !StringUtils.isNumeric(pageNum)){
+            pageNum = "1";
+        }
+        if(StringUtils.isEmpty(pageSize) || !StringUtils.isNumeric(pageSize)){
+            pageSize = "10";
+        }
         Map paramMap = new HashMap();
         paramMap.put("isPublic", Constant.BLOG_IS_PUBLIC_0);
         paramMap.put("isAudit",Constant.BLOG_IS_AUDIT_0);
         paramMap.put("deleted",Constant.DELETE_FLAG_0);
-        PageHelper.startPage(pageNum,pageSize);
+        if(StringUtils.isNotBlank(categoryIdOne)){
+            paramMap.put("categoryIdOne",categoryIdOne);
+        }
+        if(StringUtils.isNotBlank(categoryIdTwo)){
+            paramMap.put("categoryIdTwo",categoryIdTwo);
+        }
+        PageHelper.startPage(Integer.valueOf(pageNum),Integer.valueOf(pageSize));
         List<BlogVo> blogList = blogService.selectBlogList(paramMap);
         PageInfo<BlogVo> pageInfo = new PageInfo<BlogVo>(blogList);
         model.addAttribute("pageInfo",pageInfo);
