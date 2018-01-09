@@ -12,7 +12,10 @@
   <div class="content-wrap"><!--内容-->
     <div class="content">
       <div class="content-block new-content">
-        <h2 class="title"><strong>博文列表</strong></h2>
+
+        <h2 th:if="${#strings.isEmpty(searchWord)}" class="title"><strong>博文列表</strong></h2>
+        <h2 th:if="${!#strings.isEmpty(searchWord)}"  class="title"><strong>搜索到关键字为"<span style="color: #FF0000" th:text="${searchWord}"></span>"的文章共<span th:text="${totalNum}"></span>篇</strong></h2>
+
           <div class="inner-box blog-img am-gallery-item " th:each="blog : ${pageInfo.list}">
             <div class="am-g">
               <div class="col-md-2">
@@ -22,7 +25,8 @@
               </div>
               <div class="col-md-10">
                 <div class="blog-header">
-                  <span class="index-label index-label-blog" th:text="${blog.categoryOneName}"></span>
+                    <span th:if="${blog.categoryIdOne=='1'}" class="index-label index-label-blog"  th:text="${blog.categoryOneName}"></span>
+                    <span th:if="${blog.categoryIdOne=='2'}" style="background-color: #3fb8af;"  class="index-label index-label-blog" th:text="${blog.categoryOneName}"></span>
                   <a href="#" class="blog-category"  th:text="${blog.categoryTwoName}"></a>
                   <h3><a th:href="@{'/blog/detail/'+${blog.id}}" th:text="${blog.title}" ></a></h3>
                 </div>
@@ -43,7 +47,7 @@
               </div>
             </div>
           </div>
-          <div>
+          <div th:if="${!#lists.isEmpty(pageInfo.list)}">
               <nav>
                   <ul class="pagination" style="margin:0px;font-size: 13px;">
                       <li><a th:href="@{${'/blog/list?'}+'pageNum=1&pageSize='+${pageInfo.pageSize}}">首页</a></li>

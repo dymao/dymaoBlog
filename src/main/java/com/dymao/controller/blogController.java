@@ -41,7 +41,7 @@ public class blogController {
      * @return
      */
     @RequestMapping(value = "/list")
-    public String list(Model model, String pageNum, String pageSize, String categoryIdOne,String categoryIdTwo) {
+    public String list(Model model, String pageNum, String pageSize, String categoryIdOne,String categoryIdTwo,String searchWord) {
         if(StringUtils.isEmpty(pageNum) || !StringUtils.isNumeric(pageNum)){
             pageNum = "1";
         }
@@ -52,6 +52,10 @@ public class blogController {
         paramMap.put("isPublic", Constant.BLOG_IS_PUBLIC_0);
         paramMap.put("isAudit",Constant.BLOG_IS_AUDIT_0);
         paramMap.put("deleted",Constant.DELETE_FLAG_0);
+        if(StringUtils.isNotBlank(searchWord)){
+            paramMap.put("searchWord",searchWord);
+            model.addAttribute("searchWord",searchWord);
+        }
         if(StringUtils.isNotBlank(categoryIdOne)){
             paramMap.put("categoryIdOne",categoryIdOne);
         }
@@ -62,6 +66,7 @@ public class blogController {
         List<BlogVo> blogList = blogService.selectBlogList(paramMap);
         PageInfo<BlogVo> pageInfo = new PageInfo<BlogVo>(blogList);
         model.addAttribute("pageInfo",pageInfo);
+        model.addAttribute("totalNum",pageInfo.getTotal());
         return "blog/blog-list";
     }
     /**

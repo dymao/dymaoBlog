@@ -305,6 +305,15 @@
       <if test="isAudit != null">
         and  is_audit = #{isAudit,jdbcType=VARCHAR}
       </if>
+      <if test="searchWord != null">
+        and (title like  CONCAT('%',#{searchWord},'%')
+      </if>
+      <if test="searchWord != null">
+        or content_show like CONCAT('%',#{searchWord},'%')
+      </if>
+      <if test="searchWord != null">
+        or content like CONCAT('%',#{searchWord},'%') )
+      </if>
     </where>
   </select>
 

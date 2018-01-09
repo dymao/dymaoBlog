@@ -204,7 +204,7 @@ body, input, button, textarea, select {
 .content-wrap {
 	width: 100%;
 	float: left;
-	margin-top: 46px;
+	margin-top: 105px;
 }
 .content {
 	margin-right: 320px;
@@ -223,6 +223,12 @@ body, input, button, textarea, select {
 .content {
 	margin: 0px;
 	padding: 10px 8px 0;
+
+}
+.content-wrap {
+ width: 100%;
+ float: left;
+ margin-top: 55px;
 }
 }
 /*banner样式开始*/
@@ -481,6 +487,11 @@ body, input, button, textarea, select {
 .news-list .news-info {
 	width: 100%;
 	padding: 0 15px;
+}
+.content-wrap {
+ width: 100%;
+ float: left;
+ margin-top: 55px;
 }
 }
 /*首页内容分页样式开始*/
@@ -936,7 +947,7 @@ textarea::-webkit-scrollbar-thumb {
 	margin-left: -320px;
 	width: 300px;
 	position: relative;
-	padding-top: 20px;
+	padding-top: 79px;
 }
 /*侧边栏公共样式开始*/
 .sidebar .sidebar-block {
