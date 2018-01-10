@@ -215,7 +215,7 @@ body, input, button, textarea, select {
 }
  @media (max-width: 1199px) {
 .content {
-	margin-right: 0px;
+	margin-right: -320px;
 	padding: 10px 15px 0;
 }
 }

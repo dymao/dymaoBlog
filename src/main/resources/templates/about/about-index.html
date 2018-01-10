@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="shortcut icon"  type="image/x-icon" th:href="@{/images/icon/favicon.ico}" />
+<div th:include="/common/common_head::common_head('深蓝的星空')"></div>
+<body>
+<header class="am-topbar am-topbar-inverse nav-style">
+    <div th:include="/common/menu::top">
+    </div>
+</header>
+<section class="container user-select">
+  <!--/超小屏幕可见-->
+  <div class="content-wrap"><!--内容-->
+      <div class="pageside">
+          <div class="pagemenus">
+              <ul class="pagemenu">
+                  <li><a href="/index.php/about/" draggable="false"><i class="fa fa-user"></i>&nbsp;&nbsp;关于站长</a></li>
+                  <li><a href="/index.php/works/" draggable="false"><i class="fa fa-tasks"></i>&nbsp;&nbsp;作品图集</a></li>
+                  <li><a href="/index.php/life/" draggable="false"><i class="fa fa-tags"></i>&nbsp;&nbsp;生活点滴</a></li>
+                  <li><a href="/index.php/music/" draggable="false"><i class="fa fa-music"></i>&nbsp;&nbsp;在线音乐台</a></li>
+                  <li><a href="/index.php/mianzeshenming/" draggable="false"><i class="fa fa-cogs"></i>&nbsp;&nbsp;免责申明</a></li>
+                  <li><a href="javascript:alert('正在完善！');" draggable="false"><i class="fa fa-flag"></i>&nbsp;&nbsp;广告服务</a></li>
+              </ul>
+          </div>
+      </div>
+    <div class="content">
+       <div class="content-block new-content">
+           <div class="blog-detail-inner-box">
+               <h2 >关于本站</h2>
+               <div class="blog-detail-numShow">
+                   <p class="blog-ext">
+                    <span class="blog-ext-ico">
+                        <i class="glyphicon glyphicon-user"></i>
+                      <!-- <span th:text="${blog.userId}"></span>-->
+                    </span>
+                       <!--<span class="blog-ext-ico"><i class="glyphicon glyphicon-time"></i><span class="list-date" th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span></span>-->
+                 <!--   <span class="blog-ext-ico">
+                        <i class="glyphicon glyphicon-eye-open"></i>
+                        <span th:text="'共'+${blog.viewNum}+'人围观'"></span>
+                    </span>-->
+                   </p>
+               </div>
+               <hr class="blog-detail-hr"/>
+          <!--  <p th:utext="${blog.content}"></p>-->
+           </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--<div th:include="/common/footer::copyright"></div>-->
+<div th:include="/common/footer_js::footer_js"></div>
+</body>
+<script type="javascript">
+</script>
+
+</html>
