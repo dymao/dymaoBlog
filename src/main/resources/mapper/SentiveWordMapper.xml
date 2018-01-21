@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dymao.dao.mapper.SentiveWordMapper">
+  <resultMap id="BaseResultMap" type="com.dymao.model.SentiveWord">
+    <id column="SENTIVE_ID" jdbcType="VARCHAR" property="sentiveId" />
+    <result column="SENTIVE_CONTENT" jdbcType="VARCHAR" property="sentiveContent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    SENTIVE_ID, SENTIVE_CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sentiveword
+    where SENTIVE_ID = #{sentiveId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sentiveword
+    where SENTIVE_ID = #{sentiveId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dymao.model.SentiveWord">
+    insert into sentiveword (SENTIVE_ID, SENTIVE_CONTENT)
+    values (#{sentiveId,jdbcType=VARCHAR}, #{sentiveContent,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.dymao.model.SentiveWord">
+    update sentiveword
+    set SENTIVE_CONTENT = #{sentiveContent,jdbcType=VARCHAR}
+    where SENTIVE_ID = #{sentiveId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findAll" parameterType="java.util.Map" resultType="java.lang.String">
+    select SENTIVE_CONTENT
+    from sentiveword
+  </select>
+</mapper>

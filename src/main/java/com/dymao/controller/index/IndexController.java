@@ -53,6 +53,20 @@ public class IndexController {
 
         List<FriendlyLink> friendlinkList = friendLinkService.findFriendlinkList(new HashMap<>());
         request.getSession().setAttribute("friendlinkList",friendlinkList);
+
+        //获取轮播图列表
+        List<Banner> bannerList = bannerService.findBannerList();
+
+        Map paramMap = new HashMap();
+        paramMap.put("isPublic", Constant.BLOG_IS_PUBLIC_0);
+        paramMap.put("isAudit",Constant.BLOG_IS_AUDIT_0);
+        paramMap.put("deleted",Constant.DELETE_FLAG_0);
+        List<BlogVo> blogList = blogService.selectBlogList(paramMap);
+
+        model.addAttribute("bannerList",bannerList);
+
+        model.addAttribute("blogList",blogList);
+
         return "index";
     }
     /**

@@ -2,11 +2,10 @@ package com.dymao.controller;
 
 import com.dymao.common.Utils.ImageTokenUtil;
 import com.dymao.common.constants.Constant;
+import com.dymao.common.helper.sensitive.SensitivewordFilter;
 import com.dymao.model.Message;
-import com.dymao.service.BlogService;
 import com.dymao.service.IdCreateService;
 import com.dymao.service.MessageService;
-import com.dymao.vo.BlogVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -16,10 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +37,9 @@ public class MessageController {
 
     @Autowired
     private IdCreateService idCreateService;
+
+    @Autowired
+    private SensitivewordFilter sensitivewordFilter;
 
     @GetMapping(value= "/list")
     public String list(Model model, String pageNum, String pageSize) {
@@ -78,10 +78,12 @@ public class MessageController {
             validationFlag = false;
         }
         if(validationFlag){
-            // TODO: 加入次数及敏感词判断
+            // 加入次数及敏感词判断
+           String newContent =  sensitivewordFilter.replaceSensitiveWord(message.getContent(),SensitivewordFilter.minMatchTYpe,"*");
             String MessageId = idCreateService.getMessageId();
             message.setCreateTime(new Date());
             message.setId(MessageId);
+            message.setContent(newContent);
             messageService.insert(message);
         }
         String pageNum = "1";
@@ -99,7 +101,6 @@ public class MessageController {
         model.addAttribute("pageInfo",pageInfo);
         return messageList;
     }
-
 
 
 }
