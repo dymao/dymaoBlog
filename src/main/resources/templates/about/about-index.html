@@ -7,49 +7,131 @@
     <div th:include="/common/menu::top">
     </div>
 </header>
+<style>
+    .pageside {
+        position: absolute;
+        top: 150px;
+        left: 0;
+        width: 200px;
+    }
+    .pagemenu {
+        list-style: none;
+        margin: 0 0 15px;
+        padding: 0;
+        border: 1px solid #EAEAEA;
+        background-color: #FFF;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    li {
+        display: list-item;
+        list-style: none;
+        text-align: -webkit-match-parent;
+    }
+    .pagemenu li a {
+        display: block;
+        padding: 12px 20px;
+        font-size: 16px;
+        color: #999;
+        border-bottom: 1px solid #EEE;
+        background-color: #FFF;
+        text-decoration: none;
+    }
+    .pagemenu li a:hover {
+        color: #ffffff;
+        border-bottom: 1px solid #EEE;
+        background-color: #3399CC;
+    }
+  /*  @media(max-width: 460px) {
+        .pageside {
+            display: none;
+        }
+    }*/
+</style>
 <section class="container user-select">
   <!--/超小屏幕可见-->
-  <div class="content-wrap"><!--内容-->
-      <div class="pageside">
+  <div class="content-wrap" style="width: 81%; float: right;margin-top: 120px;"><!--内容-->
+      <div class="pageside" style="display: inline">
           <div class="pagemenus">
               <ul class="pagemenu">
-                  <li><a href="/index.php/about/" draggable="false"><i class="fa fa-user"></i>&nbsp;&nbsp;关于站长</a></li>
-                  <li><a href="/index.php/works/" draggable="false"><i class="fa fa-tasks"></i>&nbsp;&nbsp;作品图集</a></li>
-                  <li><a href="/index.php/life/" draggable="false"><i class="fa fa-tags"></i>&nbsp;&nbsp;生活点滴</a></li>
-                  <li><a href="/index.php/music/" draggable="false"><i class="fa fa-music"></i>&nbsp;&nbsp;在线音乐台</a></li>
-                  <li><a href="/index.php/mianzeshenming/" draggable="false"><i class="fa fa-cogs"></i>&nbsp;&nbsp;免责申明</a></li>
-                  <li><a href="javascript:alert('正在完善！');" draggable="false"><i class="fa fa-flag"></i>&nbsp;&nbsp;广告服务</a></li>
+                  <li><a href="javascript:void(0);" onclick="changeContent(1)"  draggable="false" ><i class="fa fa-user"></i>&nbsp;&nbsp;关于本站</a></li>
+                  <!--<li><a href="javascript:void(0);" onclick="changeContent(2)" draggable="false"><i class="fa fa-tasks"></i>&nbsp;&nbsp;关于站长</a></li>-->
+                 <!-- <li><a href="/index.php/life/" draggable="false"><i class="fa fa-tags"></i>&nbsp;&nbsp;生活点滴</a></li>
+                  <li><a href="/index.php/music/" draggable="false"><i class="fa fa-music"></i>&nbsp;&nbsp;在线音乐台</a></li></li>-->
+                  <li><a href="javascript:void(0);" onclick="changeContent(3)" draggable="false"><i class="fa fa-cogs"></i>&nbsp;&nbsp;免责申明</a>
+                  <li><a href="javascript:void(0);" onclick="changeContent(4)"><i class="fa fa-flag"></i>&nbsp;&nbsp;广告服务</a></li>
               </ul>
           </div>
       </div>
-    <div class="content">
+    <div style="margin-left: 5px;margin-right: 0px; display: inline">
        <div class="content-block new-content">
-           <div class="blog-detail-inner-box">
-               <h2 >关于本站</h2>
-               <div class="blog-detail-numShow">
-                   <p class="blog-ext">
-                    <span class="blog-ext-ico">
-                        <i class="glyphicon glyphicon-user"></i>
-                      <!-- <span th:text="${blog.userId}"></span>-->
-                    </span>
-                       <!--<span class="blog-ext-ico"><i class="glyphicon glyphicon-time"></i><span class="list-date" th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span></span>-->
-                 <!--   <span class="blog-ext-ico">
-                        <i class="glyphicon glyphicon-eye-open"></i>
-                        <span th:text="'共'+${blog.viewNum}+'人围观'"></span>
-                    </span>-->
+           <div class="blog-detail-inner-box" style="min-height: 500px;">
+               <div id="showContent1">
+                   <h2 >关于本站</h2>
+                   <hr class="blog-detail-hr"/>
+                   <p class="blog-ext" style="font-size: 16px;text-indent: 2em;">
+                       本网站所收集的部分公开资料来源于互联网，转载的目的在于传递更多信息及用于网络分享，并不代表本站赞同其观点和对其真实性负责，也不构成任何其他建议。本站部分作品是由网友自主投稿和发布、编辑整理上传，对此类作品本站仅提供交流平台，不为其版权负责。如果您发现网站上有侵犯您的知识产权的作品，请与我们取得联系，我们会及时修改或删除。
+                   </p>
+                   <!--<br/>
+                   <p class="blog-ext" style="font-size: 16px;text-indent: 2em;">
+                       本网站所提供的信息，只供参考之用。本网站不保证信息的准确性、有效性、及时性和完整性。本网站及其雇员一概毋须以任何方式就任何信息传递或传送的失误、不准确或错误，对用户或任何其他人士负任何直接或间接责任。在法律允许的范围内，本网站在此声明，不承担用户或任何人士就使用或未能使用本网站所提供的信息或任何链接所引致的任何直接、间接、附带、从属、特殊、惩罚性或惩戒性的损害赔偿。
+                   </p>-->
+               </div>
+               <div id="showContent3" style="display: none">
+                   <h2 >免责申明</h2>
+                   <hr class="blog-detail-hr"/>
+                  <!-- <p class="blog-ext" style="font-size: 16px;text-indent: 2em;">
+                       本网站所收集的部分公开资料来源于互联网，转载的目的在于传递更多信息及用于网络分享，并不代表本站赞同其观点和对其真实性负责，也不构成任何其他建议。本站部分作品是由网友自主投稿和发布、编辑整理上传，对此类作品本站仅提供交流平台，不为其版权负责。如果您发现网站上有侵犯您的知识产权的作品，请与我们取得联系，我们会及时修改或删除。
+                   </p>-->
+                   <p class="blog-ext" style="font-size: 16px;text-indent: 2em;">
+                       本网站所提供的信息，只供参考之用。本网站不保证信息的准确性、有效性、及时性和完整性。本网站及其雇员一概毋须以任何方式就任何信息传递或传送的失误、不准确或错误，对用户或任何其他人士负任何直接或间接责任。在法律允许的范围内，本网站在此声明，不承担用户或任何人士就使用或未能使用本网站所提供的信息或任何链接所引致的任何直接、间接、附带、从属、特殊、惩罚性或惩戒性的损害赔偿。
                    </p>
                </div>
-               <hr class="blog-detail-hr"/>
+               <div id="showContent4" style="display: none">
+                   <h2 >广告服务</h2>
+                   <hr class="blog-detail-hr"/>
+                   <p class="blog-ext" style="font-size: 16px;text-indent: 2em;">
+                       暂不支持，敬请期待
+                   </p>
+                   <br/>
+               </div>
           <!--  <p th:utext="${blog.content}"></p>-->
            </div>
       </div>
     </div>
   </div>
 </section>
-<!--<div th:include="/common/footer::copyright"></div>-->
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert-tip">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">提示信息</div>
+        <div class="am-modal-bd" id="tipText">
+            留言内容不能空！！！
+        </div>
+        <div class="am-modal-footer" id="my-alert-tip-close">
+            <span class="am-modal-btn" >知道了</span>
+        </div>
+    </div>
+</div>
+<div th:include="/common/footer::copyright"></div>
 <div th:include="/common/footer_js::footer_js"></div>
-</body>
-<script type="javascript">
+<script type="text/javascript">
+    function changeContent(num){
+        for(var i = 1;i<5;i++){
+            if(i == num){
+               $("#showContent"+i).show();
+              // alert("选中我");
+            }else{
+                $("#showContent"+i).hide();
+            }
+        }
+    }
+    $(document).ready(function(){
+        $("#tips").click(function(){
+            $('#my-alert-tip').modal('open');
+        });
+    });
+
 </script>
+</body>
 
 </html>
