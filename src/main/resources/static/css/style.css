@@ -1473,3 +1473,18 @@ h3 a:hover{
 	background-color: #15afef;
 	border-color: #e6e6e6;
 }
+.blog-transshipment {
+	color: #fff;
+	background-color: #45BCF9;
+	padding: 3px 6px;
+	display: inline-block;
+	position: relative;
+	margin-right: 6px;
+	border-radius: 6px;
+}
+.blog-transshipment-show {
+	color: #f00;
+	font-size: 13px;
+	margin-top: 8px;
+	margin-bottom: 10px;
+}

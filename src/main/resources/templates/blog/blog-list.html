@@ -15,7 +15,7 @@
 
         <h2 th:if="${#strings.isEmpty(searchWord)}" class="title"><strong>博文列表</strong></h2>
         <h2 th:if="${!#strings.isEmpty(searchWord)}"  class="title"><strong>搜索到关键字为"<span style="color: #FF0000" th:text="${searchWord}"></span>"的文章共<span th:text="${totalNum}"></span>篇</strong></h2>
-
+          <div th:if="${#lists.isEmpty(pageInfo.list)}" >该分类下暂无数据</div>
           <div class="inner-box blog-img am-gallery-item " th:each="blog : ${pageInfo.list}">
             <div class="am-g">
               <div class="col-md-2">
@@ -27,10 +27,13 @@
                 <div class="blog-header">
                     <span th:if="${blog.categoryIdOne=='1'}" class="index-label index-label-blog"  th:text="${blog.categoryOneName}"></span>
                     <span th:if="${blog.categoryIdOne=='2'}" style="background-color: #3fb8af;"  class="index-label index-label-blog" th:text="${blog.categoryOneName}"></span>
-                  <a href="#" class="blog-category"  th:text="${blog.categoryTwoName}"></a>
+                    <span th:if="${blog.categoryIdOne=='3'}" style="background-color: #A576F7;"  class="index-label index-label-blog" th:text="${blog.categoryOneName}"></span>
+                    <a href="#" class="blog-category"  th:text="${blog.categoryTwoName}"></a>
                   <h3><a th:href="@{'/blog/detail/'+${blog.id}}" th:text="${blog.title}" ></a></h3>
                 </div>
                   <p class="blog-ext">
+                    <span th:if="${blog.isTransshipment == '0'}">原创</span>
+                    <span th:if="${blog.isTransshipment == '1'}">转载</span>
                     <span class="blog-ext-ico">
                         <i class="glyphicon glyphicon-user"></i>
                        <span th:text="${blog.userId}"></span>
