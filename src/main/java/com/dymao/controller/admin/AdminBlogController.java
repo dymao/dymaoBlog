@@ -45,7 +45,7 @@ public class AdminBlogController {
         paramMap.put("deleted",Constant.DELETE_FLAG_0);
         List<BlogVo> blogVoList = blogService.selectBlogList(paramMap);
         model.addAttribute("blogVoList",blogVoList);
-        return "/admin/blog/blogList";
+        return "admin/blog/blogList";
     }
 
     /**

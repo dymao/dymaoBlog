@@ -1,10 +1,10 @@
 ﻿<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="shortcut icon"  type="image/x-icon" th:href="@{/images/icon/favicon.ico}" />
-<div th:include="/common/common_head::common_head('深蓝的星空')"></div>
+<div th:include="common/common_head::common_head('深蓝的星空')"></div>
 <body>
 <header class="am-topbar am-topbar-inverse nav-style">
-    <div th:include="/common/menu::top">
+    <div th:include="common/menu::top">
     </div>
 </header>
 <section class="container user-select">
@@ -37,11 +37,11 @@
       </div>
     </div>
   </div>
-  <div th:include="/common/right::right"></div>
+  <div th:include="common/right::right"></div>
   <!--/右侧>992px显示-->
 </section>
-<div th:include="/common/footer::copyright"></div>
-<div th:include="/common/footer_js::footer_js"></div>
+<div th:include="common/footer::copyright"></div>
+<div th:include="common/footer_js::footer_js"></div>
 </body>
 <script type="javascript">
 </script>

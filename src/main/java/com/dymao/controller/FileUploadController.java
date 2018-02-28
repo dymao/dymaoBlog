@@ -7,6 +7,8 @@ import com.dymao.common.constants.Config;
 import com.dymao.common.constants.Dict;
 import com.dymao.vo.BaseMessage;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +29,8 @@ import java.util.*;
 @RestController
 @RequestMapping("/admin/fileUpload")
 public class FileUploadController {
+
+    private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 
     //获取配置文件中Windows环境下图片的路径
     @Value("${win_upload.path}")
@@ -82,11 +86,13 @@ public class FileUploadController {
     private String getWebUploadPath(){
         String webUploadPath = "";
         String OSName = System.getProperty(Dict.OS_NAME).toLowerCase();
+        logger.info("系统是：" + OSName);
         if(OSName.indexOf("windows")>=0){
             webUploadPath = winImagesPath;
         }else{
             webUploadPath = linuxImagesPath;
         }
+        logger.info("上传文件路径是：" + webUploadPath);
         return  webUploadPath;
     }
 }

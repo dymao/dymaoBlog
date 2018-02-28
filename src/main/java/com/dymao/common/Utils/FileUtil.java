@@ -1,6 +1,8 @@
 package com.dymao.common.Utils;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -15,6 +17,7 @@ import java.util.Map;
  * @date 2017/12/3 22:29
  */
 public class FileUtil {
+    private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
     public static String uploadFile(MultipartFile file,String webUploadPath, String filePath, String fileName){
         try {
             // 获取图片的文件名
@@ -32,7 +35,9 @@ public class FileUtil {
             }
             // 上传到指定目录
             file.transferTo(dest);
+            logger.info("*****filePath = " + filePath + " **********");
             // 将反斜杠转换为正斜杠
+            logger.info("*****filePath.replaceAll(\"\\\\\\\\\", \"/\") + newFileName = " + (filePath.replaceAll("\\\\", "/") + newFileName) + " **********");
             return filePath.replaceAll("\\\\", "/") + newFileName;
         } catch (IOException e) {
             System.err.println("上传文件出现异常："+e);

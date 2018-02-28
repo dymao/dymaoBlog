@@ -72,36 +72,104 @@ CONTAINS SQL
 $
 DELIMITER ;
 
+CREATE TABLE `adminuser` (
+  `id` varchar(32) NOT NULL COMMENT '用户ID',
+  `login_id` varchar(50) NOT NULL COMMENT '登录ID',
+  `user_name` varchar(50) DEFAULT NULL COMMENT '用户名',
+  `password` varchar(50) NOT NULL COMMENT '登录密码',
+  `user_status` varchar(1) NOT NULL DEFAULT '0' COMMENT '用户登录状态',
+  `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
+  `mobile` varchar(15) DEFAULT NULL COMMENT '手机号码',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `banner` (
+  `id` varchar(12) COLLATE utf8_unicode_ci NOT NULL COMMENT 'id',
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '标题',
+  `image` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT '图片名称',
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '链接地址',
+  `showFlag` varchar(1) COLLATE utf8_unicode_ci DEFAULT '0' COMMENT '显示状态 0：显示 1：不显示',
+  `deleted` varchar(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '是否已删除 0：未删 1：已删除',
+  `create_time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='滚动图片表';
 
 CREATE TABLE `blog` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `id` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '主键',
+  `user_id` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '用户id',
   `title` varchar(200) COLLATE utf8_unicode_ci NOT NULL COMMENT '博客标题',
   `content` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '博客内容',
   `content_show` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '博客前段显示内容',
   `keyword` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '关键词',
-  `ispublic` int(11) NOT NULL COMMENT '是否发表',
-  `deleted` int(11) NOT NULL COMMENT '是否已删除',
-  `category` int(11) NOT NULL COMMENT '分类的id',
-  `view` int(11) NOT NULL DEFAULT '0' COMMENT '浏览次数',
-  `type` int(11) NOT NULL DEFAULT '0' ,
+  `is_public` varchar(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '是否发表  0:已发表  1：未发表',
+  `deleted` varchar(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '是否已删除 0：未删除 1： 已删除',
+  `category_id_one` varchar(12) COLLATE utf8_unicode_ci NOT NULL COMMENT '分类的id',
+  `category_id_two` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
+  `view_num` int(11) NOT NULL DEFAULT '0' COMMENT '浏览次数',
+  `like_num` int(11) NOT NULL DEFAULT '0' COMMENT '点赞人数',
+  `tread_num` int(11) NOT NULL DEFAULT '0' COMMENT '踩的人数',
   `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '缩略图地址',
+  `is_transshipment` varchar(1) COLLATE utf8_unicode_ci DEFAULT '0' COMMENT '是否转载 0：原创 1：转载',
+  `transshipment_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '转载源地址',
+  `is_recommend` varchar(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '是否推荐 0：否  1： 是',
+  `is_audit` varchar(1) COLLATE utf8_unicode_ci NOT NULL DEFAULT '1' COMMENT '是否审核 1：未审核  0： 已审核',
+  `audit_user_id` varchar(32) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '审核员ID',
+  `authority` varchar(1) COLLATE utf8_unicode_ci DEFAULT '0' COMMENT '浏览权限 0：所有人可见  1：仅会员可见',
   `create_time` datetime NOT NULL COMMENT '创建时间',
-  `zhuanzai` int(11) NOT NULL DEFAULT '0',
-  `zhuanzaiurl` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `editortype` int(11) NOT NULL DEFAULT '0',
-  `level` int(11) NOT NULL DEFAULT '0',
-  `showside` int(11) NOT NULL DEFAULT '1',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`),
   KEY `blog_userid_foregignkey` (`user_id`),
-  KEY `blog_category_foregignkey` (`category`),
-  CONSTRAINT `blog_category_foregignkey` FOREIGN KEY (`category`) REFERENCES `blogcategory` (`id`)
-  #CONSTRAINT `blog_userid_foregignkey` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT '博客文章表';
+  KEY `blog_category_foregignkey` (`category_id_one`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='博客文章表';
 
 CREATE TABLE `blogcategory` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `category` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '分类名称',
+  `id` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(40) COLLATE utf8_unicode_ci NOT NULL COMMENT '分类名称',
+  `level` smallint(1) NOT NULL COMMENT '分类级别',
+  `parentId` varchar(12) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '上级分类ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT '分类标签';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='分类标签';
+
+CREATE TABLE `friendlylink` (
+  `id` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '标题',
+  `url` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '链接地址',
+  `sn` int(11) NOT NULL DEFAULT '1' COMMENT '序号',
+  `create_time` datetime NOT NULL COMMENT ' 创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='友情链接表';
+
+CREATE TABLE `label` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `label_name` varchar(15) NOT NULL,
+  `desc` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `message` (
+  `id` varchar(32) NOT NULL COMMENT '留言主键id',
+  `nick_name` varchar(50) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `content` varchar(2000) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `reply_userId` varchar(32) DEFAULT NULL,
+  `reply_content` varchar(1000) DEFAULT NULL,
+  `reply_time` datetime DEFAULT NULL,
+  `showFlag` varchar(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `sentiveword` (
+  `SENTIVE_ID` varchar(10) NOT NULL,
+  `SENTIVE_CONTENT` varchar(30) NOT NULL,
+  PRIMARY KEY (`SENTIVE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `sequence` (
+  `seq_name` varchar(50) NOT NULL COMMENT '序列名称',
+  `current_value` int(11) NOT NULL COMMENT '当前值',
+  `increment` int(11) NOT NULL DEFAULT '1' COMMENT '步长',
+  PRIMARY KEY (`seq_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

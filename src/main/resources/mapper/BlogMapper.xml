@@ -339,13 +339,13 @@
 
 
   <select id="selectPreBlog" resultMap="BaseResultMap" parameterType="java.util.Map">
-    SELECT ID,TITLE FROM BLOG
+    SELECT a.ID,a.TITLE FROM blog a
       WHERE ID = (
         select  MAX(id) from  blog  where  id <![CDATA[<]]> #{id,jdbcType=VARCHAR} and deleted = '0'  and is_audit = '0' and is_public ='0'  order by id desc
     )
   </select>
   <select id="selectNextBlog" resultMap="BaseResultMap" parameterType="java.util.Map">
-    SELECT ID,TITLE FROM BLOG  WHERE ID = (
+    SELECT a.ID,a.TITLE FROM blog a WHERE ID = (
       select  MIN(id)  from  blog  where  id > #{id,jdbcType=VARCHAR} and deleted = '0'  and is_audit = '0' and is_public ='0'  order by id
      )
   </select>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <div th:include="/admin/common::common('新增博文')"></div>
+    <div th:include="admin/common::common('新增博文')"></div>
     <link rel="stylesheet" th:href="@{/admin/lib/layui/css/layui.css}"  media="all">
 </head>
 <body class="childrenBody">
@@ -158,7 +158,7 @@
             }
         });
 
-        form.on('submit(save)', function(data){
+        form.on('submit(publish)', function(data){
             saveData(data);
             return false;
         });
@@ -170,7 +170,6 @@
         });*/
         function saveData(data){
             console.log(data.field);
-            alert(data.field);
             $.ajax({
                 url: "/admin/blog/add",
                 data: data.field,
@@ -207,7 +206,7 @@
     editor.customConfig.uploadFileName = 'blogImg';
     editor.create()
 
-    document.getElementById('saveAndPublish').addEventListener('click', function () {
+    document.getElementById('publish').addEventListener('click', function () {
         $("#content").val(editor.txt.html());
     }, false)
 

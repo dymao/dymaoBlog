@@ -1,10 +1,10 @@
 ﻿<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="shortcut icon"  type="image/x-icon" th:href="@{/images/icon/favicon.ico}" />
-<div th:include="/common/common_head::common_head('深蓝的星空')"></div>
+<div th:include="common/common_head::common_head('深蓝的星空')"></div>
 <body>
 <header class="am-topbar am-topbar-inverse nav-style">
-    <div th:include="/common/menu::top">
+    <div th:include="common/menu::top">
     </div>
 </header>
 <style>
@@ -112,8 +112,8 @@
         </div>
     </div>
 </div>
-<div th:include="/common/footer::copyright"></div>
-<div th:include="/common/footer_js::footer_js"></div>
+<div th:include="common/footer::copyright"></div>
+<div th:include="common/footer_js::footer_js"></div>
 <script type="text/javascript">
     function changeContent(num){
         for(var i = 1;i<5;i++){
