@@ -995,7 +995,7 @@ textarea::-webkit-scrollbar-thumb {
 	display: block;
 	font-size: 14px;
 	color: #666;
-	padding: 8px 0px 0px 3px;
+	padding: 0px 0px 0px 3px;
 	min-height: 76px;
 	text-decoration: none;
 }
@@ -1092,9 +1092,12 @@ textarea::-webkit-scrollbar-thumb {
 	display: inline;
 }
 .sidebar .recommend ul li img {
-	width: 80px;
-	height: 60px;
-	border-radius: 2px;
+	width: 100px;
+	height: 78px;
+	border-radius: 6px;
+    float: left;
+    margin-right: 6px;
+    margin-left: 3px;
 }
 .sidebar .recommend ul li .text {
 	margin-top: 1px;
@@ -1507,4 +1510,16 @@ h3 a:hover{
 	font-size: 13px;
 	margin-top: 8px;
 	margin-bottom: 10px;
+}
+.hotBlog li{
+    overflow: hidden;
+    min-height: 90px;
+    margin: 5px 5px;
+    /*background: #F5F5F5;*/
+    border-radius: 6px;
+    -webkit-transition: all 0.30s ease-in-out;
+}
+.hotBlog li:hover{
+    box-shadow:2px 2px 8px rgba(0,0,0,.2);
+    border-color:#d6d6d6;
 }

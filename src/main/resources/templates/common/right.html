@@ -52,7 +52,7 @@
             </div>
             <div class="sidebar-block recommend">
                 <h2 class="title"><strong>热门推荐</strong></h2>
-                <ul id="hotBlogList">
+                <ul class="hotBlog" id="hotBlogList">
                 </ul>
             </div>
             <div class="sidebar-block friendLink">
@@ -75,7 +75,7 @@
                         if(res.hotBlogList.length > 0){
                             var hostBlogStr = '';
                             $.each(res.hotBlogList,function(n,value) {
-                                hostBlogStr += '<li><a style="min-height: 54px" target="_blank" href="/blog/detail/'+value.id+'"><span class="text">'+value.title+'</span> <span class="text-muted">阅读('+value.viewNum+')</span></a></li>';
+                                hostBlogStr += '<li><img class="am_img animated" alt="'+value.title+'" src="'+value.image+'" style="display: inline;" /><div><a style="min-height: 54px" target="_blank" href="/blog/detail/'+value.id+'"><span class="text">'+value.title+'</span> <span class="text-muted">阅读('+value.viewNum+')</span></a></li>';
                             });
                             $("#hotBlogList").html(hostBlogStr);
                         }
