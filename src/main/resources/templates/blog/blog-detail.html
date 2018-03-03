@@ -32,12 +32,19 @@
                </div>
                <hr class="blog-detail-hr"/>
               <p th:utext="${blog.content}"></p>
+
                <div th:if="${blog.isTransshipment == '0'}" class="blog-transshipment-show" style="color: #FF0000">版权声明：本文为博主原创文章，未经博主允许不得转载。</div>
                <div th:if="${blog.isTransshipment == '1'}" class="blog-transshipment-show">版权声明：本文为转载文章，原文出处：<a th:href="@{${blog.transshipmentUrl}}" target="_blank" th:alt="原文出处" >点击查看原文</a></div>
-             <div>
+               <!-- JiaThis Button BEGIN -->
+               <div class="jiathis_style_m"></div>
+               <script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_m.js" charset="utf-8"></script>
+               <!-- JiaThis Button END -->
+               <br/>
+               <br/>
+               <div>
                  <div>上一篇：<span th:if="${preBlog != null}"><a th:href="@{'/blog/detail/'+${preBlog.id}}" th:text="${preBlog.title}"></a></span> <span th:if="${preBlog == null}">没有了</span> </div>
                  <div>下一篇：<span th:if="${nextBlog != null}"><a th:href="@{'/blog/detail/'+${nextBlog.id}}" th:text="${nextBlog.title}"></a></span> <span th:if="${nextBlog == null}">没有了</span></div>
-             </div>
+                </div>
            </div>
       </div>
     </div>
