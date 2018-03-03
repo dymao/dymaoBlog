@@ -29,4 +29,9 @@ public class DateUtils {
         return  dateFormat.format(date);
     }
 
+    public static boolean sameDate(Date d1, Date d2,String pattern){
+        SimpleDateFormat fmt = new SimpleDateFormat(pattern);
+        return fmt.format(d1).equals(fmt.format(d2));
+    }
+
 }

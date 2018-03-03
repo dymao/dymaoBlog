@@ -14,15 +14,15 @@
           <div class="content">
               <div id="carousel-example-generic" class="carousel slide" data-ride="carousel"> <!--banner-->
                   <ol class="carousel-indicators">
-                      <li th:each="bannerSn,iterStat1:${bannerList}" th:if="${iterStat1.first}" data-target="#carousel-example-generic" th:attr="data-slide-to=${iterStat1.index},class='active'"></li>
-                      <li th:each="bannerSn,iterStat1:${bannerList}" th:unless="${iterStat1.first}" data-target="#carousel-example-generic" th:attr="data-slide-to=${iterStat1.index}" ></li>
+                      <li th:each="bannerSn,iterStat1:${application.bannerList}" th:if="${iterStat1.first}" data-target="#carousel-example-generic" th:attr="data-slide-to=${iterStat1.index},class='active'"></li>
+                      <li th:each="bannerSn,iterStat1:${application.bannerList}" th:unless="${iterStat1.first}" data-target="#carousel-example-generic" th:attr="data-slide-to=${iterStat1.index}" ></li>
                   </ol>
                   <div class="carousel-inner" role="listbox" >
-                      <div th:each="banner,iterStat:${bannerList}" th:if="${iterStat.first}" class="item active" > <a th:href="@{${banner.url}}" target="_blank"><img th:src="@{${banner.image}}" th:alt="${banner.title}" /></a>
+                      <div th:each="banner,iterStat:${application.bannerList}" th:if="${iterStat.first}" class="item active" > <a th:href="@{${banner.url}}" target="_blank"><img th:src="@{${banner.image}}" th:alt="${banner.title}" /></a>
                           <div class="carousel-caption" th:text="${banner.title}"></div>
                           <span class="carousel-bg"></span>
                       </div>
-                      <div th:each="banner,iterStat:${bannerList}" th:unless="${iterStat.first}" class="item" > <a th:href="@{${banner.url}}" target="_blank"><img th:src="@{${banner.image}}" th:alt="${banner.title}" /></a>
+                      <div th:each="banner,iterStat:${application.bannerList}" th:unless="${iterStat.first}" class="item" > <a th:href="@{${banner.url}}" target="_blank"><img th:src="@{${banner.image}}" th:alt="${banner.title}" /></a>
                           <div class="carousel-caption" th:text="${banner.title}"></div>
                           <span class="carousel-bg"></span>
                       </div>

@@ -1006,7 +1006,7 @@ textarea::-webkit-scrollbar-thumb {
 .sidebar .sentence strong {
 	background: #3399CC;
 	color: #FFF;
-	font-size: 14px;
+	font-size: 16px;
 	font-weight: 100;
 	padding: 5px 10px;
 	position: absolute;
@@ -1020,7 +1020,7 @@ textarea::-webkit-scrollbar-thumb {
 	margin: 10px 0px;
 }
 .sidebar .sentence p {
-	font-size: 12px;
+	font-size: 15px;
 	color: #AAA;
 }
 /*搜索表单样式开始*/

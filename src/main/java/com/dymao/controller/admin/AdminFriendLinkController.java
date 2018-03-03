@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -39,7 +41,7 @@ public class AdminFriendLinkController {
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public Map addFriendlink(Model model, FriendlyLink friendlyLink){
+    public Map addFriendlink(Model model, FriendlyLink friendlyLink, HttpServletRequest request){
         Map result = new HashMap();
         String id = idCreateService.getFriendlinkId();
         String seq = id.substring(6,11);
@@ -49,30 +51,33 @@ public class AdminFriendLinkController {
         int count = friendLinkService.insert(friendlyLink);
         result.put("count",count);
         result.put("friendlyLink",friendlyLink);
+        removeFriendlinkListFromContext(request);
         return result;
     }
 
     @RequestMapping(value = "/del/{id}",method = RequestMethod.POST)
     @ResponseBody
-    public Map delBanner(@PathVariable String id){
+    public Map delFriendLink(@PathVariable String id, HttpServletRequest request){
         Map result  = new HashMap();
         Integer count = friendLinkService.deleteByPrimaryKey(id);
         result.put("count",count);
+        removeFriendlinkListFromContext(request);
         return result;
     }
 
     @RequestMapping(value = "/delBatch",method = RequestMethod.POST)
     @ResponseBody
-    public Map delBatchCategory(String friendlinkIds){
+    public Map delBatchFriendLink(String friendlinkIds, HttpServletRequest request){
         Map result  = new HashMap();
         List<String> friendlinkIdList = Arrays.asList(friendlinkIds.split(","));
         Integer count = friendLinkService.deleteByFriendlinkIds(friendlinkIdList);
         result.put("count",count);
+        removeFriendlinkListFromContext(request);
         return result;
     }
 
     @RequestMapping(value = "/tofriendlinkEditPage/{friendlyLinkId}",method = RequestMethod.GET)
-    public String toCategoryEditPage(Model model, @PathVariable("friendlyLinkId") String id){
+    public String toFriendLinkEditPage(Model model, @PathVariable("friendlyLinkId") String id){
         FriendlyLink friendlyLink = friendLinkService.selectByPrimaryKey(id);
         model.addAttribute("friendlyLink",friendlyLink);
         return "admin/friendLink/friendLink-edit";
@@ -80,10 +85,20 @@ public class AdminFriendLinkController {
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     @ResponseBody
-    public Map updateCategory(Model model,FriendlyLink friendlyLink){
+    public Map updateFridenlyLink(Model model,FriendlyLink friendlyLink, HttpServletRequest request){
         Map result = new HashMap();
         int count = friendLinkService.updateByPrimaryKey(friendlyLink);
         result.put("count",count);
+        removeFriendlinkListFromContext(request);
         return result;
+    }
+
+    /**
+     * 友情链接信息变更时从application中移除列表，首页中会重新读取最新的链接列表
+     * @param request
+     */
+    private void removeFriendlinkListFromContext(HttpServletRequest request){
+        ServletContext application = request.getServletContext();
+        application.removeAttribute("friendlinkList");
     }
 }

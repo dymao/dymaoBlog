@@ -50,15 +50,8 @@ public class IndexController {
      */
     @RequestMapping(value = "/")
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
-        Locale localeCN = Locale.SIMPLIFIED_CHINESE;
-        request.getSession().setAttribute("currentDate", DateUtils.getStringDate(new Date(),DateUtils.DATE_YYYY_MM_DD_WEEK,localeCN));
-
         ServletContext application = request.getServletContext();
-        /*String DailySentence = (String)application.getAttribute("DailySentence");
-        if(StringUtils.isBlank(DailySentence)){
-            application.setAttribute("DailySentence","锲而舍之，朽木不折；锲而不舍，金石可镂");
-        }*/
-
+        changeShowDate(application);
         List<FriendlyLink> friendlinkList = (List<FriendlyLink>)application.getAttribute("friendlinkList");
         if(friendlinkList == null){
             friendlinkList = friendLinkService.findFriendlinkList(new HashMap<>());
@@ -66,7 +59,11 @@ public class IndexController {
         }
 
         //获取轮播图列表
-        List<Banner> bannerList = bannerService.findBannerList();
+        List<Banner> bannerList = (List<Banner>)application.getAttribute("bannerList");
+        if(bannerList == null){
+            bannerList = bannerService.findBannerList();
+            application.setAttribute("bannerList",bannerList);
+        }
 
         Map paramMap = new HashMap();
         paramMap.put("isPublic", Constant.BLOG_IS_PUBLIC_0);
@@ -74,11 +71,22 @@ public class IndexController {
         paramMap.put("deleted",Constant.DELETE_FLAG_0);
         List<BlogVo> blogList = blogService.selectBlogList(paramMap);
 
-        model.addAttribute("bannerList",bannerList);
+       // model.addAttribute("bannerList",bannerList);
 
         model.addAttribute("blogList",blogList);
 
         return "index";
+    }
+
+    private void changeShowDate(ServletContext application){
+        Date now = new Date();
+        String nowDate = DateUtils.getStringDate(now,DateUtils.DATE_YYYYMMDD);
+        String showDate = (String)application.getAttribute("reallyDate");
+        if(StringUtils.isBlank(showDate) || !nowDate.equals(showDate)){
+            Locale localeCN = Locale.SIMPLIFIED_CHINESE;
+            application.setAttribute("currentDate", DateUtils.getStringDate(now,DateUtils.DATE_YYYY_MM_DD_WEEK,localeCN));
+            application.setAttribute("reallyDate", nowDate);
+        }
     }
     /**
      * 首页
