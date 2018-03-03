@@ -204,7 +204,7 @@ body, input, button, textarea, select {
 .content-wrap {
 	width: 100%;
 	float: left;
-	margin-top: 105px;
+	margin-top: 93px;
 }
 .content {
 	margin-right: 320px;
@@ -284,7 +284,7 @@ body, input, button, textarea, select {
 /*内容公共样式*/
 .content .content-block {
 	clear: both;
-	margin: 10px 0;
+	margin: 0px 0;
 	position: relative;
 }
 .content .content-block h2 {
@@ -993,7 +993,7 @@ textarea::-webkit-scrollbar-thumb {
 /*每日一句开始*/
 .sidebar .sentence {
 	margin-bottom: 20px;
-	margin-top: 35px;
+	margin-top: 25px;
 	position: relative;
 	padding: 30px 10px 10px 10px;
 	border: 1px solid #EEE;

@@ -2,21 +2,23 @@ package com.dymao.controller.index;
 
 import com.dymao.common.Utils.DateUtils;
 import com.dymao.common.constants.Constant;
-import com.dymao.model.*;
+import com.dymao.model.Banner;
+import com.dymao.model.Blog;
+import com.dymao.model.FriendlyLink;
+import com.dymao.model.Label;
 import com.dymao.service.*;
 import com.dymao.vo.BlogVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Mervin
@@ -48,11 +50,20 @@ public class IndexController {
      */
     @RequestMapping(value = "/")
     public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
-        request.getSession().setAttribute("currentDate", DateUtils.getStringDate(new Date(),DateUtils.DATE_YYYY_MM_DD_WEEK));
-        request.getSession().setAttribute("DailySentence","你是我人生中唯一的主角，我却只能是你故事中的一晃而过的路人甲");
+        Locale localeCN = Locale.SIMPLIFIED_CHINESE;
+        request.getSession().setAttribute("currentDate", DateUtils.getStringDate(new Date(),DateUtils.DATE_YYYY_MM_DD_WEEK,localeCN));
 
-        List<FriendlyLink> friendlinkList = friendLinkService.findFriendlinkList(new HashMap<>());
-        request.getSession().setAttribute("friendlinkList",friendlinkList);
+        ServletContext application = request.getServletContext();
+        String DailySentence = (String)application.getAttribute("DailySentence");
+        if(StringUtils.isBlank(DailySentence)){
+            application.setAttribute("DailySentence","锲而舍之，朽木不折；锲而不舍，金石可镂");
+        }
+
+        List<FriendlyLink> friendlinkList = (List<FriendlyLink>)application.getAttribute("friendlinkList");
+        if(friendlinkList == null){
+            friendlinkList = friendLinkService.findFriendlinkList(new HashMap<>());
+            application.setAttribute("friendlinkList",friendlinkList);
+        }
 
         //获取轮播图列表
         List<Banner> bannerList = bannerService.findBannerList();

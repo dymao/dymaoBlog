@@ -2,6 +2,7 @@ package com.dymao.common.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * @author Mervin
@@ -14,8 +15,17 @@ public class DateUtils {
     public static final String DATE_YYYYMMDD = "yyyyMMdd";
     public static final String DATE_YYMMDD = "yyMMdd";
 
-    public static String getStringDate(Date date,String pattern){
-        SimpleDateFormat dateFormat=new SimpleDateFormat(pattern);
+    public static String getStringDate(Date date, String pattern, Locale locale){
+        SimpleDateFormat dateFormat = null;
+        if(locale != null) {
+            dateFormat = new SimpleDateFormat(pattern,locale);
+        }else{
+            dateFormat = new SimpleDateFormat(pattern);
+        }
+        return  dateFormat.format(date);
+    }
+    public static String getStringDate(Date date, String pattern){
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
         return  dateFormat.format(date);
     }
 
