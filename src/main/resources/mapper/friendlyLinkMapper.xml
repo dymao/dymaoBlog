@@ -89,11 +89,13 @@
     select
     <include refid="Base_Column_List" />
     from friendlylink
+    order by sn asc
   </select>
 
   <select id="findFriendlinkListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
     select count(1)
     from friendlylink
+    order by sn asc
   </select>
 
 </mapper>

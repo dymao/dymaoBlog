@@ -315,11 +315,12 @@
         or content like CONCAT('%',#{searchWord},'%') )
       </if>
     </where>
+     order by create_time desc
   </select>
 
   <select id="selectHotBlogList" parameterType="java.util.Map" resultMap="BaseResultMap">
     select
-    a.id, title, a.view_num
+    a.id, title, a.view_num,image
     from blog a
     <where>
 

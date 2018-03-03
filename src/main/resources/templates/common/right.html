@@ -87,15 +87,6 @@
                             });
                             $("#labelListId").html(labelStr);
                         }
-
-                      /*  if(res.newMessageList.length>0){
-                            var messageStr = '';
-                            $.each(res.newMessageList,function(n,value) {
-                                console.log(messageStr);
-                                messageStr += '<li data-toggle="tooltip" data-placement="top" title="站长的评论"><a target="_blank" href=""><span class="am-badge am-badge-secondary am-round">'+(n+1)+'</span><span class="text"><strong>'+value.nickName+'</strong>(2015-10-18) 说： <br />'+value.content+'</span></a></li>';
-                            });
-                            $("#newMessageList").html(messageStr);
-                        }*/
                     },
                     error:function(data){
                         console.log("数据加载失败！！！");

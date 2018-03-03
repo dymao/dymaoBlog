@@ -497,7 +497,7 @@ body, input, button, textarea, select {
 .content-wrap {
  width: 100%;
  float: left;
- margin-top: 55px;
+ margin-top: 51px;
 }
 .blog-img .blog-a-curse img{
     margin-bottom: 9px;
@@ -1213,7 +1213,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 .inner-box {
 	background: #F5F5F5;
-	padding: 15px;
+	padding: 13px 2px;
 	margin-bottom: 10px;
 	border: 1px solid #e6e6e6;
 	border-radius: 4px 4px 0 0;
