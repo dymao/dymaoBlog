@@ -54,10 +54,10 @@ public class IndexController {
         request.getSession().setAttribute("currentDate", DateUtils.getStringDate(new Date(),DateUtils.DATE_YYYY_MM_DD_WEEK,localeCN));
 
         ServletContext application = request.getServletContext();
-        String DailySentence = (String)application.getAttribute("DailySentence");
+        /*String DailySentence = (String)application.getAttribute("DailySentence");
         if(StringUtils.isBlank(DailySentence)){
             application.setAttribute("DailySentence","锲而舍之，朽木不折；锲而不舍，金石可镂");
-        }
+        }*/
 
         List<FriendlyLink> friendlinkList = (List<FriendlyLink>)application.getAttribute("friendlinkList");
         if(friendlinkList == null){
