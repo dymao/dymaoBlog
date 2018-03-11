@@ -41,7 +41,7 @@ public class blogController {
      * @return
      */
     @RequestMapping(value = "/list")
-    public String list(Model model, String pageNum, String pageSize, String categoryIdOne,String categoryIdTwo,String searchWord) {
+    public String list(Model model, String pageNum, String pageSize, String categoryIdOne,String categoryIdTwo,String searchWord,String archiveDate) {
         if(StringUtils.isEmpty(pageNum) || !StringUtils.isNumeric(pageNum)){
             pageNum = "1";
         }
@@ -61,6 +61,9 @@ public class blogController {
         }
         if(StringUtils.isNotBlank(categoryIdTwo)){
             paramMap.put("categoryIdTwo",categoryIdTwo);
+        }
+        if(StringUtils.isNotBlank(archiveDate)){
+            paramMap.put("archiveDate",archiveDate);
         }
         PageHelper.startPage(Integer.valueOf(pageNum),Integer.valueOf(pageSize));
         List<BlogVo> blogList = blogService.selectBlogList(paramMap);

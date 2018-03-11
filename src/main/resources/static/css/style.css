@@ -1523,3 +1523,23 @@ h3 a:hover{
     box-shadow:2px 2px 8px rgba(0,0,0,.2);
     border-color:#d6d6d6;
 }
+.blogArchive li{
+    overflow: hidden;
+    min-height: 30px;
+    margin: 5px 5px;
+}
+.blogArchive li a {
+    display: inline !important;
+}
+.blogArchive li a:hover {
+    color: #ff4742 !important;
+}
+.blogArchive .blogNum {
+    float: right;
+    color: #666;
+    font-size: 14px;
+    padding: 3px 45px 3px 3px;
+}
+blockquote  p{
+    white-space:nowrap;
+}

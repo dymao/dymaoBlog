@@ -77,4 +77,9 @@ public class BlogServiceImpl  implements BlogService{
     public int updateTreadNumByPrimaryKey(Map map) {
         return blogMapper.updateTreadNumByPrimaryKey(map);
     }
+
+    @Override
+    public List<Map> selectBlogArchiveList(Map map) {
+        return blogMapper.selectBlogArchiveList(map);
+    }
 }

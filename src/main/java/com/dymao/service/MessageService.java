@@ -20,5 +20,9 @@ public interface MessageService {
 
     int updateByPrimaryKey(Message message);
 
+    Integer deleteByMessageIds(List<String> messageIds);
+
     List<Message> findAllByCondition(Map map);
+
+    int findAllByConditionCount(Map map);
 }

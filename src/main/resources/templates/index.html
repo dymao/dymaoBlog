@@ -48,12 +48,12 @@
                   <div class="inner-box blog-img am-gallery-item " th:each="blog : ${blogList}">
                       <div class="am-g">
                           <div class="col-md-3">
-                              <a class="blog-a-curse" href="#">
+                              <a class="blog-a-curse" th:href="@{'/blog/detail/'+${blog.id}}" target="_blank">
                                   <img class="am_img animated" th:alt="${blog.title}" th:src="@{${blog.image}}" style="display: inline;" />
-                              </a>
-                          </div>
-                          <div class="col-md-9">
-                              <div class="blog-header">
+                                  </a>
+                              </div>
+                              <div class="col-md-9">
+                                  <div class="blog-header">
                                   <span th:if="${blog.categoryIdOne=='1'}" class="index-label index-label-blog"  th:text="${blog.categoryOneName}"></span>
                                   <span th:if="${blog.categoryIdOne=='2'}" style="background-color: #3fb8af;"  class="index-label index-label-blog" th:text="${blog.categoryOneName}"></span>
                                   <span th:if="${blog.categoryIdOne=='3'}" style="background-color: #A576F7;"  class="index-label index-label-blog" th:text="${blog.categoryOneName}"></span>

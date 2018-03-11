@@ -66,6 +66,12 @@
             <input type="text" id="keyword" name="keyword" th:value="${blog.keyword}" class="layui-input" placeholder="请输入文章关键字,以英文逗号分隔">
         </div>
     </div>
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label" style="width: 110px;"><span class="x-red">*</span>标签</label>-->
+        <!--<div class="layui-input-block">-->
+            <!--<input th:each="label:${labelList}"  type="checkbox" name="label" th:value="${label.id}" th:text="${label.labelName}"/>-->
+        <!--</div>-->
+    <!--</div>-->
     <div class="layui-form-item">
         <label for="titleImg" class="layui-form-label" style="width: 110px;">
             <span class="x-red">*</span>缩略图
@@ -209,9 +215,9 @@
         $("#content").val(editor.txt.html());
     }, false)
 
-    document.getElementById('save').addEventListener('click', function () {
-        $("#content").val(editor.txt.html());
-    }, false)
+    // document.getElementById('save').addEventListener('click', function () {
+    //     $("#content").val(editor.txt.html());
+    // }, false)
 
 </script>
 </body>

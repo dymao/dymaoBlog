@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <div th:include="admin/common::common('留言管理')"></div>
+    </head>
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+              <a><cite>首页</cite></a>
+              <a><cite>留言管理</cite></a>
+              <a><cite>留言列表</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+        <div class="x-body">
+            <xblock><button class="layui-btn layui-btn-danger" onclick="delBatch()"><i class="layui-icon">&#xe640;</i>批量删除</button><span class="x-right" style="line-height:40px">共有数据：<span id="categoryNum" th:text="${messageNum}"></span> 条</span></xblock>
+            <table class="layui-table" width="70%">
+                <thead>
+                    <tr>
+                        <th width="2%">
+                            <input type="checkbox" id="selectAll" name="selectAll"  value=""/>
+                        </th>
+                      <!--  <th>
+                            ID
+                        </th>-->
+                        <th width="8%">
+                            昵称
+                        </th>
+                        <th width="10%">
+                            Email
+                        </th>
+                        <th width="10%">
+                            留言内容
+                        </th>
+                        <th width="8%">
+                            留言时间
+                        </th>
+                        <th width="10%">
+                            回复内容
+                        </th>
+                        <th width="8%">
+                            回复时间
+                        </th>
+                        <th width="10%">
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="x-link">
+                    <tr th:if="${#lists.isEmpty(messageList)}"><td colspan="5">无数据</td></tr>
+                    <tr th:each="message: ${messageList}">
+                        <td>
+                            <input type="checkbox" id="messageCheck" name="messageCheck" th:value="${message.id}"/>
+                        </td>
+                        <!--<td th:text="${message.id}"></td>-->
+                        <td th:text="${message.nickName}"></td>
+                        <td th:text="${message.email}"></td>
+                        <td th:utext="${message.content}"></td>
+                        <td th:text="${#dates.format(message.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                        <td th:utext="${message.replyContent}"></td>
+
+                        <td th:if="${#strings.isEmpty(message.replyTime)}" th:text="${message.replyTime}"></td>
+                        <td th:if="${!#strings.isEmpty(message.replyTime)}" th:text="${#dates.format(message.replyTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                        <td class="td-manage">
+                            <a th:if="${#strings.isEmpty(message.replyContent)}" title="回复" href="javascript:;" th:onclick="'cate_edit(\'留言回复\',\'/admin/message/toReplyPage/'+${message.id}+'\',\'\',\'510\')'" class="ml-5" style="text-decoration:none" >
+                                <i class="layui-icon">&#xe642;</i>
+                            </a>&nbsp;&nbsp;&nbsp;
+                            <a title="删除" href="javascript:;" th:onclick="'cate_del(this,\''+${message.id}+'\')'"
+                            style="text-decoration:none">
+                                <i class="layui-icon">&#xe640;</i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script th:src="@{/admin/lib/layui/layui.js}"  charset="utf-8"></script>
+        <script th:src="@{/admin/js/x-layui.js}" charset="utf-8"></script>
+        <script th:src="@{/js/jquery-2.1.4.min.js}" type="text/javascript"></script>
+        <script>
+            layui.use(['element','layer','form'], function(){
+                $ = layui.jquery;//jquery
+              lement = layui.element();//面包导航
+              layer = layui.layer;//弹出层
+              form = layui.form();
+            })
+
+            $(function () {
+                $("#selectAll").change(function() {
+                    if ($(this).prop("checked")) {  // 因jquery版本原因，此处用$(this).attr("checked")拿不到是否选中状态，改用prop后可正常使用
+                        $("input[name=messageCheck]").each(function() {
+                            $(this).prop("checked", true);
+                        });
+                    } else {
+                        $("input[name=messageCheck]").each(function() {
+                            $(this).prop("checked", false);
+                        });
+                    }
+                });
+            });
+
+            function getCheckedboxValue() {
+                var ckbValue = "";
+                $("input[name=messageCheck]:checked").each(function () {
+                    ckbValue = ckbValue + $(this).val() + ",";
+                });
+                return ckbValue.substring(0, ckbValue.length - 1);
+
+            };
+            //批量删除提交
+             function delBatch () {
+                 var messageIds = getCheckedboxValue();
+                 if(messageIds == ''){
+                     layer.msg('请先选中要删除的记录', {icon: 5,time:1000});
+                     return ;
+                 }
+                layer.confirm('确认要删除吗？',function(index){
+                    $.ajax({
+                        url:"/admin/message/delBatch",
+                        data: {"messageIds":messageIds},
+                        type:"Post",
+                        dataType:"json",
+                        success:function(res){
+                            if(res.count > 0){
+                                var num = 0;
+                                $("input[name=messageCheck]:checked").each(function () {
+                                    $(this).parents("tr").remove();
+                                    num ++;
+                                });
+                                var messageNum = $('#messageNum').text();
+                                var newMessageNum = parseInt(messageNum)-num;
+                                $("#messageNum").text(newMessageNum);
+                                layer.msg('已删除!',{icon:1,time:1000});
+                            }else{
+                                layer.msg('删除失败!',{icon:5,time:1000});
+                            }
+                        },
+                        error:function(data){
+                            layer.msg('错误','删除失败');
+                        }
+                    });
+                });
+             }
+
+             //-编辑
+            function cate_edit (title,url,w,h) {
+                x_admin_show(title,url,w,h); 
+            }
+           
+            /*-删除*/
+            function cate_del(obj,id){
+                layer.confirm('确认要删除吗？',function(index){
+                    $.ajax({
+                        url:"/admin/message/del/"+id,
+                        data:'',
+                        type:"Post",
+                        dataType:"json",
+                        success:function(res){
+                            if(res.count > 0){
+                                $(obj).parents("tr").remove();
+                                layer.msg('已删除!',{icon:1,time:1000});
+                                var messageNum = $('#messageNum').text();
+                                var newmessageNum = parseInt(messageNum)-1;
+                                $("#messageNum").text(newmessageNum);
+                            }else{
+                                layer.msg('删除失败!',{icon:5,time:1000});
+                            }
+                        },
+                        error:function(data){
+                            layer.msg('错误','删除失败');
+                        }
+                    });
+                });
+            }
+        </script>
+            
+    </body>
+</html>

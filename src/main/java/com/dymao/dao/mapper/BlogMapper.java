@@ -31,4 +31,6 @@ public interface BlogMapper {
     int updateLikeNumByPrimaryKey(Map map);
 
     int updateTreadNumByPrimaryKey(Map map);
+
+    List<Map> selectBlogArchiveList(Map map);
 }

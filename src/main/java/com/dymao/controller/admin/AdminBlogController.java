@@ -4,9 +4,11 @@ import com.dymao.common.constants.Config;
 import com.dymao.common.constants.Constant;
 import com.dymao.model.Blog;
 import com.dymao.model.BlogCategory;
+import com.dymao.model.Label;
 import com.dymao.service.BlogCategoryService;
 import com.dymao.service.BlogService;
 import com.dymao.service.IdCreateService;
+import com.dymao.service.LabelService;
 import com.dymao.vo.BaseMessage;
 import com.dymao.vo.BlogVo;
 import org.apache.commons.lang3.StringUtils;
@@ -39,6 +41,9 @@ public class AdminBlogController {
     @Autowired
     private IdCreateService idCreateService;
 
+    @Autowired
+    private LabelService labelService;
+
     @RequestMapping(value = "/toBlogListPage", method = RequestMethod.GET)
     public String toBlogListPage(Model model){
         Map paramMap = new HashMap();
@@ -57,6 +62,9 @@ public class AdminBlogController {
         // 查询一级分类列表
         List<BlogCategory> categoryOneLevelList = blogCategoryService.findCategoryList(Constant.BLOG_CATEGORY_LEVEL_1);
         model.addAttribute("categoryOneLevelList",categoryOneLevelList);
+        // 查询所有标签
+        List<Label> labelList = labelService.findAllLabel(new HashMap());
+        model.addAttribute("labelList",labelList);
         return "admin/blog/blog-add";
     }
 

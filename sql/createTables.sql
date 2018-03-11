@@ -173,3 +173,6 @@ CREATE TABLE `sequence` (
   `increment` int(11) NOT NULL DEFAULT '1' COMMENT '步长',
   PRIMARY KEY (`seq_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 创建视图
+select date_format(curdate(),'%Y-%m') AS `month` union select date_format((curdate() - interval 1 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 2 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 3 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 4 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 5 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 6 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 7 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 8 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 9 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 10 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 11 month),'%Y-%m') AS `month`

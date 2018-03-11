@@ -2242,7 +2242,7 @@ Code.prototype = {
     // 插入代码
     _insertCode: function _insertCode(value) {
         var editor = this.editor;
-        editor.cmd.do('insertHTML', '<pre><code>' + value + '</code></pre><p><br></p>');
+        editor.cmd.do('insertHTML', '<pre><code>' + value + '</code></pre><span></span>');
     },
 
     // 更新代码
@@ -2474,7 +2474,7 @@ Table.prototype = {
             }
             html += '</tr>';
         }
-        html += '</table><p><br></p>';
+        html += '</table><span></span>';
 
         // 执行命令
         var editor = this.editor;
@@ -2798,7 +2798,7 @@ Video.prototype = {
     // 插入视频
     _insert: function _insert(val) {
         var editor = this.editor;
-        editor.cmd.do('insertHTML', val + '<p><br></p>');
+        editor.cmd.do('insertHTML', val + '<span></span>');
     }
 };
 
@@ -3323,7 +3323,7 @@ Text.prototype = {
 
     // 清空内容
     clear: function clear() {
-        this.html('<p><br></p>');
+        this.html('<span></span>');
     },
 
     // 获取 设置 html
@@ -3379,7 +3379,7 @@ Text.prototype = {
         // 按回车建时的特殊处理
         this._enterKeyHandle();
 
-        // 清空时保留 <p><br></p>
+        // 清空时保留 <span></span>
         this._clearHandle();
 
         // 粘贴事件（粘贴文字，粘贴图片）
@@ -3426,7 +3426,7 @@ Text.prototype = {
         var $textElem = editor.$textElem;
 
         function insertEmptyP($selectionElem) {
-            var $p = $('<p><br></p>');
+            var $p = $('<span></span>');
             $p.insertBefore($selectionElem);
             editor.selection.createRangeByElem($p, true);
             editor.selection.restoreSelection();
@@ -3498,7 +3498,7 @@ Text.prototype = {
             if (editor._willBreakCode === true) {
                 // 此时可以跳出代码块
                 // 插入 <p> ，并将选取定位到 <p>
-                var $p = $('<p><br></p>');
+                var $p = $('<span></span>');
                 $p.insertAfter($parentElem);
                 editor.selection.createRangeByElem($p, true);
                 editor.selection.restoreSelection();
@@ -3543,7 +3543,7 @@ Text.prototype = {
         });
     },
 
-    // 清空时保留 <p><br></p>
+    // 清空时保留 <span></span>
     _clearHandle: function _clearHandle() {
         var editor = this.editor;
         var $textElem = editor.$textElem;
@@ -3553,7 +3553,7 @@ Text.prototype = {
                 return;
             }
             var txtHtml = $textElem.html().toLowerCase().trim();
-            if (txtHtml === '<p><br></p>') {
+            if (txtHtml === '<span></span>') {
                 // 最后剩下一个空行，就不再删除了
                 e.preventDefault();
                 return;
@@ -4539,7 +4539,7 @@ Editor.prototype = {
         if ($children && $children.length) {
             $textElem.append($children);
         } else {
-            $textElem.append($('<p><br></p>'));
+            $textElem.append($('<span></span>'));
         }
 
         // 编辑区域加入DOM
@@ -4629,7 +4629,7 @@ Editor.prototype = {
         var $children = $textElem.children();
         if (!$children.length) {
             // 如果编辑器区域无内容，添加一个空行，重新设置选区
-            $textElem.append($('<p><br></p>'));
+            $textElem.append($('<span></span>'));
             this.initSelection();
             return;
         }
@@ -4641,8 +4641,8 @@ Editor.prototype = {
             var html = $last.html().toLowerCase();
             var nodeName = $last.getNodeName();
             if (html !== '<br>' && html !== '<br\/>' || nodeName !== 'P') {
-                // 最后一个元素不是 <p><br></p>，添加一个空行，重新设置选区
-                $textElem.append($('<p><br></p>'));
+                // 最后一个元素不是 <span></span>，添加一个空行，重新设置选区
+                $textElem.append($('<span></span>'));
                 this.initSelection();
                 return;
             }

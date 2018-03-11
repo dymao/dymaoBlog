@@ -41,7 +41,17 @@ public class MessageServiceImpl implements MessageService{
     }
 
     @Override
+    public Integer deleteByMessageIds(List<String> messageIds){
+        return messageMapper.deleteByMessageIds(messageIds);
+    }
+
+    @Override
     public List<Message> findAllByCondition(Map map) {
         return messageMapper.findAllByCondition(map);
+    }
+
+    @Override
+    public int findAllByConditionCount(Map map) {
+        return messageMapper.findAllByConditionCount(map);
     }
 }

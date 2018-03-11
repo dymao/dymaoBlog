@@ -34,4 +34,6 @@ public interface BlogService {
     int updateLikeNumByPrimaryKey(Map map);
 
     int updateTreadNumByPrimaryKey(Map map);
+
+    List<Map> selectBlogArchiveList(Map map);
 }

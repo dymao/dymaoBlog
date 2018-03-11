@@ -305,6 +305,9 @@
       <if test="isAudit != null">
         and  is_audit = #{isAudit,jdbcType=VARCHAR}
       </if>
+      <if test="archiveDate != null">
+        and  DATE_FORMAT(create_time,'%Y-%m')= #{archiveDate,jdbcType=VARCHAR}
+      </if>
       <if test="searchWord != null">
         and (title like  CONCAT('%',#{searchWord},'%')
       </if>
@@ -366,4 +369,25 @@
     update blog  set tread_num = tread_num +1
       where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectBlogArchiveList" parameterType="java.util.Map" resultType="java.util.Map">
+    select v.month as monthVal, concat(replace(v.`month`,'-','年'),'月')as monthKey,ifnull(b.blogNum,0) blogNum
+      from past_12_month_view v
+        left join (
+                select DATE_FORMAT(t.create_time,'%Y-%m') month,count(t.id) blogNum
+                  from blog t
+                where DATE_FORMAT(t.create_time,'%Y-%m')> DATE_FORMAT(date_sub(curdate(), interval 12 month),'%Y-%m')
+                <if test="isPublic != null">
+                  and is_public = #{isPublic,jdbcType=VARCHAR}
+                </if>
+                <if test="deleted != null">
+                  and  deleted = #{deleted,jdbcType=VARCHAR}
+                </if>
+                <if test="isAudit != null">
+                  and  is_audit = #{isAudit,jdbcType=VARCHAR}
+                </if>
+                group by month desc
+      ) b
+    on v.month = b.month group by v.month desc
+  </select>
 </mapper>

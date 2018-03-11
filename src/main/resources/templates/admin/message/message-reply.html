@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <div th:include="admin/common::common('留言回复')"></div>
+    </head>
+    <script th:src="@{/admin/js/wangEditor.js}" charset="utf-8"></script>
+    <body>
+        <div class="x-body">
+            <form class="layui-form">
+                    <input type="hidden"  id="id" name="id" th:value="${message.id}"   />
+                    <input type="hidden" name="replyContent" id="replyContent" value="" />
+                <div class="layui-form-item">
+                    <span for="name" class="">
+                        留言内容：
+                    </span>
+                    <div class="">
+                        <p th:utext="${message.content}"></p>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <span for="name" class="">
+                        <span class="x-red">*</span>回复内容：
+                    </span>
+                    <div class="am-form-group" style="width: 85%">
+                        <div id="messageArea" >
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                <button  class="layui-btn" id="reply" lay-filter="reply" lay-submit="reply">
+                    回复
+                </button>
+                </div>
+            </form>
+        </div>
+        <script th:src="@{/admin/lib/layui/layui.js}"  charset="utf-8"></script>
+        <script th:src="@{/admin/js/x-layui.js}" charset="utf-8"></script>
+        <script>
+
+            var E = window.wangEditor;
+            var editor = new E('#messageArea');
+            editor.customConfig.menus = [ 'emoticon']
+            editor.create();
+
+            document.getElementById('reply').addEventListener('click', function () {
+                $("#replyContent").val(editor.txt.html());
+                if($("#replyContent").val() == '<p><br></p>'){
+                    layer.alert("回复内容不能为空！", {icon: 6});
+                    return;
+                }
+            }, false);
+
+            layui.use(['form','layer'], function(){
+                $ = layui.jquery;
+              var form = layui.form()
+              ,layer = layui.layer;
+            
+              //监听提交
+              form.on('submit(reply)', function(data){
+                  $.ajax({
+                      url: "/admin/message/reply",
+                      data: data.field,
+                      type: "Post",
+                      dataType: "json",
+                      success: function (res) {
+                          if (res.count > 0) {
+                              layer.alert("回复成功", {icon: 6},function () {
+                                  // 获得frame索引
+                                  var index = parent.layer.getFrameIndex(window.name);
+                                  //关闭当前frame
+                                  parent.layer.close(index);
+                                  parent.location = parent.location;
+                              });
+                          } else {
+                              layer.alert("回复失败", {icon: 6});
+                          }
+                      },
+                      error: function (data) {
+                          layer.alert('错误', data.msg);
+                      }
+                  });
+                return false;
+              });
+
+                $(".w-e-text-container").height(90);
+
+            });
+        </script>
+        
+    </body>
+
+</html>

@@ -133,6 +133,10 @@ public class IndexController {
         List<Label> labelList = labelService.findAllLabel(new HashMap());
 
         resultMap.put("labelList",labelList);
+
+
+        List<Map> blogArchiveList = blogService.selectBlogArchiveList(paramMap);
+        resultMap.put("blogArchiveList",blogArchiveList);
         return resultMap;
     }
 
