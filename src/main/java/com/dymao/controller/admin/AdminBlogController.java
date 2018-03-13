@@ -70,12 +70,14 @@ public class AdminBlogController {
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public BaseMessage addBlog(Model model, Blog blog){
+    public BaseMessage addBlog(Model model, Blog blog,String[] label){
         BaseMessage baseMessage = new BaseMessage();
         int count = 0;
         Date now = new Date();
         blog.setUpdateTime(now);
         blog.setIsAudit(Constant.BLOG_IS_AUDIT_1); // 无论是新增还是修改，状态都应该是待审核
+
+
         if(StringUtils.isEmpty(blog.getId())){// 新增
             blog.setId(idCreateService.getBlogId());
             blog.setDeleted(Constant.DELETE_FLAG_0);
@@ -91,6 +93,7 @@ public class AdminBlogController {
         }else{   // 修改
             count = blogService.updateByPrimaryKey(blog);
         }
+
         if(count <=0){
             baseMessage.setReturnCode(201);
             baseMessage.setReturnMsg("保存失败");

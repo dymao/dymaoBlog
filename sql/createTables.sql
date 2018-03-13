@@ -175,4 +175,13 @@ CREATE TABLE `sequence` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 创建视图
-select date_format(curdate(),'%Y-%m') AS `month` union select date_format((curdate() - interval 1 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 2 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 3 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 4 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 5 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 6 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 7 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 8 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 9 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 10 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 11 month),'%Y-%m') AS `month`
+DROP VIEW IF EXISTS `past_12_month_view`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `past_12_month_view` AS select date_format(curdate(),'%Y-%m') AS `month` union select date_format((curdate() - interval 1 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 2 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 3 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 4 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 5 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 6 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 7 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 8 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 9 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 10 month),'%Y-%m') AS `month` union select date_format((curdate() - interval 11 month),'%Y-%m') AS `month`;
+
+-- 博客标签关系表
+CREATE TABLE `blog_label` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `blog_id` varchar(32) NOT NULL,
+  `label_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
