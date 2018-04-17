@@ -55,4 +55,17 @@ public class Constant {
     public static final String LOGIN_VRRFY_STATUS_7 = "7"; // 用户已被锁定
     public static final String LOGIN_VRRFY_STATUS_8 = "8"; // 系统出错
 
+    // 访问渠道
+    public static final String CHANNEL_TYPE_FRONT = "0"; // 前端
+    public static final String CHANNEL_TYPE_ADMIN = "1"; // 后管
+
+    // 设备类型
+    public static final String DEVICE_TYPE_PC_IOS = "PC_MAC";                 // MAC PC设备
+    public static final String DEVICE_TYPE_MOBILE_IOS = "MOBILE_IOS";         // IOS 移动设备
+    public static final String DEVICE_TYPE_PC_WINDOWS = "PC_WINDOWS";         // PC  WINDOWS
+    public static final String DEVICE_TYPE_MOBILE_ANDROID = "MOBILE_ANDROID"; // ANDROID 移动设备
+    public static final String DEVICE_TYPE_OHTERS = "OTHERS";                 // 其他设备类型
+
+
+
 }

@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.websocket.server.PathParam;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Mervin
@@ -41,7 +38,9 @@ public class blogController {
      * @return
      */
     @RequestMapping(value = "/list")
-    public String list(Model model, String pageNum, String pageSize, String categoryIdOne,String categoryIdTwo,String searchWord,String archiveDate) {
+    public String list(Model model, String pageNum, String pageSize, String categoryIdOne,
+                       String categoryIdTwo,String searchWord,String archiveDate,
+                       String labelId) {
         if(StringUtils.isEmpty(pageNum) || !StringUtils.isNumeric(pageNum)){
             pageNum = "1";
         }
@@ -65,6 +64,18 @@ public class blogController {
         if(StringUtils.isNotBlank(archiveDate)){
             paramMap.put("archiveDate",archiveDate);
         }
+        if(StringUtils.isNotBlank(labelId)){
+            Map labelMap = new HashMap();
+            labelMap.put("labelId",labelId);
+            List<String> blogIdList = blogService.queryBlogIdByLabelId(labelMap);
+            if(blogIdList != null && blogIdList.size() > 0){
+                paramMap.put("list",blogIdList);
+            }else{
+                blogIdList = new ArrayList();
+                blogIdList.add("1");
+                paramMap.put("list",blogIdList); // 如果传了标签过来，而且查询不到记录，则new一个空数组，防止查询条件不生效
+            }
+        }
         PageHelper.startPage(Integer.valueOf(pageNum),Integer.valueOf(pageSize));
         List<BlogVo> blogList = blogService.selectBlogList(paramMap);
         PageInfo<BlogVo> pageInfo = new PageInfo<BlogVo>(blogList);
@@ -80,6 +91,9 @@ public class blogController {
     public String blogDetail(Model model, @PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response) {
 
         Blog blog = blogService.selectByPrimaryKey(id);
+        if(blog == null){
+            return "blog/blog-detail";
+        }
         model.addAttribute("blog",blog);
         Map paramMap = new HashMap();
         paramMap.put("id",id);

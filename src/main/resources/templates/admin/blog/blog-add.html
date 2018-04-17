@@ -66,7 +66,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label" style="width: 110px;"><span class="x-red">*</span>标签</label>
         <div class="layui-input-block">
-            <input th:each="label:${labelList}"  th:title="${label.labelName}" type="checkbox" name="label" th:value="${label.id}"/>
+            <input th:each="label:${labelList}"  th:title="${label.labelName}" type="checkbox" name="labels" th:value="${label.id}"/>
         </div>
     </div>
     <div class="layui-form-item">

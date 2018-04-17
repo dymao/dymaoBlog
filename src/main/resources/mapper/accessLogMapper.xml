@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dymao.dao.mapper.AccessLogMapper">
+  <resultMap id="BaseResultMap" type="com.dymao.model.AccessLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="devicetype" jdbcType="VARCHAR" property="devicetype" />
+    <result column="channeltype" jdbcType="VARCHAR" property="channeltype" />
+    <result column="sessionId" jdbcType="VARCHAR" property="sessionid" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="accesstime" jdbcType="TIMESTAMP" property="accesstime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, url, userid, devicetype, channeltype, sessionId, ip, accesstime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from access_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">-->
+    <!--delete from access_log-->
+    <!--where id = #{id,jdbcType=INTEGER}-->
+  <!--</delete>-->
+  <insert id="insert" parameterType="com.dymao.model.AccessLog">
+    insert into access_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="url != null">
+        url,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="devicetype != null">
+        devicetype,
+      </if>
+      <if test="channeltype != null">
+        channeltype,
+      </if>
+      <if test="sessionid != null">
+        sessionId,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="accesstime != null">
+        accesstime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="devicetype != null">
+        #{devicetype,jdbcType=VARCHAR},
+      </if>
+      <if test="channeltype != null">
+        #{channeltype,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionid != null">
+        #{sessionid,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="accesstime != null">
+        #{accesstime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.dymao.model.AccessLog">
+    update access_log
+    <set>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="devicetype != null">
+        devicetype = #{devicetype,jdbcType=VARCHAR},
+      </if>
+      <if test="channeltype != null">
+        channeltype = #{channeltype,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionid != null">
+        sessionId = #{sessionid,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="accesstime != null">
+        accesstime = #{accesstime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

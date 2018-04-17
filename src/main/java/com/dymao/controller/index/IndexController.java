@@ -110,7 +110,7 @@ public class IndexController {
         return "welcome";
     }
 
-    @RequestMapping("/rightDataList")
+    @RequestMapping("/indexRightDataList")
     @ResponseBody
     public Map getHotBlogList(){
         Map resultMap = new HashMap();
@@ -123,12 +123,6 @@ public class IndexController {
         List<Blog> hotBlogList = blogService.selectHotBlogList(paramMap);
         resultMap.put("hotBlogList",hotBlogList);
 
-       /* // 查询最新留言
-        paramMap.clear();
-        paramMap.put("showflag", Constant.SHOW_FLAG_0);
-        paramMap.put("limitNum", Integer.valueOf(5));
-        List<Message> messageList = messageService.findAllByCondition(paramMap);
-        resultMap.put("newMessageList",messageList);*/
 
         List<Label> labelList = labelService.findAllLabel(new HashMap());
 
@@ -138,6 +132,52 @@ public class IndexController {
         List<Map> blogArchiveList = blogService.selectBlogArchiveList(paramMap);
         resultMap.put("blogArchiveList",blogArchiveList);
         return resultMap;
+    }
+
+    @RequestMapping("/rightDataList")
+    @ResponseBody
+    public Map getRightDataList(){
+        Map resultMap = new HashMap();
+
+        // 查询随机博客
+        Map paramMap = new HashMap();
+        paramMap.put("isPublic", Constant.BLOG_IS_PUBLIC_0);
+        paramMap.put("isAudit",Constant.BLOG_IS_AUDIT_0);
+        paramMap.put("deleted",Constant.DELETE_FLAG_0);
+
+        List<Blog> hotBlogList = blogService.selectRandomBlogList(paramMap);
+
+        resultMap.put("randomBlogList",getRandomBlogList(hotBlogList));
+
+        List<Label> labelList = labelService.findAllLabel(new HashMap());
+
+        resultMap.put("labelList",labelList);
+
+
+        List<Map> blogArchiveList = blogService.selectBlogArchiveList(paramMap);
+        resultMap.put("blogArchiveList",blogArchiveList);
+        return resultMap;
+    }
+
+    // 获取6篇随机博文
+    private List<Blog> getRandomBlogList(List<Blog> hotBlogList){
+        List<Blog> randomBlogList = new ArrayList<Blog>();
+        if(hotBlogList != null && hotBlogList.size() > 6){
+            int length = hotBlogList.size();
+            String str = ",";
+            int count = 0;
+            while (count < 6){
+                int m = (int)(Math.random() * length) ;
+                System.out.println(m);
+                if(str.indexOf("," + m + ",") < 0 ){
+                    str = str + m + ",";
+                    randomBlogList.add(count,hotBlogList.get(m));
+                    count ++;
+                }
+            }
+
+        }
+        return randomBlogList;
     }
 
 }

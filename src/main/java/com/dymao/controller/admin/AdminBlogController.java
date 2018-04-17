@@ -14,6 +14,7 @@ import com.dymao.vo.BlogVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -70,7 +71,8 @@ public class AdminBlogController {
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public BaseMessage addBlog(Model model, Blog blog,String[] label){
+    @Transactional
+    public BaseMessage addBlog(Model model, Blog blog,String[] labels){
         BaseMessage baseMessage = new BaseMessage();
         int count = 0;
         Date now = new Date();
@@ -92,6 +94,15 @@ public class AdminBlogController {
             count = blogService.insert(blog);
         }else{   // 修改
             count = blogService.updateByPrimaryKey(blog);
+            blogService.delBlogLabels(blog.getId());// 删除之前所有标签
+        }
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("blogId", blog.getId());
+        if(labels != null && labels.length > 0){
+            for (String label: labels) {
+                map.put("labelId", label);
+                    blogService.saveBlogLabels(map);
+            }
         }
 
         if(count <=0){
@@ -119,6 +130,11 @@ public class AdminBlogController {
         List<BlogCategory> bolgCategoryTwoLevelList = blogCategoryService.findCategoryListByMap(paramMap);
 
         model.addAttribute("bolgCategoryTwoLevelList",bolgCategoryTwoLevelList);
+
+        // 查询所有标签
+        List<Label> labelList = labelService.findAllLabel(new HashMap());
+        model.addAttribute("labelList",labelList);
+
         return "admin/blog/blog-edit";
     }
 
@@ -129,22 +145,14 @@ public class AdminBlogController {
      */
     @RequestMapping(value = "/del/{id}",method = RequestMethod.POST)
     @ResponseBody
+    @Transactional
     public Map delBanner(@PathVariable String id){
         Map result  = new HashMap();
         Integer count = blogService.deleteByPrimaryKey(id);
+        blogService.delBlogLabels(id);// 删除之前所有标签
         result.put("count",count);
         return result;
     }
-
-    /*@RequestMapping(value = "/delBatch",method = RequestMethod.POST)
-    @ResponseBody
-    public Map delBatchBanner(String bannerIds){
-        Map result  = new HashMap();
-        List<String> idList = Arrays.asList(bannerIds.split(","));
-        Integer count = blogService.deleteByBannerIds(idList);
-        result.put("count",count);
-        return result;
-    }*/
 
     @RequestMapping(value = "/recommend/{id}",method = RequestMethod.POST)
     @ResponseBody

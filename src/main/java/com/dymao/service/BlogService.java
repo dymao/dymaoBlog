@@ -25,6 +25,8 @@ public interface BlogService {
 
     List<Blog> selectHotBlogList(Map map);
 
+    List<Blog> selectRandomBlogList(Map map);
+
     Blog selectPreBlog(Map map);
 
     Blog selectNextBlog(Map map);
@@ -36,4 +38,11 @@ public interface BlogService {
     int updateTreadNumByPrimaryKey(Map map);
 
     List<Map> selectBlogArchiveList(Map map);
+
+    int saveBlogLabels(Map map);
+
+    int delBlogLabels(String blogId);
+
+    List<String> queryBlogIdByLabelId(Map map);
+
 }

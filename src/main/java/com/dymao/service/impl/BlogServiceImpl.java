@@ -53,6 +53,11 @@ public class BlogServiceImpl  implements BlogService{
     }
 
     @Override
+    public List<Blog> selectRandomBlogList(Map map) {
+        return blogMapper.selectRandomBlogList(map);
+    }
+
+    @Override
     public Blog selectPreBlog(Map map) {
         return blogMapper.selectPreBlog(map);
     }
@@ -81,5 +86,20 @@ public class BlogServiceImpl  implements BlogService{
     @Override
     public List<Map> selectBlogArchiveList(Map map) {
         return blogMapper.selectBlogArchiveList(map);
+    }
+
+    @Override
+    public int saveBlogLabels(Map map) {
+        return blogMapper.saveBlogLabels(map);
+    }
+
+    @Override
+    public int delBlogLabels(String blogId) {
+        return blogMapper.delBlogLabels(blogId);
+    }
+
+    @Override
+    public List<String> queryBlogIdByLabelId(Map map){
+        return blogMapper.queryBlogIdByLabelId(map);
     }
 }

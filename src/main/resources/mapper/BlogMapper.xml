@@ -47,6 +47,9 @@
     <include refid="Blob_Column_List" />
     from blog
     where id = #{id,jdbcType=VARCHAR}
+      and is_public = '0'
+      and deleted = '0'
+      and is_audit = '0'
   </select>
   <update id="deleteByPrimaryKey" parameterType="java.lang.String">
     update blog  set deleted = '1'
@@ -317,6 +320,15 @@
       <if test="searchWord != null">
         or content like CONCAT('%',#{searchWord},'%') )
       </if>
+      <if test="searchWord != null">
+        or content like CONCAT('%',#{searchWord},'%') )
+      </if>
+      <if test="list != null">
+          and a.id in
+          <foreach collection="list" index="index" item="id" open="(" close=")" separator=",">
+              #{id,jdbcType=VARCHAR}
+          </foreach>
+      </if>
     </where>
      order by create_time desc
   </select>
@@ -326,7 +338,6 @@
     a.id, title, a.view_num,image
     from blog a
     <where>
-
       <if test="isPublic != null">
         is_public = #{isPublic,jdbcType=VARCHAR}
       </if>
@@ -339,6 +350,32 @@
     </where>
     order by a.view_num desc
     LIMIT 0,6
+  </select>
+
+  <select id="selectRandomBlogList" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    a.id, title, a.view_num,image
+    from blog a
+    <where>
+      <if test="isPublic != null">
+        is_public = #{isPublic,jdbcType=VARCHAR}
+      </if>
+      <if test="deleted != null">
+        and  deleted = #{deleted,jdbcType=VARCHAR}
+      </if>
+      <if test="isAudit != null">
+        and  is_audit = #{isAudit,jdbcType=VARCHAR}
+      </if>
+      <if test="isAudit != null">
+        and  is_audit = #{isAudit,jdbcType=VARCHAR}
+      </if>
+      <if test="list != null">
+          and id in
+          <foreach collection="list" index="index" item="id" open="(" close=")" separator=",">
+              #{id,jdbcType=VARCHAR}
+          </foreach>
+      </if>
+    </where>
   </select>
 
 
@@ -390,4 +427,16 @@
       ) b
     on v.month = b.month group by v.month desc
   </select>
+
+   <insert id="saveBlogLabels" parameterType="java.util.Map">
+       insert into blog_label(blog_id,label_id) values(#{blogId,jdbcType=VARCHAR},#{labelId,jdbcType=VARCHAR})
+   </insert>
+
+   <delete id="delBlogLabels"  parameterType="java.lang.String">
+       delete from  blog_label  where  blog_id = #{blogId,jdbcType=VARCHAR}
+   </delete>
+
+    <select id="queryBlogIdByLabelId" parameterType="java.util.Map" resultType="java.lang.String">
+        select blog_id from blog_label where label_id = #{labelId,jdbcType=VARCHAR};
+    </select>
 </mapper>

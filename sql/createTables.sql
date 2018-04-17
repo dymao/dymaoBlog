@@ -181,7 +181,19 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `past_12
 -- 博客标签关系表
 CREATE TABLE `blog_label` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `blog_id` varchar(32) NOT NULL,
-  `label_id` int(11) NOT NULL,
+  `blog_id` varchar(32) NOT NULL COMMENT '博客id',
+  `label_id` int(11) NOT NULL COMMENT '标签id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='博客标签关系表';
+
+-- 访问日志记录表
+CREATE TABLE `access_log` (
+    `id` INT(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `url` VARCHAR(50) NOT NULL  COMMENT  '请求URL',
+    `userid` VARCHAR(32)  COMMENT '用户ID',
+    `devicetype` VARCHAR(10) COMMENT '设备类型',
+    `channeltype` VARCHAR(1) COMMENT '访问渠道 0：前端， 1：后台',
+    `sessionId` VARCHAR(100) COMMENT 'sessionID',
+    `ip` VARCHAR(50) COMMENT '访问者IP',
+    `accesstime` datetime DEFAULT NULL COMMENT '访问时间'
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='访问日志记录表';
