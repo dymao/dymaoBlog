@@ -91,7 +91,9 @@ public class blogController {
     public String blogDetail(Model model, @PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response) {
 
         Blog blog = blogService.selectByPrimaryKey(id);
-        if(blog == null){
+        if(blog == null || !StringUtils.equals(Constant.BLOG_IS_PUBLIC_0, blog.getIsPublic())
+                || !StringUtils.equals(Constant.BLOG_IS_AUDIT_0, blog.getIsAudit())
+                || !StringUtils.equals(Constant.DELETE_FLAG_0, blog.getDeleted())){
             return "blog/blog-detail";
         }
         model.addAttribute("blog",blog);

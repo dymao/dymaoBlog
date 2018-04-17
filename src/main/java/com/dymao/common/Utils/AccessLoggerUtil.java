@@ -33,7 +33,7 @@ public class AccessLoggerUtil {
         }
         log.setDevicetype(DeviceUtil.getDeviceTypeByAgent(request));
         String channelType = Constant.CHANNEL_TYPE_FRONT;
-        if(StringUtils.isNotBlank(requestUri) && requestUri.indexOf(Constant.CHANNEL_TYPE_ADMIN) >= 0){
+        if(StringUtils.isNotBlank(requestUri) && requestUri.indexOf("admin") >= 0){
             channelType = Constant.CHANNEL_TYPE_ADMIN;
         }
         log.setChanneltype(channelType);

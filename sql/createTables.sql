@@ -189,9 +189,9 @@ CREATE TABLE `blog_label` (
 -- 访问日志记录表
 CREATE TABLE `access_log` (
     `id` INT(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `url` VARCHAR(50) NOT NULL  COMMENT  '请求URL',
+    `url` VARCHAR(150) NOT NULL  COMMENT  '请求URL',
     `userid` VARCHAR(32)  COMMENT '用户ID',
-    `devicetype` VARCHAR(10) COMMENT '设备类型',
+    `devicetype` VARCHAR(20) COMMENT '设备类型',
     `channeltype` VARCHAR(1) COMMENT '访问渠道 0：前端， 1：后台',
     `sessionId` VARCHAR(100) COMMENT 'sessionID',
     `ip` VARCHAR(50) COMMENT '访问者IP',
