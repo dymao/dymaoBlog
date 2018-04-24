@@ -17,6 +17,8 @@ public class AccessLog {
 
     private String ip;
 
+    private String status;
+
     private String returnMsg;
 
     private Date accesstime;
@@ -75,6 +77,14 @@ public class AccessLog {
 
     public void setIp(String ip) {
         this.ip = ip == null ? null : ip.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getReturnMsg() {

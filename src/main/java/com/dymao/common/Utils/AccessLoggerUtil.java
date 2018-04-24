@@ -1,7 +1,10 @@
 package com.dymao.common.Utils;
 
 import com.dymao.common.constants.Constant;
+import com.dymao.common.constants.Dict;
 import com.dymao.model.AccessLog;
+import com.dymao.model.AdminUser;
+import com.dymao.model.User;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,15 +29,21 @@ public class AccessLoggerUtil {
         log.setUrl(requestUri);
         HttpSession session = request.getSession();
         if(session != null){
-          String userId = (String)session.getAttribute("");
-            if(StringUtils.isNotBlank(userId)){
-                log.setUserid(userId);
+          User user = (User)session.getAttribute(Dict.USER);
+            if(user != null){
+                log.setUserid(user.getId());
             }
         }
         log.setDevicetype(DeviceUtil.getDeviceTypeByAgent(request));
         String channelType = Constant.CHANNEL_TYPE_FRONT;
-        if(StringUtils.isNotBlank(requestUri) && requestUri.indexOf("admin") >= 0){
+        if(StringUtils.isNotBlank(requestUri) && requestUri.indexOf(Dict.ADMIN) >= 0){
             channelType = Constant.CHANNEL_TYPE_ADMIN;
+            if(session != null){
+                AdminUser adminUser = (AdminUser)session.getAttribute(Dict.ADMIN_USER);
+                if(adminUser != null){
+                    log.setUserid(adminUser.getId());
+                }
+            }
         }
         log.setChanneltype(channelType);
         log.setSessionid(request.getSession().getId());

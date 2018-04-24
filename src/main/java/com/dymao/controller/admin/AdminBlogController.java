@@ -2,6 +2,8 @@ package com.dymao.controller.admin;
 
 import com.dymao.common.constants.Config;
 import com.dymao.common.constants.Constant;
+import com.dymao.common.constants.Dict;
+import com.dymao.model.AdminUser;
 import com.dymao.model.Blog;
 import com.dymao.model.BlogCategory;
 import com.dymao.model.Label;
@@ -19,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +75,7 @@ public class AdminBlogController {
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
     @Transactional
-    public BaseMessage addBlog(Model model, Blog blog,String[] labels){
+    public BaseMessage addBlog(Model model, Blog blog,String[] labels,HttpServletRequest request){
         BaseMessage baseMessage = new BaseMessage();
         int count = 0;
         Date now = new Date();
@@ -84,7 +87,12 @@ public class AdminBlogController {
             blog.setId(idCreateService.getBlogId());
             blog.setDeleted(Constant.DELETE_FLAG_0);
             blog.setIsPublic(Constant.BLOG_IS_PUBLIC_0);
-            blog.setUserId("admin");
+
+            HttpSession session = request.getSession();
+            AdminUser adminUser = (AdminUser) session.getAttribute(Dict.ADMIN_USER);
+            if(adminUser != null){
+                blog.setUserId(adminUser.getId());
+            }
             blog.setViewNum(0);
             blog.setLikeNum(0);
             blog.setTreadNum(0);
@@ -121,7 +129,7 @@ public class AdminBlogController {
         // 查询一级分类列表
         List<BlogCategory> categoryOneLevelList = blogCategoryService.findCategoryList(Constant.BLOG_CATEGORY_LEVEL_1);
         model.addAttribute("categoryOneLevelList",categoryOneLevelList);
-        Blog blog = blogService.selectByPrimaryKey(id);
+        BlogVo blog = blogService.selectByPrimaryKey(id);
         model.addAttribute("blog",blog);
         // 查询二级分类
         Map paramMap = new HashMap();
@@ -159,7 +167,7 @@ public class AdminBlogController {
     public BaseMessage recommendBlog(@PathVariable String id){
         BaseMessage baseMessage = new BaseMessage();
 
-        Blog blog = blogService.selectByPrimaryKey(id);
+        BlogVo blog = blogService.selectByPrimaryKey(id);
         if(blog == null || Constant.DELETE_FLAG_1.equals(blog.getDeleted())){
             baseMessage.setReturnCode(201);
             baseMessage.setReturnMsg("博客不存在，请检查！");
@@ -188,7 +196,7 @@ public class AdminBlogController {
     public BaseMessage auditBlog(@PathVariable String id){
         BaseMessage baseMessage = new BaseMessage();
 
-        Blog blog = blogService.selectByPrimaryKey(id);
+        BlogVo blog = blogService.selectByPrimaryKey(id);
         if(blog == null || Constant.DELETE_FLAG_1.equals(blog.getDeleted())){
             baseMessage.setReturnCode(201);
             baseMessage.setReturnMsg("博客不存在，请检查！");

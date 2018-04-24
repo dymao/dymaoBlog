@@ -9,6 +9,8 @@
     <result column="channeltype" jdbcType="VARCHAR" property="channeltype" />
     <result column="sessionId" jdbcType="VARCHAR" property="sessionid" />
     <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="returnMsg" jdbcType="VARCHAR" property="returnMsg" />
     <result column="accesstime" jdbcType="TIMESTAMP" property="accesstime" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -45,6 +47,12 @@
       <if test="ip != null">
         ip,
       </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="returnMsg != null">
+        returnMsg,
+      </if>
       <if test="accesstime != null">
         accesstime,
       </if>
@@ -67,6 +75,12 @@
       </if>
       <if test="ip != null">
         #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="returnMsg != null">
+        #{returnMsg,jdbcType=VARCHAR},
       </if>
       <if test="accesstime != null">
         #{accesstime,jdbcType=TIMESTAMP},
@@ -93,6 +107,12 @@
       </if>
       <if test="ip != null">
         ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{stauts,jdbcType=VARCHAR},
+      </if>
+      <if test="returnMsg != null">
+        returnMsg = #{returnMsg,jdbcType=VARCHAR},
       </if>
       <if test="accesstime != null">
         accesstime = #{accesstime,jdbcType=TIMESTAMP},

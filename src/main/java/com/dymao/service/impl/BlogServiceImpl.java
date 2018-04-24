@@ -33,7 +33,7 @@ public class BlogServiceImpl  implements BlogService{
     }
 
     @Override
-    public Blog selectByPrimaryKey(String id) {
+    public BlogVo selectByPrimaryKey(String id) {
         return blogMapper.selectByPrimaryKey(id);
     }
 
@@ -48,22 +48,22 @@ public class BlogServiceImpl  implements BlogService{
     }
 
     @Override
-    public List<Blog> selectHotBlogList(Map map) {
+    public List<BlogVo> selectHotBlogList(Map map) {
         return blogMapper.selectHotBlogList(map);
     }
 
     @Override
-    public List<Blog> selectRandomBlogList(Map map) {
+    public List<BlogVo> selectRandomBlogList(Map map) {
         return blogMapper.selectRandomBlogList(map);
     }
 
     @Override
-    public Blog selectPreBlog(Map map) {
+    public BlogVo selectPreBlog(Map map) {
         return blogMapper.selectPreBlog(map);
     }
 
     @Override
-    public Blog selectNextBlog(Map map) {
+    public BlogVo selectNextBlog(Map map) {
         return blogMapper.selectNextBlog(map);
 
     }

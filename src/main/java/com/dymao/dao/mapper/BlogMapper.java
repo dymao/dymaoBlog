@@ -14,19 +14,19 @@ public interface BlogMapper {
 
     int insert(Blog blog);
 
-    Blog selectByPrimaryKey(String id);
+    BlogVo selectByPrimaryKey(String id);
 
     int updateByPrimaryKey(Blog blog);
 
     List<BlogVo> selectBlogList(Map map);
 
-    List<Blog> selectHotBlogList(Map map);
+    List<BlogVo> selectHotBlogList(Map map);
 
-    List<Blog> selectRandomBlogList(Map map);
+    List<BlogVo> selectRandomBlogList(Map map);
 
-    Blog selectPreBlog(Map map);
+    BlogVo selectPreBlog(Map map);
 
-    Blog selectNextBlog(Map map);
+    BlogVo selectNextBlog(Map map);
 
     int updateViewNumByPrimaryKey(Map map);
 

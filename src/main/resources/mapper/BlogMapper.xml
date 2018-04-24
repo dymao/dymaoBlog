@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dymao.dao.mapper.BlogMapper">
-  <resultMap id="BaseResultMap" type="com.dymao.model.Blog">
+  <resultMap id="BaseResultMap" type="com.dymao.vo.BlogVo">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
@@ -24,18 +24,20 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.dymao.model.Blog">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.dymao.vo.BlogVo">
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
 
   <resultMap extends="BaseResultMap" id="BlogInfoWithOutBLOBs" type="com.dymao.vo.BlogVo">
     <result column="categoryOneName" jdbcType="VARCHAR" property="categoryOneName" />
     <result column="categoryTwoName" jdbcType="VARCHAR" property="categoryTwoName" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, title, content_show, keyword, is_public, deleted, category_id_one, category_id_two, 
+    a.id, user_id, title, content_show, keyword, is_public, deleted, category_id_one, category_id_two,
     view_num, like_num, tread_num, image, is_transshipment, transshipment_url, is_recommend, 
-    is_audit, audit_user_id, authority, create_time, update_time
+    is_audit, audit_user_id, authority, a.create_time, a.update_time
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -45,8 +47,11 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from blog
-    where id = #{id,jdbcType=VARCHAR}
+    ,t.user_name
+    from blog a
+      LEFT JOIN adminuser t
+        on a.user_id = t.id
+    where a.id = #{id,jdbcType=VARCHAR}
   </select>
   <update id="deleteByPrimaryKey" parameterType="java.lang.String">
     update blog  set deleted = '1'
@@ -262,15 +267,17 @@
   </update>
   <select id="selectBlogList" parameterType="java.util.Map" resultMap="BlogInfoWithOutBLOBs">
     select
-      a.id,user_id, title, content_show, keyword, is_public, deleted, category_id_one, category_id_two,
+      a.id,user_id,t.user_name, title, content_show, keyword, is_public, deleted, category_id_one, category_id_two,
       view_num, like_num, tread_num, image, is_transshipment, is_recommend,
-      is_audit, audit_user_id, authority, create_time,update_time
+      is_audit, audit_user_id, authority, a.create_time,a.update_time
       ,b.`name` as categoryOneName, c.`name` as categoryTwoName
-    from blog a
-       LEFT JOIN blogcategory b
-          on a.category_id_one = b.id
-       LEFT JOIN blogcategory c
-          on a.category_id_two = c.id
+     from blog a
+      LEFT JOIN blogcategory b
+        on a.category_id_one = b.id
+      LEFT JOIN blogcategory c
+        on a.category_id_two = c.id
+      LEFT JOIN adminuser t
+        on a.user_id = t.id
     <where>
       <if test="userId != null">
         user_id = #{userId,jdbcType=VARCHAR}
@@ -306,7 +313,7 @@
         and  is_audit = #{isAudit,jdbcType=VARCHAR}
       </if>
       <if test="archiveDate != null">
-        and  DATE_FORMAT(create_time,'%Y-%m')= #{archiveDate,jdbcType=VARCHAR}
+        and  DATE_FORMAT(a.create_time,'%Y-%m')= #{archiveDate,jdbcType=VARCHAR}
       </if>
       <if test="searchWord != null">
         and (title like  CONCAT('%',#{searchWord},'%')
@@ -327,7 +334,7 @@
           </foreach>
       </if>
     </where>
-     order by create_time desc
+     order by a.create_time desc
   </select>
 
   <select id="selectHotBlogList" parameterType="java.util.Map" resultMap="BaseResultMap">

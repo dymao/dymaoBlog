@@ -12,4 +12,7 @@ public class Dict {
     public static final String IMAGE_VRIFY_CODE_TIME = "imageVrifyCodeTime";
 
     public static final String ADMIN_USER = "adminUser";
+    public static final String USER = "user";
+    public static final String ADMIN = "admin";
+    public static final String LOGIN_ID = "loginId";
 }

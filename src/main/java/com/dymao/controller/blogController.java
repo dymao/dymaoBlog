@@ -90,7 +90,7 @@ public class blogController {
     @RequestMapping(value = "/detail/{id}")
     public String blogDetail(Model model, @PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response) {
 
-        Blog blog = blogService.selectByPrimaryKey(id);
+        BlogVo blog = blogService.selectByPrimaryKey(id);
         if(blog == null || !StringUtils.equals(Constant.BLOG_IS_PUBLIC_0, blog.getIsPublic())
                 || !StringUtils.equals(Constant.BLOG_IS_AUDIT_0, blog.getIsAudit())
                 || !StringUtils.equals(Constant.DELETE_FLAG_0, blog.getDeleted())){
@@ -99,8 +99,8 @@ public class blogController {
         model.addAttribute("blog",blog);
         Map paramMap = new HashMap();
         paramMap.put("id",id);
-        Blog preBlog = blogService.selectPreBlog(paramMap);
-        Blog nextBlog = blogService.selectNextBlog(paramMap);
+        BlogVo preBlog = blogService.selectPreBlog(paramMap);
+        BlogVo nextBlog = blogService.selectNextBlog(paramMap);
         model.addAttribute("preBlog",preBlog);
         model.addAttribute("nextBlog",nextBlog);
         // 更新浏览次数

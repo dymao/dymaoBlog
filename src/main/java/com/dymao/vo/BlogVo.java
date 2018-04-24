@@ -7,6 +7,8 @@ public class BlogVo {
 
     private String userId;          // 用户id
 
+    private String userName;          // 用户id
+
     private String title;           // 博客标题
 
     private String contentShow;     // 博客摘要
@@ -241,5 +243,13 @@ public class BlogVo {
 
     public void setCategoryTwoName(String categoryTwoName) {
         this.categoryTwoName = categoryTwoName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

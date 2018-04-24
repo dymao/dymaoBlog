@@ -9,62 +9,69 @@
 	legend a{ color:#666;} legend a:hover{ text-decoration:none;}
 	.layui-table{ font-family: "Microsoft YaHei","Helvetica Neue";}
 	</style>
+    <script th:src="@{/js/jquery-2.1.4.min.js}" type="text/javascript"></script>
         <div class="x-body">
             <blockquote class="layui-elem-quote">
-                欢迎使用个人博客后台管理系统！ &nbsp;&nbsp;上次登录时间：2017年12月2日 22:53:20
+                <span style="color: #1E9FFF" th:text="${session.adminUser.userName}"></span>，您好！欢迎使用个人博客后台管理系统！&nbsp;&nbsp;
+                <span th:if="${isFirst == 'Y'}" >您是首次登录后台管理系统</span>
+                <span th:if="${isFirst == 'N'}" >您上次登录时间：<span th:text="${#dates.format(lastLoginTime,'yyyy-MM-dd HH:mm:ss')}"></span></span>
+
+                <span style="float:right"> 当前在线人数：<span th:text="${application.onLineCount}"></span></span>
             </blockquote>
-<div class="row">
+         <div class="row" >
             <div class="col-xs-6 col-sm-4 col-md-3">
-                <section class="panel">
-                    <div class="symbol bgcolor-blue"> <i class="fa fa-address-card"></i>
+                <section class="panel" style="margin-bottom: 0px">
+                    <div class="symbol bgcolor-blue"> <i class="layui-icon">&#xe63a;</i>
                     </div>
                     <div class="value tab-menu" bind="1">
-                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="机构总数"><i class="iconfont " data-icon=""></i>
-                            <h1>10</h1>
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="留言总数"><i class="iconfont " data-icon=""></i>
+                            <h1 th:text="${statisMap['messgeNum']}"></h1>
                         </a>
 
-                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="机构总数"> <i class="iconfont " data-icon=""></i><span>机构总数</span></a>
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="留言总数"> <i class="iconfont " data-icon=""></i><span>留言总数</span></a>
 
                     </div>
                 </section>
             </div>
             <div class="col-xs-6 col-sm-4 col-md-3">
-                <section class="panel">
-                    <div class="symbol bgcolor-commred"> <i class="fa fa-handshake-o"></i>
+                <section class="panel" style="margin-bottom: 0px">
+                    <div class="symbol" style="background-color:#FF5722;"> <i class="iconfont icon-dongtaifensishu"></i>
                     </div>
                     <div class="value tab-menu" bind="1">
-                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="今日新增"> <i class="iconfont " data-icon=""></i>
-                            <h1>10</h1>
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="本月访问人数"><i class="iconfont " data-icon=""></i>
+                            <h1 th:text="${statisMap['monthUserNum']}"></h1>
                         </a>
 
-                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="今日新增"> <i class="iconfont " data-icon=""></i><span>今日新增</span></a>
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="本月访问人数"> <i class="iconfont " data-icon=""></i><span>本月访问人数</span></a>
 
                     </div>
                 </section>
             </div>
-
             <div class="col-xs-6 col-sm-4 col-md-3">
-                <section class="panel">
-                    <div class="symbol bgcolor-dark-green"> <i class="fa fa-bar-chart"></i>
+                <section class="panel" style="margin-bottom: 0px">
+                    <div class="symbol" style="background-color:#009688;"> <i class="layui-icon">&#xe613;</i>
                     </div>
                     <div class="value tab-menu" bind="1">
-                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="订单总数"> <i class="iconfont " data-icon=""></i>
-                            <h1>10</h1>
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="总访问人数"><i class="iconfont " data-icon=""></i>
+                            <h1 th:text="${statisMap['allUserNum']}"></h1>
                         </a>
-                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="订单总数"> <i class="iconfont " data-icon=""></i><span>订单总数</span></a>
+
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="总访问人数"> <i class="iconfont " data-icon=""></i><span>总访问人数</span></a>
+
                     </div>
                 </section>
             </div>
-
             <div class="col-xs-6 col-sm-4 col-md-3">
-                <section class="panel">
-                    <div class="symbol bgcolor-yellow-green"> <i class="fa fa-cubes"></i>
+                <section class="panel" style="margin-bottom: 0px">
+                    <div class="symbol" style="background-color:#2F4056;"> <i class="iconfont icon-text"></i>
                     </div>
                     <div class="value tab-menu" bind="1">
-                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="今日新增"> <i class="iconfont " data-icon=""></i>
-                            <h1>10</h1>
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="博文总数"> <i class="iconfont " data-icon=""></i>
+                            <h1 th:text="${statisMap['allBlogNum']}"></h1>
                         </a>
-                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="今日新增"> <i class="iconfont " data-icon=""></i><span>今日新增</span></a>
+
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="博文总数"> <i class="iconfont " data-icon=""></i><span>博文总数</span></a>
+
                     </div>
                 </section>
             </div>
@@ -79,150 +86,169 @@
         <div class="row">
         <div class="col-sm-6">
          <section class="panel">
-                    <div class="panel-heading">区域统计</div>
+                    <div class="panel-heading">类型统计</div>
                     <div class="panel-body">
-                        <div class="echarts" id="area" style="height:300px; height:350px"></div>
+                        <div class="echarts" id="category" style="height:300px; height:350px"></div>
+                    </div>
+                </section>
+        </div>
+        <!--<div class="col-sm-6">-->
+         <!--<section class="panel">-->
+                    <!--<div class="panel-heading">一周统计</div>-->
+                    <!--<div class="panel-body">-->
+                        <!--<div class="echarts" id="main" style="height:300px; height:350px"></div>-->
+                    <!--</div>-->
+                <!--</section>-->
+        <!--</div>-->
+        <div class="col-sm-6">
+            <section class="panel">
+                <div class="panel-heading">原创统计</div>
+                <div class="panel-body">
+                    <div class="echarts" id="transType" style="height:300px; height:350px"></div>
+                </div>
+            </section>
+        </div>
+        <div class="col-sm-6">
+         <section class="panel">
+                    <div class="panel-heading">年度博客统计</div>
+                    <div class="panel-body">
+                        <div class="echarts" id="blog" style="height:300px; height:350px"></div>
                     </div>
                 </section>
         </div>
         <div class="col-sm-6">
          <section class="panel">
-                    <div class="panel-heading">一周统计</div>
+                    <div class="panel-heading">年度访客统计</div>
                     <div class="panel-body">
-                        <div class="echarts" id="main" style="height:300px; height:350px"></div>
-                    </div>
-                </section>
-        </div>
-        <div class="col-sm-6">
-         <section class="panel">
-                    <div class="panel-heading">年度统计</div>
-                    <div class="panel-body">
-                        <div class="echarts" id="years" style="height:300px; height:350px"></div>
-                    </div>
-                </section>
-        </div>
-        <div class="col-sm-6">
-         <section class="panel">
-                    <div class="panel-heading">产品统计</div>
-                    <div class="panel-body">
-                        <div class="echarts" id="product" style="height:300px; height:350px"></div>
+                        <div class="echarts" id="customer" style="height:300px; height:350px"></div>
                     </div>
                 </section>
         </div>
         </div>
-    
         <script th:src="@{/admin/lib/layui/layui.js}" charset="utf-8"></script>
         <script th:src="@{/admin/js/echarts.min.js}" ></script>
         <script type="text/javascript">
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
+        <!--// 基于准备好的dom，初始化echarts实例-->
+        <!--var myChart = echarts.init(document.getElementById('main'));-->
 
+        <!-- 指定图表的配置项和数据-->
+        <!--var option = {-->
+            <!--tooltip: {-->
+                <!--trigger: 'axis'-->
+            <!--},-->
+            <!--legend: {-->
+                <!--data:['车贷','房贷','信用贷']-->
+            <!--},-->
+            <!--grid: {-->
+                <!--left: '3%',-->
+                <!--right: '4%',-->
+                <!--bottom: '3%',-->
+                <!--containLabel: true-->
+            <!--},-->
+            <!--toolbox: {-->
+                <!--feature: {-->
+                    <!--saveAsImage: {}-->
+                <!--}-->
+            <!--},-->
+            <!--xAxis: {-->
+                <!--type: 'category',-->
+                <!--boundaryGap: false,-->
+                <!--data: ['周一','周二','周三','周四','周五','周六','周日']-->
+            <!--},-->
+            <!--yAxis: {-->
+                <!--type: 'value'-->
+            <!--},-->
+            <!--series: [-->
+                <!--{-->
+                    <!--name:'车贷',-->
+                    <!--type:'line',-->
+                    <!--stack: '总量',-->
+                    <!--data:[120, 132, 101, 134, 90, 230, 210]-->
+                <!--},-->
+                <!--{-->
+                    <!--name:'房贷',-->
+                    <!--type:'line',-->
+                    <!--stack: '总量',-->
+                    <!--data:[220, 182, 191, 234, 290, 330, 310]-->
+                <!--},-->
+                <!--{-->
+                    <!--name:'信用贷',-->
+                    <!--type:'line',-->
+                    <!--stack: '总量',-->
+                    <!--data:[150, 232, 201, 154, 190, 330, 410]-->
+                <!--}-->
+            <!--]-->
+        <!--};-->
+
+
+        <!-- 使用刚指定的配置项和数据显示图表-->
+        <!--myChart.setOption(option);-->
+     </script>
+    <script type="text/javascript">
         // 指定图表的配置项和数据
-        var option = {
+       var myCategoryChart = echarts.init(document.getElementById('category'));
+        // 指定图表的配置项和数据
+        var categoryOption = {
+            title: {
+                text: '各类型博客数量统计',
+                subtext: '按一级分类统计',
+                x: 'center'
+            },
             tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data:['车贷','房贷','信用贷']
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
             toolbox: {
                 feature: {
                     saveAsImage: {}
                 }
             },
-            xAxis: {
-                type: 'category',
-                boundaryGap: false,
-                data: ['周一','周二','周三','周四','周五','周六','周日']
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: []
             },
-            yAxis: {
-                type: 'value'
-            },
-            series: [
-                {
-                    name:'车贷',
-                    type:'line',
-                    stack: '总量',
-                    data:[120, 132, 101, 134, 90, 230, 210]
-                },
-                {
-                    name:'房贷',
-                    type:'line',
-                    stack: '总量',
-                    data:[220, 182, 191, 234, 290, 330, 310]
-                },
-                {
-                    name:'信用贷',
-                    type:'line',
-                    stack: '总量',
-                    data:[150, 232, 201, 154, 190, 330, 410]
+            series: [{
+                name: '各类型博客数量',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
+                data: [],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
                 }
-            ]
+            }]
         };
-
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-    </script>
-    <script type="text/javascript">
-        // 指定图表的配置项和数据
-       var myChart = echarts.init(document.getElementById('area'));
-
-        // 指定图表的配置项和数据
-    var option = {
-        title: {
-            text: '地区订单统计',
-            subtext: '纯属虚构',
-            x: 'center'
-        },
-        tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-        legend: {
-            orient: 'vertical',
-            left: 'left',
-            data: ['广州', '佛山', '东莞', '中山', '深圳']
-        },
-        series: [{
-            name: '地区会员数量',
-            type: 'pie',
-            radius: '55%',
-            center: ['50%', '60%'],
-            data: [
-                { value: 6335, name: '广州' },
-                { value: 4310, name: '佛山' },
-                { value: 2310, name: '东莞' },
-                { value: 3310, name: '中山' },
-                { value: 9310, name: '深圳' }
-            ],
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
+        $.ajax({
+            type : "POST",
+            url : "/admin/getCategoryBlogNum",
+            dataType : "json",
+            success : function(result) {
+                var jsonobj = eval(result);
+                categoryOption.legend.data = jsonobj.categoryNameList;
+                console.log("jsonobj.categoryNameList = " + jsonobj.categoryNameList);
+                categoryOption.series[0].data = jsonobj.categoryBlogNumList;
+                console.log("jsonobj.categoryBlogNumList = " + jsonobj.categoryBlogNumList);
+                myCategoryChart.hideLoading();
+                myCategoryChart.setOption(categoryOption);
             }
-        }]
-    };
+        });
         // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
+       // myChart.setOption(option);
     </script>
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('years'));
+        var myMonthBlogChart = echarts.init(document.getElementById('blog'));
 
         // 指定图表的配置项和数据
-        var option = {
+        var monthBlogOption = {
             title: {
-            text: '年度订单统计',
-            subtext: '纯属虚构',
+            text: '近一年博客数量统计',
+            subtext: '按月份统计',
             x: 'center'
         },
         color: ['#3398DB'],
@@ -238,6 +264,11 @@
             bottom: '3%',
             containLabel: true
         },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
         xAxis: [{
             type: 'category',
             data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
@@ -249,44 +280,123 @@
             type: 'value'
         }],
         series: [{
-            name: '活跃度',
+            name: '博客数',
             type: 'bar',
             barWidth: '60%',
             data: [10, 52, 200, 334, 390, 330, 220, 200, 334, 390, 330, 220]
         }]
     };
+        $.ajax({
+            type : "POST",
+            url : "/admin/getMonthBlogNum",
+            dataType : "json",
+            success : function(result) {
+                //将从后台接收的json字符串转换成json对象
+                var jsonobj = eval(result);
+                //给图标标题赋值
+                monthBlogOption.xAxis[0].data = jsonobj.monthNameList;
+                monthBlogOption.series[0].data = jsonobj.monthBlogNumList;
+                myMonthBlogChart.hideLoading();
+                myMonthBlogChart.setOption(monthBlogOption);
+            }
+        });
         // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
+       // myChart.setOption(myMonthBlogChart);
     </script>
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('product'));
+        var myCustomerChart = echarts.init(document.getElementById('customer'));
 
         // 指定图表的配置项和数据
-        var option = {
+        var customerOption = {
+            title: {
+            text: '近一年访客数量统计',
+            subtext: '按月份统计',
+            x: 'center'
+        },
+        color: ['#3398DB'],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: [{
+            type: 'category',
+            data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+            axisTick: {
+                alignWithLabel: true
+            }
+        }],
+        yAxis: [{
+            type: 'value'
+        }],
+        series: [{
+            name: '访客数',
+            type: 'bar',
+            barWidth: '60%',
+            data: [10, 52, 200, 334, 390, 330, 220, 200, 334, 390, 330, 220]
+        }]
+       };
+        $.ajax({
+            type : "POST",
+            url : "/admin/getMonthCustomerNum",
+            dataType : "json",
+            success : function(result) {
+                //将从后台接收的json字符串转换成json对象
+                var jsonobj = eval(result);
+                //给图标标题赋值
+                customerOption.xAxis[0].data = jsonobj.monthNameList;
+                customerOption.series[0].data = jsonobj.monthCustomerNumList;
+                myCustomerChart.hideLoading();
+                myCustomerChart.setOption(customerOption);
+            }
+        });
+        // 使用刚指定的配置项和数据显示图表。
+        //myChart.setOption(option);
+    </script>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myTransTypeChart = echarts.init(document.getElementById('transType'));
+
+        // 指定图表的配置项和数据
+        var transTypeOption = {
              title: {
-                text: '产品订单比例',
-                subtext: '纯属虚构',
+                text: '原创转载比例',
+                subtext: '原创转载占比',
                 x: 'center'
             },
             tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
             legend: {
                 orient: 'vertical',
                 left: 'left',
-                data: ['车贷', '房贷']
+                data: []
             },
             series: [{
-                name: '访问来源',
+                name: '是否原创',
                 type: 'pie',
                 radius: '55%',
                 center: ['50%', '60%'],
-                data: [
-                    { value: 1335, name: '车贷' },
-                    { value: 310, name: '房贷' }
-                ],
+                data: [],
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -296,21 +406,28 @@
                 }
             }]
         };
-
-
+        $.ajax({
+            type : "POST",
+            url : "/admin/getTranBlogNum",
+            dataType : "json",
+            success : function(result) {
+                //将从后台接收的json字符串转换成json对象
+                var jsonobj = eval(result);
+                //给图标标题赋值
+                transTypeOption.legend.data = jsonobj.tranNameList;
+                transTypeOption.series[0].data = jsonobj.tranBlogNumList;
+                myTransTypeChart.hideLoading();
+                myTransTypeChart.setOption(transTypeOption);
+            }
+        });
         // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
+        //myChart.setOption(option);
     </script>
             
         </div>
         <div class="layui-footer footer footer-demo">
             <div class="layui-main">
-                <p>
-                    <a href="/">
-                        Copyright ©2017 17sucai.com All Rights Reserved.
-                    </a>
-                </p>
-                
+                  <div>Copyright &copy;2017-2018<a href="#">&nbsp;深蓝的星空&nbsp;</a>All Rights Reserved&nbsp;粤ICP备17146341号-1</div>
             </div>
         </div>
         

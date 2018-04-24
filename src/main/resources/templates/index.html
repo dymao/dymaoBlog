@@ -7,14 +7,6 @@
     <div th:include="common/menu::top">
     </div>
 </header>
-<!-- Baidu Button BEGIN -->
-<!--<script type="text/javascript" id="bdshare_js" data="type=slide&img=6&pos=right&uid=6478904" ></script>-->
-<!--<script type="text/javascript" id="bdshell_js"></script>-->
-<!--<script type="text/javascript">-->
-    <!--document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);-->
-<!--</script>-->
-<!-- Baidu Button END -->
-
 
 <section class="container user-select">
     <!-- JiaThis Button BEGIN -->
@@ -65,7 +57,7 @@
                                     <span th:if="${blog.isTransshipment == '1'}">转载</span>
                                     <span class="blog-ext-ico">
                                         <i class="glyphicon glyphicon-user"></i>
-                                       <span th:text="${blog.userId}"></span>
+                                       <span th:text="${blog.userName}"></span>
                                     </span>
                                     <span class="blog-ext-ico"><i class="glyphicon glyphicon-time"></i><span class="list-date" th:text="${#dates.format(blog.createTime, 'yyyy-MM-dd')}"></span></span>
                                     <span class="blog-ext-ico">

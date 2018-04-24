@@ -195,5 +195,7 @@ CREATE TABLE `access_log` (
     `channeltype` VARCHAR(1) COMMENT '访问渠道 0：前端， 1：后台',
     `sessionId` VARCHAR(100) COMMENT 'sessionID',
     `ip` VARCHAR(50) COMMENT '访问者IP',
+    `status` VARCHAR(10) COMMENT '访问状态',
+    `returnMsg` VARCHAR(100) COMMENT '返回信息',
     `accesstime` datetime DEFAULT NULL COMMENT '访问时间'
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='访问日志记录表';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='访问日志记录表';

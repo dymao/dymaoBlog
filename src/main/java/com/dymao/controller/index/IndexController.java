@@ -120,7 +120,7 @@ public class IndexController {
         paramMap.put("isPublic", Constant.BLOG_IS_PUBLIC_0);
         paramMap.put("isAudit",Constant.BLOG_IS_AUDIT_0);
         paramMap.put("deleted",Constant.DELETE_FLAG_0);
-        List<Blog> hotBlogList = blogService.selectHotBlogList(paramMap);
+        List<BlogVo> hotBlogList = blogService.selectHotBlogList(paramMap);
         resultMap.put("hotBlogList",hotBlogList);
 
 
@@ -145,7 +145,7 @@ public class IndexController {
         paramMap.put("isAudit",Constant.BLOG_IS_AUDIT_0);
         paramMap.put("deleted",Constant.DELETE_FLAG_0);
 
-        List<Blog> hotBlogList = blogService.selectRandomBlogList(paramMap);
+        List<BlogVo> hotBlogList = blogService.selectRandomBlogList(paramMap);
 
         resultMap.put("randomBlogList",getRandomBlogList(hotBlogList));
 
@@ -160,8 +160,8 @@ public class IndexController {
     }
 
     // 获取6篇随机博文
-    private List<Blog> getRandomBlogList(List<Blog> hotBlogList){
-        List<Blog> randomBlogList = new ArrayList<Blog>();
+    private List<BlogVo> getRandomBlogList(List<BlogVo> hotBlogList){
+        List<BlogVo> randomBlogList = new ArrayList<BlogVo>();
         if(hotBlogList != null && hotBlogList.size() > 6){
             int length = hotBlogList.size();
             String str = ",";

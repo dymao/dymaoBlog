@@ -2,7 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
   <div th:fragment="copyright">
-    <footer class="footer">Copyright &copy;2017-2018<a href="#">&nbsp;深蓝的星空&nbsp;</a>All Rights Reserved&nbsp;粤ICP备17146341号-1</footer>
+    <footer class="footer">
+      <div><span class="am-icon-user"></span>&nbsp;欢迎您的光临，当前在线人数：<span th:text="${application.onLineCount}"></span></div>
+      <div>Copyright &copy;2017-2018<a href="#">&nbsp;深蓝的星空&nbsp;</a>All Rights Reserved&nbsp;粤ICP备17146341号-1</div>
+    </footer>
   </div>
 </body>
 </html>

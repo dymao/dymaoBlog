@@ -41,7 +41,7 @@ public class AdminUserManagerServiceImpl extends AbstractUserManagerService {
         RSAPrivateKey prkey = RSAUtils.getPrivateKey(Modulus,private_exponent);
         //解密
         String afterDecrypt = rsa.decrypttoStr(prkey,user.getPassword());
-        logger.debug("解密后的密码是："+afterDecrypt);
+        //logger.debug("解密后的密码是："+afterDecrypt);
         String stroePassword = MD5Util.encrypt(afterDecrypt);
         if(StringUtils.isEmpty(stroePassword)){
             throw new Exception("密码加密错误！！！");
@@ -52,7 +52,7 @@ public class AdminUserManagerServiceImpl extends AbstractUserManagerService {
     @Override
     public String checkUser(User user) throws Exception {
         Map paramMap = new HashMap();
-        paramMap.put("loginId",user.getLoginId());
+        paramMap.put(Dict.LOGIN_ID,user.getLoginId());
         List<AdminUser> list = adminUserMapper.queryUserByMap(paramMap);
         if(list == null || list.isEmpty() || list.size() > 1){
             return  Constant.LOGIN_VRRFY_STATUS_4;

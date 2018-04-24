@@ -2,10 +2,14 @@ package com.dymao.interceptor;
 
 
 import com.dymao.common.Utils.AccessLoggerUtil;
+import com.dymao.common.Utils.DeviceUtil;
+import com.dymao.common.constants.Constant;
 import com.dymao.common.constants.Dict;
 import com.dymao.dao.mapper.AccessLogMapper;
 import com.dymao.model.AccessLog;
 import com.dymao.model.AdminUser;
+import com.dymao.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
@@ -15,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,10 +57,32 @@ public class LogInterceptor implements HandlerInterceptor {
         AccessLog log = (AccessLog) httpServletRequest.getAttribute(AccessLoggerUtil.LOG_OPERATE);
         if(log == null){
             logger.warn("日志信息为空",log);
-        }else{
+            log = AccessLoggerUtil.getLog(httpServletRequest);
+        }
+        if(log != null){
+            int status =  response.getStatus();
+            log.setStatus(status+"");
             if(exception != null){
                 String returnMsg = exception.getMessage();
                 log.setReturnMsg(returnMsg);
+            }
+            if(StringUtils.isBlank(log.getUserid())){
+                HttpSession session = httpServletRequest.getSession();
+                if(session != null){
+                    User user = (User)session.getAttribute(Dict.USER);
+                    if(user != null){
+                        log.setUserid(user.getId());
+                    }
+                }
+                log.setDevicetype(DeviceUtil.getDeviceTypeByAgent(httpServletRequest));
+                if(StringUtils.isNotBlank(log.getUrl()) && log.getUrl().indexOf(Dict.ADMIN) >= 0){
+                    if(session != null){
+                        AdminUser adminUser = (AdminUser)session.getAttribute(Dict.ADMIN_USER);
+                        if(adminUser != null){
+                            log.setUserid(adminUser.getId());
+                        }
+                    }
+                }
             }
             logMapper.insert(log);
         }

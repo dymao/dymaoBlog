@@ -110,7 +110,7 @@
             <td id="recommendId" th:if="${blogVo.isRecommend}==0">否</td>
             <td id="recommendId" th:if="${blogVo.isRecommend}==1">是</td>
 
-            <td th:text="${blogVo.userId}"></td>
+            <td th:text="${blogVo.userName}"></td>
 
             <td id="auditId" th:if="${blogVo.isAudit}==0">已审核</td>
             <td id="auditId" style="color:#f00" th:if="${blogVo.isAudit}==1">待审核</td>

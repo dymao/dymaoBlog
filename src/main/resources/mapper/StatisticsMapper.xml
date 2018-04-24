@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dymao.dao.mapper.StatisticsMapper">
+
+  <select id="getLastLoginTime" parameterType="java.util.Map" resultType="java.util.Map">
+      select a.accesstime as loginTime
+       from access_log a
+        where a.url = '/admin/login'
+        and a.userid= #{userid,jdbcType=VARCHAR}
+        and status = '302'
+      ORDER BY a.accesstime desc LIMIT 1,1
+  </select>
+
+  <select id="queryStatisNum" resultType="java.util.Map">
+      select sum(messgeNum) messgeNum, sum(monthUserNum) monthUserNum, sum(allUserNum) allUserNum, sum(allBlogNum) allBlogNum
+      from(
+      select count(1) messgeNum, 0 as monthUserNum, 0 as allUserNum,0 as allBlogNum from message
+      union all
+      select 0 as messgeNum, count(DISTINCT sessionId) as monthUserNum, 0 as allUserNum,0 as allBlogNum from access_log where month(accesstime) = month(curdate()) and year(accesstime) = year(curdate())
+      union all
+      select 0 as messgeNum, 0 as monthUserNum, count(DISTINCT sessionId) as allUserNum,0 as allBlogNum from access_log
+      union all
+      select 0 as messgeNum, 0 as monthUserNum, 0 as allUserNum,count(1) as allBlogNum from blog where deleted = '0'
+      ) t
+  </select>
+
+  <select id="getTransBlogNum" resultType="java.util.Map">
+      select  CASE when is_transshipment = 0 then '原创' else '转载' end as name, count(1) as value from blog where deleted = '0' group by is_transshipment
+  </select>
+
+  <select id="getCategoryBlogNum" resultType="java.util.Map">
+      select b.`name` as name ,count(a.id) as value
+      from blog a
+      LEFT JOIN blogcategory b
+      on a.category_id_one = b.id
+      where deleted = '0'
+      group by b.`name`
+  </select>
+
+  <select id="getMonthCustomerNum" resultType="java.util.Map">
+
+      select v.month as monthVal, concat(replace(v.`month`,'-','年'),'月')as monthKey,ifnull(b.userNum,0) userNum
+      from past_12_month_view v
+      left join (
+      select DATE_FORMAT(t.accesstime,'%Y-%m') month,count(DISTINCT t.sessionId) userNum
+      from access_log t
+      where DATE_FORMAT(t.accesstime,'%Y-%m')> DATE_FORMAT(date_sub(curdate(), interval 12 month),'%Y-%m')
+      group by month desc
+      ) b
+      on v.month = b.month group by v.month desc
+  </select>
+
+
+</mapper>
