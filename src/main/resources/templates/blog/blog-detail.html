@@ -28,7 +28,6 @@
             if (!window.applicationCache) {
                 window.location.href="ie.html";
             }
-
         }
     </script>
 </head>
@@ -71,6 +70,20 @@
                <script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_m.js" charset="utf-8"></script>
                <!-- JiaThis Button END -->
                <br/>
+               <div class="divtextaligncenter">
+                   <div class="detailzan" id="infoyes" th:onclick="'javascript:zan(\''+${blog.id}+'\');'">
+                       <div class="detailzan1 colorboldCheng">
+                           赞</div>
+                       <div class="detailzan2 colorboldCheng">
+                           (<span id="spanYes" th:text="${blog.likeNum}" >0</span>)</div>
+                   </div>
+                   <div class="detailcai" id="infono" th:onclick="'javascript:cai(\''+${blog.id}+'\');'">
+                       <div class="detailcai1 colorboldlv">
+                           踩</div>
+                       <div class="detailcai2 colorboldlv">
+                           (<span id="spanNo" th:text="${blog.treadNum}" >0</span>)</div>
+                   </div>
+               </div>
                <br/>
                <div>
                  <div>上一篇：<span th:if="${preBlog != null}"><a th:href="@{'/blog/detail/'+${preBlog.id}}" th:text="${preBlog.title}"></a></span> <span th:if="${preBlog == null}">没有了</span> </div>
@@ -85,8 +98,37 @@
 </section>
 <div th:include="common/footer::copyright"></div>
 <div th:include="common/footer_js::footer_js"></div>
-</body>
-<script type="javascript">
+<script type="text/javascript">
+    function zan(id) {
+        $.post("/blog/likeNum/"+id,
+            function(result){
+                 if(result.returnCode == 200){
+                    //alert(result.returnMsg);
+                     changeNum('spanYes');
+                 }else{
+                     alert(result.returnMsg);
+                 }
+            }
+        );
+    }
+    function cai(id) {
+        $.post("/blog/treadNum/"+id,
+            function(result){
+                 if(result.returnCode == 200){
+                    //alert(result.returnMsg);
+                     changeNum('spanNo');
+                 }else{
+                     alert(result.returnMsg);
+                 }
+            }
+        );
+    }
+    function changeNum(spanId) {
+        var num = $("#"+spanId).text();
+        var afterOptNum = parseInt(num)+1;
+        $("#"+spanId).text(afterOptNum);
+    }
 </script>
+</body>
 
 </html>

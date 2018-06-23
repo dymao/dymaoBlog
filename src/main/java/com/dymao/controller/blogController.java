@@ -6,6 +6,7 @@ import com.dymao.model.Banner;
 import com.dymao.model.Blog;
 import com.dymao.service.BannerService;
 import com.dymao.service.BlogService;
+import com.dymao.vo.BaseMessage;
 import com.dymao.vo.BlogVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -13,12 +14,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 import java.util.*;
 
@@ -108,4 +108,65 @@ public class blogController {
         return "blog/blog-detail";
     }
 
+    /**
+     * 点赞
+     * @return
+     */
+    @RequestMapping(value = "/likeNum/{id}",method = RequestMethod.POST)
+    @ResponseBody
+    public BaseMessage updateLikeNumByPrimaryKey(@PathVariable("id") String id, HttpServletRequest request) {
+        BaseMessage result = new BaseMessage();
+        BlogVo blog = blogService.selectByPrimaryKey(id);
+        if(blog == null || !StringUtils.equals(Constant.BLOG_IS_PUBLIC_0, blog.getIsPublic())
+                || !StringUtils.equals(Constant.BLOG_IS_AUDIT_0, blog.getIsAudit())
+                || !StringUtils.equals(Constant.DELETE_FLAG_0, blog.getDeleted())){
+            result.setReturnCode(201);
+            result.setReturnMsg("文章不存在！");
+            return result;
+        }
+        HttpSession session = request.getSession();
+        String flag = (String)session.getAttribute("zan_"+id);
+        if(StringUtils.isNotBlank(flag)){
+            result.setReturnCode(202);
+            result.setReturnMsg("您已赞过！");
+            return result;
+        }
+        Map<String,String> paramMap = new HashMap<String,String>(1);
+        paramMap.put("id",id);
+        blogService.updateLikeNumByPrimaryKey(paramMap);
+        session.setAttribute("zan_"+id,"YES");
+        result.setReturnMsg("点赞成功");
+        return result;
+    }
+
+    /**
+     * 点赞
+     * @return
+     */
+    @RequestMapping(value = "/treadNum/{id}",method = RequestMethod.POST)
+    @ResponseBody
+    public BaseMessage updateTreadNumByPrimaryKey(@PathVariable("id") String id, HttpServletRequest request) {
+        BaseMessage result = new BaseMessage();
+        BlogVo blog = blogService.selectByPrimaryKey(id);
+        if(blog == null || !StringUtils.equals(Constant.BLOG_IS_PUBLIC_0, blog.getIsPublic())
+                || !StringUtils.equals(Constant.BLOG_IS_AUDIT_0, blog.getIsAudit())
+                || !StringUtils.equals(Constant.DELETE_FLAG_0, blog.getDeleted())){
+            result.setReturnCode(201);
+            result.setReturnMsg("文章不存在！");
+            return result;
+        }
+        HttpSession session = request.getSession();
+        String flag = (String)session.getAttribute("cai_"+id);
+        if(StringUtils.isNotBlank(flag)){
+            result.setReturnCode(202);
+            result.setReturnMsg("您已踩过！");
+            return result;
+        }
+        Map<String,String> paramMap = new HashMap<String,String>(1);
+        paramMap.put("id",id);
+        blogService.updateTreadNumByPrimaryKey(paramMap);
+        session.setAttribute("cai_"+id,"YES");
+        result.setReturnMsg("踩成功");
+        return result;
+    }
 }

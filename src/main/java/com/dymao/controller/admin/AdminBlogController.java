@@ -13,6 +13,8 @@ import com.dymao.service.IdCreateService;
 import com.dymao.service.LabelService;
 import com.dymao.vo.BaseMessage;
 import com.dymao.vo.BlogVo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,11 +51,21 @@ public class AdminBlogController {
     private LabelService labelService;
 
     @RequestMapping(value = "/toBlogListPage", method = RequestMethod.GET)
-    public String toBlogListPage(Model model){
+    public String toBlogListPage(String pageNum, String pageSize,Model model){
+        if(StringUtils.isEmpty(pageNum) || !StringUtils.isNumeric(pageNum)){
+            pageNum = "1";
+        }
+        if(StringUtils.isEmpty(pageSize) || !StringUtils.isNumeric(pageSize)){
+            pageSize = "10";
+        }
+        PageHelper.startPage(Integer.valueOf(pageNum),Integer.valueOf(pageSize));
         Map paramMap = new HashMap();
         paramMap.put("deleted",Constant.DELETE_FLAG_0);
         List<BlogVo> blogVoList = blogService.selectBlogList(paramMap);
-        model.addAttribute("blogVoList",blogVoList);
+        PageInfo<BlogVo> pageInfo = new PageInfo<BlogVo>(blogVoList);
+        model.addAttribute("pageInfo",pageInfo);
+        model.addAttribute("totalNum",pageInfo.getTotal());
+       // model.addAttribute("blogVoList",blogVoList);
         return "admin/blog/blogList";
     }
 

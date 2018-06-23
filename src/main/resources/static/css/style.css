@@ -1543,3 +1543,62 @@ h3 a:hover{
 blockquote  p{
     white-space:nowrap;
 }
+
+/*点赞相关*/
+.divtextaligncenter {
+	text-align: center;
+    margin: 0 auto;
+    padding: 0;
+    clear: both;
+}
+.detailzan {
+	width: 60px;
+    display:inline-block;
+    _display:inline;
+    *display:inline;
+    cursor: pointer;
+	border: 1px #e1e1e1 solid;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+.detailzan1 {
+	padding: 8px 0 6px 0;
+	font-size: 18px;
+}
+.detailzan2 {
+	padding: 5px 0 5px 0;
+	border-top: 1px #e1e1e1 solid;
+}
+
+.colorboldCheng {
+	/*font-weight: bold;*/
+	color: #ff6600;
+}
+
+.detailcai {
+	width: 60px;
+    display:inline-block;
+    _display:inline;
+    *display:inline;
+    cursor: pointer;
+    margin-left: 10px;
+	border: 1px #e1e1e1 solid;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+.detailcai1 {
+	padding: 8px 0 6px 0;
+	font-size: 18px;
+}
+.detailcai2 {
+    padding: 5px 0 5px 0;
+    border-top: 1px #e1e1e1 solid;
+}
+
+.colorboldlv {
+	/*font-weight: bold;*/
+	color: #259235;
+}

@@ -25,6 +25,7 @@
     <div class="layui-inline">
         <a class="layui-btn layui-btn-danger batchDel">批量删除</a>
     </div>
+    <span class="x-right" style="line-height:40px">共有数据：<span id="total" name="total" th:text="${pageInfo.total}"></span> 条,本页<span id="total" name="total" th:text="${pageInfo.size}"></span>条</span>
 </blockquote>
 <div class="news_list">
     <table class="layui-table" style="text-align: left">
@@ -84,7 +85,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="blogVo:${blogVoList}">
+        <tr th:each="blogVo:${pageInfo.list}">
             <td>
                 <input type="checkbox" th:value="${blogVo.id}" name="blogCheckbox" id="blogCheckbox"/>
             </td>
@@ -132,6 +133,8 @@
         </tbody>
     </table>
 
+    <input type="hidden" name="pages" th:value="${pageInfo.pages}" id="pages">
+    <input type="hidden"  th:value="${pageInfo.pageNum}" id="pageNum">
     <div id="page"></div>
 </div>
 <script th:src="@{/admin/lib/layui/layui.js}"  charset="utf-8"></script>
@@ -144,17 +147,21 @@
         laypage = layui.laypage;//分页
         layer = layui.layer;//弹出层
 
+        var pages= document.getElementById('pages').value;
+        var pageNum= document.getElementById('pageNum').value;
         //以上模块根据需要引入
         laypage({
             cont: 'page'
-            ,pages: 20
+            ,pages:pages
             ,first: '首页'
+            ,curr: pageNum
             ,last: '尾页'
             ,prev: '上一页'
             ,next: '下一页'
             ,jump: function(obj, first){
                 if(!first){
                     layer.msg('第 '+ obj.curr +' 页');
+                    location.href='/admin/blog/toBlogListPage?pageNum='+obj.curr;
                 }
             }
         });

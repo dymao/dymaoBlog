@@ -8,6 +8,7 @@ import com.dymao.model.FriendlyLink;
 import com.dymao.model.Label;
 import com.dymao.service.*;
 import com.dymao.vo.BlogVo;
+import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -69,6 +70,7 @@ public class IndexController {
         paramMap.put("isPublic", Constant.BLOG_IS_PUBLIC_0);
         paramMap.put("isAudit",Constant.BLOG_IS_AUDIT_0);
         paramMap.put("deleted",Constant.DELETE_FLAG_0);
+        PageHelper.startPage(1,15);
         List<BlogVo> blogList = blogService.selectBlogList(paramMap);
 
        // model.addAttribute("bannerList",bannerList);
